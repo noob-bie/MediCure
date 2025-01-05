@@ -27,7 +27,7 @@ Frontend:         React
 Rendering Method: Hybride
 
 # UI Design:
- Mock UI:
+ Mock UI:https://www.figma.com/proto/MzwXycpoX3lPGMwWdektHR?node-id=2-3
 
 # Project Features: 
 User authentication :              Registration, Login
