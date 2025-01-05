@@ -27,7 +27,7 @@ Frontend:         React
 Rendering Method: Hybride
 
 # UI Design:
-# Mock UI:
+ Mock UI:
 
 # Project Features: 
 User authentication :              Registration, Login
