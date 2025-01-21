@@ -9,7 +9,7 @@
 | Mohsin Ul Hassan    | 20220104135   | mohsin.cse.20220104134@aust.edu     | Frontend,Backend  |
 | Ishrat Jahan Mim    | 20220104137   | ishrat.cse.20220104137@aust.edu     | Frontend,Backend  |
 
-	---
+	
 
 ## ⏭️ Project Overview
 
@@ -38,13 +38,11 @@
    - *Rendering Method:*  Hybride
    - *Version Control:* GitHub
 	
-	---
 
 ## 💻 UI Design:
 
 	[MockUI](https://www.figma.com/design/MzwXycpoX3lPGMwWdektHR/MediCure?node-id=0-1&t=jhpvm007jui6XlYY-0)
 
-	---
 
 ## 📥 Project Features: 
 
