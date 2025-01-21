@@ -27,7 +27,7 @@
 
 		-Elderly people
 		-patients with specific medical conditions 
-		-healthcare professionals, caregivers, and individuals interested in health 		 and wellness. 
+		-healthcare professionals, caregivers, and individuals interested in health and wellness. 
 	 ---
 
 ## 📚 Tech Stack
@@ -50,10 +50,10 @@
 
 	*MediCure* is designed with:
 
-	   -User authentication :Registration, Login
-	   -Pages: Home, Registration, Login, Profile,  Cart,Delivery, Payment, Review
+	   -User authentication : Registration, Login
+	   -Pages               : Home, Registration, Login, Profile,  Cart,Delivery, Payment, Review
 	   -CRUD operations for specific data: Create, Read, Update, Delete
-	   -API endpoints:                     GET /story, POST /story
+	   -API endpoints                    : GET /story, POST /story
 
 	---
 
