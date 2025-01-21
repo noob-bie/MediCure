@@ -42,7 +42,7 @@
 
 ## 💻 UI Design:
 
-	[Mock UI]:(https://www.figma.com/design/MzwXycpoX3lPGMwWdektHR/MediCure?node-id=0-1&t=jhpvm007jui6XlYY-0)
+	[Mock UI](https://www.figma.com/design/MzwXycpoX3lPGMwWdektHR/MediCure?node-id=0-1&t=jhpvm007jui6XlYY-0)
 
 	---
 
