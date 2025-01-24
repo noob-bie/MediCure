@@ -1,0 +1,137 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #e0f7fa;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-left .text {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #0077b6;
+}
+
+/* Search Bar between left and middle */
+.nav-left-middle {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+}
+
+/* Search Bar Styling */
+.search-bar {
+  width: 85%;
+  max-width: 500px;
+  position: relative;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 1px solid #8fd7f4;
+  border-radius: 25px;
+  outline: none;
+  background-color: #9ae2fd;
+  transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.search-bar input:focus {
+  border-color: #478dff;
+  box-shadow: 0 0 5px rgba(71, 187, 255, 0.5);
+}
+
+/* Menu Icon for Mobile */
+.menu-icon {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #0077b6;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-middle,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-middle a,
+.nav-right a {
+  font-size: 1rem;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-middle a:hover,
+.nav-right a:hover {
+  background-color: #b2ebf2;
+  color: #005f73;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  /* Search Bar gets smaller on small screens */
+  .search-bar {
+    max-width: 400px;
+  }
+
+  /* Dropdown Menu */
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #e0f7fa;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 150px;
+    padding: 10px 0;
+    z-index: 10;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .nav-middle,
+  .nav-right {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-middle a,
+  .nav-right a {
+    text-align: center;
+    width: 100%;
+  }
+}
