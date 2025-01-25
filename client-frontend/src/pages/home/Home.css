@@ -1,0 +1,114 @@
+
+
+.home-container {
+    font-family: 'Arial', sans-serif;
+    padding: 0 2rem;
+    background-color: #eaf6fc;
+    color: #2c3e50;
+  }
+  
+  h2 {
+    color: #006bb3;
+    font-weight: bold;
+  }
+  
+  p {
+    color: #4a6c81;
+  }
+  
+  .content {
+    text-align: center;
+    margin: 2rem 0;
+    padding: 2rem;
+    background-color: #ffffff;
+    border: 1px solid #d9eaf2;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .content h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+  }
+  
+  .content p {
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+  }
+  
+  #medicines-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+  
+  .medicine-card {
+    background-color: #ffffff;
+    border: 1px solid #d9eaf2;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    width: 250px; 
+    height: 350px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    align-items: center; 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin: auto; 
+  }
+  
+  .medicine-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .medicine-card img {
+    max-width: 100%;
+    border-radius: 8px;
+    height: 150px; /* Ensures consistent image size */
+    object-fit: cover;
+    margin-bottom: 1rem;
+  }
+  
+  .medicine-info h3 {
+    color: #006bb3;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .medicine-info p {
+    color: #4a6c81;
+    text-align: center;
+  }
+  
+  .medicine-info .text-primary {
+    color: #007acc;
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
+  
+  .home-container .slider {
+    margin-top: 80px; /* Adjust based on your navbar height */
+    width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    .content {
+      padding: 1.5rem;
+    }
+  
+    #medicines-container {
+      gap: 1rem;
+    }
+  
+    .medicine-card {
+      padding: 0.8rem;
+    }
+  
+    .medicine-card img {
+      height: 120px;
+    }
+  }
+  

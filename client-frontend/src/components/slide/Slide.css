@@ -1,0 +1,72 @@
+/* Overall slider container */
+.slider {
+    position: relative;
+    width: 100%;
+    max-width: 1200px; /* Adjust to your preferred size */
+    margin: auto;
+    overflow: hidden;
+  }
+  
+  /* Slides wrapper that contains all individual slides */
+  .slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  /* Each slide (individual image) */
+  .slide {
+    min-width: 100%;
+    position: relative;
+  }
+  
+  /* Image styling */
+  .slide img {
+    width: 100%;
+    height: auto;
+    max-height: 400px; /* Adjust based on your design */
+    object-fit: contain; /* Prevents cropping */
+    background: #e3f2fd; /* Optional background color */
+    border-radius: 10px; /* Rounded corners for images */
+  }
+  
+  /* Caption styling */
+  .caption {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 18px;
+  }
+  
+  /* Navigation buttons styling */
+  .prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5); /* Dark background for buttons */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 24px;
+    border-radius: 50%;
+    z-index: 10; /* Ensures the buttons are on top of slides */
+  }
+  
+  .prev {
+    left: 10px;
+  }
+  
+  .next {
+    right: 10px;
+  }
+  
+  /* Button hover effect */
+  .prev:hover, .next:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
