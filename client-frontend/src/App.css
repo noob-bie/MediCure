@@ -1,0 +1,21 @@
+/* General resets */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5faff;
+  color: #333;
+}
+
+.App {
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: #0077b6; 
+}
+
+a:hover {
+  text-decoration: underline;
+}
