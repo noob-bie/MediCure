@@ -1,0 +1,92 @@
+.Shop-container {
+    font-family: 'Arial', sans-serif;
+    padding: 2rem;
+    background-color: #eaf6fc;
+    color: #2c3e50;
+  }
+  
+  .content {
+    text-align: center;
+    margin: 2rem 0;
+    padding: 2rem;
+    background-color: #ffffff;
+    border: 1px solid #d9eaf2;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .content h2 {
+    color: #006bb3;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .content p {
+    color: #4a6c81;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+  }
+  
+  #products-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+  
+  .products-card {
+    background-color: #ffffff;
+    border: 1px solid #d9eaf2;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    height: 150px;
+    width: 300px; /* Adjust the size of the box */
+    display: flex; /* Enable flexbox */
+    align-items: center; /* Center items vertically */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .products-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .products-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 1rem; /* Add spacing between text and image */
+  }
+  
+  .products_type-info {
+    flex: 1; /* Let the text section take up available space */
+  }
+  
+  .products_type-info h3 {
+    color: #006bb3;
+    font-size: 1.2rem;
+    text-align: right;
+    margin-bottom: 0.5rem;
+  }
+  
+  .products_type-info p {
+    color: #4a6c81;
+    text-align: right; /* Align text to the left */
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 768px) {
+    .products-card {
+      flex-direction: column; /* Stack text and image vertically on smaller screens */
+      text-align: center; /* Center text and image */
+    }
+  
+    .products-card img {
+      margin-left: 0; /* Reset margin */
+      margin-top: 1rem; /* Add spacing between text and image */
+    }
+  }
+  
