@@ -82,7 +82,7 @@ const featuredMedicines = [
     image: "https://medex.com.bd/storage/images/packaging/orsaline-n-1025-gm-powder-76097023982-i1-qf6Cczs1KJaSziGlKNZY.webp",
   },
   {
-    name: "Ceevit(250 mg",
+    name: "Ceevit(250 mg)",
     Generic_Name:"Vitamin C [Ascorbic acid]",
     description: "Boosts immunity.",
     price: "৳40",

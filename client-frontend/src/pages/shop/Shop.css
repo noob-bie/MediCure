@@ -1,92 +1,372 @@
 .Shop-container {
-    font-family: 'Arial', sans-serif;
-    padding: 2rem;
-    background-color: #eaf6fc;
-    color: #2c3e50;
-  }
-  
-  .content {
-    text-align: center;
-    margin: 2rem 0;
-    padding: 2rem;
-    background-color: #ffffff;
-    border: 1px solid #d9eaf2;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .content h2 {
-    color: #006bb3;
-    margin-bottom: 1rem;
-    font-size: 2rem;
-    font-weight: bold;
-  }
-  
-  .content p {
-    color: #4a6c81;
-    line-height: 1.6;
-    margin-bottom: 0.5rem;
-  }
-  
+  font-family: "Arial", sans-serif;
+  padding: 2rem;
+  background-color: #eaf6fc;
+  color: #2c3e50;
+}
+
+.content {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 2rem;
+  background-color: #ffffff;
+  border: 1px solid #d9eaf2;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content h2 {
+  color: #006bb3;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.content p {
+  color: #4a6c81;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+/* Dropdown Containers */
+.dropdown-container {
+  display: flex;
+  justify-content: space-between; /* Align dropdowns to left and right */
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.sort-container {
+  display: flex;
+  /* flex-direction: column; Stack items vertically */
+  align-items: center; /* Align to the left */
+  /* margin-bottom: 1rem; Add spacing below */
+}
+
+.order-container {
+  display: flex;
+  align-items: center;
+}
+
+.sort-label {
+  font-size: 1rem;
+  color: #2c3e50;
+  margin-right: 0.5rem; /* Space below Sort by */
+}
+
+.order-label {
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+.sort-dropdown {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #d9eaf2;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #2c3e50;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  margin-bottom: 0.5rem; /* Space below Dropdown */
+}
+.order-dropdown {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #d9eaf2;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  color: #2c3e50;
+  cursor: pointer;
+}
+
+.sort-dropdown:focus {
+  outline: none;
+  border-color: #006bb3;
+}
+.order-dropdown:focus {
+  outline: none;
+  border-color: #006bb3;
+}
+
+
+.products_type-info h3 {
+  color: #006bb3;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.products_type-info p {
+  color: #4a6c81;
+  font-size: 0.9rem;
+}
+
+.category-container {
+  margin-top: 2rem;
+  font-size: 2rem; /* Adjust font size */
+  font-weight: bold;
+  color: #2c3e50; /* Match the color theme */
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center; /* Align to the left */
+ 
+}
+/* Product Cards */
+#products-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  overflow-x: auto;
+}
+.products-card {
+  background-color: #d9d9d9;
+  border: 1px solid #c8c5c5;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  flex: 0 0 250px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.products-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+.product-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+@media (max-width: 768px) {
   #products-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    justify-content: center;
+    gap: 0.5rem;
   }
-  
+
   .products-card {
-    background-color: #ffffff;
-    border: 1px solid #d9eaf2;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    height: 150px;
-    width: 300px; /* Adjust the size of the box */
-    display: flex; /* Enable flexbox */
-    align-items: center; /* Center items vertically */
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    flex: 0 0 200px;
   }
-  
-  .products-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  .products-card img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-left: 1rem; /* Add spacing between text and image */
-  }
-  
-  .products_type-info {
-    flex: 1; /* Let the text section take up available space */
-  }
-  
-  .products_type-info h3 {
-    color: #006bb3;
-    font-size: 1.2rem;
-    text-align: right;
-    margin-bottom: 0.5rem;
-  }
-  
-  .products_type-info p {
-    color: #4a6c81;
-    text-align: right; /* Align text to the left */
-    font-size: 0.9rem;
-  }
-  
-  @media (max-width: 768px) {
-    .products-card {
-      flex-direction: column; /* Stack text and image vertically on smaller screens */
-      text-align: center; /* Center text and image */
-    }
-  
-    .products-card img {
-      margin-left: 0; /* Reset margin */
-      margin-top: 1rem; /* Add spacing between text and image */
-    }
-  }
-  
+}
+
+/* medicine_cards */
+.medi-container {
+  margin-top: 2rem;
+  font-size: 2rem; /* Adjust font size */
+  font-weight: bold;
+  color: #2c3e50; /* Match the color theme */
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center; /* Align to the left */
+}
+#med-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  overflow-x: auto;
+}
+.med-card {
+  background-color: #d9d9d9;
+  border: 1px solid #c8c5c5;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+ 
+  flex: 0 0 250px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.med-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+.med-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 2rem;
+}
+.med-info h3 {
+  color: #006bb3;
+  font-size: 1.2rem;
+  margin-bottom: -.2rem;
+}
+.med-info h4 {
+  color: #003c64;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  display: flex;
+  align-items: center; 
+  justify-content: flex-end;
+}
+.med-info p {
+  color: #4a6c81;
+  font-size: 1.0rem;
+}
+
+
+
+
+/* healcare_cards */
+.health-container {
+  margin-top: 2rem;
+  font-size: 2rem; /* Adjust font size */
+  font-weight: bold;
+  color: #2c3e50; /* Match the color theme */
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center; /* Align to the left */
+}
+#healthcare_Products-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  overflow-x: auto;
+}
+.healthcare_Products-card {
+  background-color: #d9d9d9;
+  border: 1px solid #c8c5c5;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  flex: 0 0 250px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.healthcare_Products-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+.healthcare_Products-image {
+  width: 80px;
+  height: 80 px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+.healthcare_Products-info h3 {
+  color: #006bb3;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.healthcare_Products-info h4 {
+  color: #003c64;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center; 
+  justify-content: flex-end;
+}
+
+
+
+/* homecare_cards */
+.homecare-container {
+  margin-top: 2rem;
+  font-size: 2rem; /* Adjust font size */
+  font-weight: bold;
+  color: #2c3e50; /* Match the color theme */
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center; /* Align to the left */
+}
+#homecare_Products-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  overflow-x: auto;
+}
+.homecare_Products-card {
+  background-color: #d9d9d9;
+  border: 1px solid #c8c5c5;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  flex: 0 0 250px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.homecare_Products-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+.homecare_Products-image {
+  width: 80px;
+  height: 80 px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+.homecare_Products-info h3 {
+  color: #006bb3;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.homecare_Products-info h4 {
+  color: #003c64;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center; 
+  justify-content: flex-end;
+}
+
+
+/* homecare_cards */
+.babyANDmom-container {
+  margin-top: 2rem;
+  font-size: 2rem; /* Adjust font size */
+  font-weight: bold;
+  color: #2c3e50; /* Match the color theme */
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center; /* Align to the left */
+}
+#babyANDmom_Products-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  overflow-x: auto;
+}
+.babyANDmom_Products-card {
+  background-color: #d9d9d9;
+  border: 1px solid #c8c5c5;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  flex: 0 0 250px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.babyANDmom_Products-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+.babyANDmom_Products-image {
+  width: 80px;
+  height: 80 px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+.babyANDmom_Products-info h3 {
+  color: #006bb3;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.babyANDmom_Products-info h4 {
+  color: #003c64;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center; 
+  justify-content: flex-end;
+}
+
