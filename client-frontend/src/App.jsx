@@ -9,6 +9,10 @@ import Profile from "./pages/profile/Profile";
 import AdminPanel from "./pages/adminPanel/AdminPanel";
 import LoginSignup from "./pages/loginSignup/LoginSignup";
 import { element } from "prop-types";
+import Healthcare from "./pages/healthcare/Healthcare";
+import Homecare from "./pages/homecare/Homecare";
+import Medicines from "./pages/medicine/Medicines";
+import BabyAndMomcare from "./pages/babyandmomcare/BabyAndMomcare";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -20,7 +24,6 @@ function App() {
         {/* Passing state to Navbar */}
         <Navbar />
         <Outlet />
-       
       </div>
     );
   };
@@ -32,6 +35,10 @@ function App() {
       children: [
         { path: "/", element: <Home /> },
         { path: "/shop", element: <Shop /> },
+        { path: "/healthcare", element: <Healthcare /> },
+        {path :"/homecare",element:<Homecare/>},
+        {path:"/medicines",element:<Medicines/>},
+        {path:"/baby&momcare",element:<BabyAndMomcare/>},
         { path: "/cart", element: <Cart /> },
         { path: "/profile", element: <Profile /> },
         { path: "/loginSignup", element: <LoginSignup /> },
