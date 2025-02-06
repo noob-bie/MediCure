@@ -1,52 +1,135 @@
-import React, { useState } from 'react';
-import './Login.css';
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 150px;
+    width: 600px;
+    background: #fff;
+    padding-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
 
-import phone from '../../assets/images/phone.png';
-import password from '../../assets/images/password.png';
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 30px;
+}
 
-const Login = () => {
-  const [role, setRole] = useState("user"); // Default role: User
+.text {
+    color: #0077b6;
+    font-size: 40px;
+    font-weight: 700;
+}
 
-  return (
-    <div className='container'>
-      <div className="header">
-        <div className="text">Login</div>
-        <div className="underline"></div>
-      </div>
-      
-      <div className="inputs">
-        {/* Role Dropdown */}
-        <div className="input">
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-          </select>
-        </div>
+.underline {
+    width: 60px;
+    height: 5px;
+    background: #0077b6;
+    border-radius: 10px;
+}
 
-        <div className="input">
-          <img src={phone} alt="Phone" />
-          <input placeholder="Phone Number" type="text" />
-        </div>
+.inputs {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
-        <div className="input">
-          <img src={password} alt="Password" />
-          <input placeholder="Password" type="password" />
-        </div>
-      </div>
+.input {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 450px;
+    height: 65px;
+    background: #eaeaea;
+    border-radius: 6px;
+    padding: 0 15px;
+}
 
-      <div className="forgot-password">
-        Lost Password? <span>Click Here!</span>
-      </div>
+.input img {
+    margin-right: 15px;
+    width: 24px;
+    height: 24px;
+}
 
-      <div className="no-account">
-        Do not have an account? <span>Signup</span>
-      </div>
+.input input {
+    flex: 1;
+    height: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #333;
+    font-size: 18px;
+    padding-left: 10px;
+}
 
-      <div className="submit-container">
-        <div className="submit">Login</div>
-      </div>
-    </div>
-  );
-};
+.input select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background: #fff;
+    cursor: pointer;
+  }
+  
+  .input select:focus {
+    outline: none;
+    border-color: #007bff;
+  }  
 
-export default Login;
+.have-account {
+    text-align: center;
+    margin-top: 15px;
+    color: #797979;
+    font-size: 16px;
+}
+
+.have-account span {
+    color: #478dff;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.submit-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 55px;
+    color: #fff;
+    background: #478dff;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit:hover {
+    background: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+
+    .input {
+        width: 90%;
+    }
+
+    .submit {
+        width: 80%;
+    }
+}

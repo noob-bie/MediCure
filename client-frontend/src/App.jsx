@@ -8,6 +8,7 @@ import Cart from "./pages/cart/Cart";
 import Profile from "./pages/profile/Profile";
 import AdminPanel from "./pages/adminPanel/AdminPanel";
 import Login from "./pages/login/Login";
+import Signup from "./pages/signup/Signup";
 import { element } from "prop-types";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         { path: "/cart", element: <Cart /> },
         { path: "/profile", element: <Profile /> },
         { path: "/login", element: <Login/>},
+        { path: "/signup", element: <Signup/>},
         isAdmin && { path: "/admin", element: <AdminPanel /> },
       ].filter(Boolean),
     },
