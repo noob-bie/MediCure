@@ -5,10 +5,15 @@ import Navbar from "./components/navbar/Navbar";
 import Home from "./pages/home/Home";
 import Shop from "./pages/shop/Shop";
 import Cart from "./pages/cart/Cart";
-import Login from "./pages/login/Login";
-import Register from "./pages/register/Register";
 import Profile from "./pages/profile/Profile";
 import AdminPanel from "./pages/adminPanel/AdminPanel";
+import Login from "./pages/login/Login";
+import Signup from "./pages/signup/Signup";
+import { element } from "prop-types";
+import Healthcare from "./pages/healthcare/Healthcare";
+import Homecare from "./pages/homecare/Homecare";
+import Medicines from "./pages/medicine/Medicines";
+import BabyAndMomcare from "./pages/babyandmomcare/BabyAndMomcare";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -31,10 +36,14 @@ function App() {
       children: [
         { path: "/", element: <Home /> },
         { path: "/shop", element: <Shop /> },
+        { path: "/healthcare", element: <Healthcare /> },
+        {path :"/homecare",element:<Homecare/>},
+        {path:"/medicines",element:<Medicines/>},
+        {path:"/baby&momcare",element:<BabyAndMomcare/>},
         { path: "/cart", element: <Cart /> },
-        { path: "/login", element: <Login /> },
-        { path: "/register", element: <Register /> },
         { path: "/profile", element: <Profile /> },
+        { path: "/login", element: <Login/>},
+        { path: "/signup", element: <Signup/>},
         isAdmin && { path: "/admin", element: <AdminPanel /> },
       ].filter(Boolean),
     },
