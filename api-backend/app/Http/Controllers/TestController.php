@@ -1,6 +1,7 @@
+
 <?php
 
-namespace App\Http\Controllers;
+/*namespace App\Http\Controllers;
 
 use App\Services\TestService;
 use Illuminate\Http\Request;
@@ -20,3 +21,4 @@ class TestController extends Controller
         return $data;
     }
 }
+*/

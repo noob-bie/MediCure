@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +13,14 @@ use App\Http\Controllers\TestController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/test', [TestController::class, 'getTestHuman'])->middleware('test.middleware');
-Route::get('/test/{id}', [TestController::class, 'getTestHumanWithId']);
+//Route::get('/test', [TestController::class, 'getTestHuman'])->middleware('test.middleware');
+//Route::get('/test/{id}', [TestController::class, 'getTestHumanWithId']);
+    Route::post('/register', [UserController::class, 'register']);
+    Route::post('/login', [UserController::class, 'login']);
+    Route::get('/health-check', function () {
+        return response()->json(['message' => 'Backend is running!']);
+    });
+
+
+
 

@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS `attendance_tracker` DEFAULT CHARACTER SET latin1 COLLATE latin1_danish_ci;
+/*CREATE DATABASE IF NOT EXISTS `attendance_tracker` DEFAULT CHARACTER SET latin1 COLLATE latin1_danish_ci;
 
 DROP TABLE IF EXISTS `attendances`;
 DROP TABLE IF EXISTS `sessions`;
@@ -20,3 +20,4 @@ CREATE TABLE `attendances` (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`session_id`) REFERENCES `sessions`(`id`)
 );
+*/

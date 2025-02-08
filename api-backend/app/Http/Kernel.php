@@ -4,6 +4,7 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
+
 class Kernel extends HttpKernel
 {
     /**
@@ -26,7 +27,8 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'api' => [
-            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class, //  ensures that requests originating from the frontend (typically a browser) are treated as stateful. Used to persist cookies across requests
+            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class, //  ensures that requests originating from the frontend (typically a browser) are treated as stateful. Used to persist cookies across requests
+            \Illuminate\Routing\Middleware\ThrottleRequests::class, //  limits the number of requests that a client can make to a route or group of routes within a specified number of minutes.
             \Illuminate\Routing\Middleware\SubstituteBindings::class, // responsible for automatically substituting route parameter bindings in a controller action when you have route parameters like {id} or {slug}.
         ],
     ];
@@ -39,6 +41,6 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
-        'test.middleware' => \App\Http\Middleware\TestMiddleware::class,
+        // 'test.middleware' => \App\Http\Middleware\TestMiddleware::class,
     ];
 }

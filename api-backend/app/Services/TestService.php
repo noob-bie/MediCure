@@ -1,6 +1,6 @@
-<?php
+//<?php
 
-namespace App\Services;
+/*namespace App\Services;
 
 class TestService
 {
@@ -9,3 +9,4 @@ class TestService
         return "Test human returned from TestService";
     }
 }
+*/
