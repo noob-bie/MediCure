@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import './Signup.css';
-<<<<<<< HEAD
 import axios from 'axios';
 import axiosInstance from '../../utils/axiosInstance';
-=======
->>>>>>> 75d0a7c7cc823d350b5b03744632640a4ee613ed
 
 import person from '../../assets/images/person.png';
 import email from '../../assets/images/email.png';
@@ -12,7 +9,6 @@ import phone from '../../assets/images/phone.png';
 import password from '../../assets/images/password.png';
 
 const Signup = () => {
-<<<<<<< HEAD
   const [role, setRole] = useState("user");
   const [name, setName] = useState("");
   const [emailValue, setEmail] = useState("");
@@ -33,9 +29,6 @@ const Signup = () => {
       alert("Signup failed: " + (error.response?.data?.message || "Unknown error"));
     }
   };
-=======
-  const [role, setRole] = useState("user"); // Default role: User
->>>>>>> 75d0a7c7cc823d350b5b03744632640a4ee613ed
 
   return (
     <div className='container'>
@@ -55,7 +48,6 @@ const Signup = () => {
 
         <div className="input">
           <img src={person} alt="Person" />
-<<<<<<< HEAD
           <input 
           placeholder="Name" 
           type="text"
@@ -89,21 +81,6 @@ const Signup = () => {
           value={passwordValue} 
           onChange={(e) => setPassword(e.target.value)}
           />
-=======
-          <input placeholder="Name" type="text" />
-        </div>
-        <div className="input">
-          <img src={email} alt="Email" />
-          <input placeholder="Email Id" type="email" />
-        </div>
-        <div className="input">
-          <img src={phone} alt="Phone" />
-          <input placeholder="Phone Number" type="text" />
-        </div>
-        <div className="input">
-          <img src={password} alt="Password" />
-          <input placeholder="Password" type="password" />
->>>>>>> 75d0a7c7cc823d350b5b03744632640a4ee613ed
         </div>
       </div>
 
@@ -112,11 +89,7 @@ const Signup = () => {
       </div>
 
       <div className="submit-container">
-<<<<<<< HEAD
         <div className="submit" onClick={handleSignup}>Sign Up</div>
-=======
-        <div className="submit">Sign Up</div>
->>>>>>> 75d0a7c7cc823d350b5b03744632640a4ee613ed
       </div>
     </div>
   );
