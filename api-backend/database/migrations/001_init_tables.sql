@@ -20,4 +20,4 @@ CREATE TABLE `attendances` (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`session_id`) REFERENCES `sessions`(`id`)
 );
-*/
+

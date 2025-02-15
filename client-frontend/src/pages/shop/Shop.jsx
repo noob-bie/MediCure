@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Shop.css";
-import { Link } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 import { Home_Care_link, Baby_Mom_Care_link, Medicine_link } from "./link.jsx";
 
 const Products_type = [
@@ -21,7 +21,7 @@ const Products_type = [
     description: "Care Comes to You",
     image: Home_Care_link,
   },
-  
+
   {
     name: "Medicines",
     description: "Care Comes to You",
@@ -114,7 +114,6 @@ const med = [
   },
 ];
 
-
 const healthcare_Products = [
   {
     name: " Napa (500mg)",
@@ -188,7 +187,6 @@ const healthcare_Products = [
   },
 ];
 
-
 const homecare_Products = [
   {
     name: " Napa (500mg)",
@@ -261,7 +259,6 @@ const homecare_Products = [
       "https://medeasy.health/_next/image?url=https%3A%2F%2Fapi.medeasy.health%2Fmedia%2Fmedicines%2Fmedeasy_ceevit_250.jpg&w=750&q=75",
   },
 ];
-
 
 const babyANDmom_Products = [
   {
@@ -341,10 +338,13 @@ const Shop = () => {
   const [sortOption, setSortOption] = useState("");
   const [orderOption, setOrderOption] = useState("");
   const [Med, shop_med] = useState([]);
-  const[healthcare,shop_heatlcare]=useState([]);
-  const[homecare,shop_homecare]=useState([]);
-  const[baby_mom,shop_babyMoM]=useState([]);
+  const [healthcare, shop_heatlcare] = useState([]);
+  const [homecare, shop_homecare] = useState([]);
+  const [baby_mom, shop_babyMoM] = useState([]);
+  const location = useLocation();
 
+  // Check if we are at the base route or a sub-route
+  const isBaseRoute = location.pathname === "/shop";
 
   useEffect(() => {
     setProducts(Products_type);
@@ -354,63 +354,90 @@ const Shop = () => {
     shop_med(med);
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     shop_heatlcare(healthcare_Products);
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     shop_homecare(homecare_Products);
-  },[]);
+  }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     shop_babyMoM(babyANDmom_Products);
-  },[]);
+  }, []);
 
   // Handle sort option change
   const handleSortChange = (e) => {
     const selectedOption = e.target.value;
     setSortOption(selectedOption);
-  
+
     // If sorting by price, popularity, or best sales, wait for order selection
-    if ((selectedOption === "price" || selectedOption === "popularity" || selectedOption === "bestSales") && !orderOption) {
+    if (
+      (selectedOption === "price" ||
+        selectedOption === "popularity" ||
+        selectedOption === "bestSales") &&
+      !orderOption
+    ) {
       return;
     }
-  
+
     applySortingAndOrdering(selectedOption, orderOption);
   };
-  
+
   const handleOrderChange = (e) => {
     const selectedOption = e.target.value;
     setOrderOption(selectedOption);
-  
+
     // If no sort option is selected, do nothing
     if (!sortOption) return;
-  
+
     applySortingAndOrdering(sortOption, selectedOption);
   };
-  
+
   // Function to apply sorting based on current options
   const applySortingAndOrdering = (sortOption, orderOption) => {
     // let sortedProducts = [...Products];
     let sortedMeds = [...Med];
-    let sortedHealthcare=[...healthcare];
-    let sortedHomecare=[...homecare];
-    let sortedBabyaNdMomcare=[...baby_mom];
+    let sortedHealthcare = [...healthcare];
+    let sortedHomecare = [...homecare];
+    let sortedBabyaNdMomcare = [...baby_mom];
 
-
-  
     if (sortOption === "bestSales") {
       // sortedProducts.sort((a, b) => (orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales));
-      sortedMeds.sort((a, b) => (orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales));
-      sortedHealthcare.sort((a, b) => (orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales));
-      sortedHomecare.sort((a, b) => (orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales));
-      sortedBabyaNdMomcare.sort((a, b) => (orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales));
+      sortedMeds.sort((a, b) =>
+        orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales
+      );
+      sortedHealthcare.sort((a, b) =>
+        orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales
+      );
+      sortedHomecare.sort((a, b) =>
+        orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales
+      );
+      sortedBabyaNdMomcare.sort((a, b) =>
+        orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales
+      );
     } else if (sortOption === "popularity") {
       // sortedProducts.sort((a, b) => (orderOption === "descending" ? b.popularity - a.popularity : a.popularity - b.popularity));
-      sortedMeds.sort((a, b) => (orderOption === "descending" ? b.popularity - a.popularity : a.popularity - b.popularity));
-      sortedHealthcare.sort((a, b) => (orderOption === "descending" ? b.popularity - a.popularity : a.popularity - b.popularity));
-      sortedHomecare.sort((a, b) => (orderOption === "descending" ? b.popularity - a.popularity : a.popularity - b.popularity));
-      sortedBabyaNdMomcare.sort((a, b) => (orderOption === "descending" ? b.popularity - a.popularity : a.popularity - b.popularity));
+      sortedMeds.sort((a, b) =>
+        orderOption === "descending"
+          ? b.popularity - a.popularity
+          : a.popularity - b.popularity
+      );
+      sortedHealthcare.sort((a, b) =>
+        orderOption === "descending"
+          ? b.popularity - a.popularity
+          : a.popularity - b.popularity
+      );
+      sortedHomecare.sort((a, b) =>
+        orderOption === "descending"
+          ? b.popularity - a.popularity
+          : a.popularity - b.popularity
+      );
+      sortedBabyaNdMomcare.sort((a, b) =>
+        orderOption === "descending"
+          ? b.popularity - a.popularity
+          : a.popularity - b.popularity
+      );
     } else if (sortOption === "price") {
       sortedMeds.sort((a, b) => {
         let priceA = parseFloat(a.price.replace("৳", "").trim()) || 0;
@@ -435,260 +462,276 @@ const Shop = () => {
         let priceB = parseFloat(b.price.replace("৳", "").trim()) || 0;
         return orderOption === "descending" ? priceB - priceA : priceA - priceB;
       });
-
     } else {
       // Default: Sort by name
       // sortedProducts.sort((a, b) =>
       //   orderOption === "descending" ? (a.name < b.name ? 1 : -1) : (a.name > b.name ? 1 : -1)
       // );
       sortedMeds.sort((a, b) =>
-        orderOption === "descending" ? (a.name < b.name ? 1 : -1) : (a.name > b.name ? 1 : -1)
+        orderOption === "descending"
+          ? a.name < b.name
+            ? 1
+            : -1
+          : a.name > b.name
+          ? 1
+          : -1
       );
 
       sortedHealthcare.sort((a, b) =>
-        orderOption === "descending" ? (a.name < b.name ? 1 : -1) : (a.name > b.name ? 1 : -1)
+        orderOption === "descending"
+          ? a.name < b.name
+            ? 1
+            : -1
+          : a.name > b.name
+          ? 1
+          : -1
       );
 
       sortedHomecare.sort((a, b) =>
-        orderOption === "descending" ? (a.name < b.name ? 1 : -1) : (a.name > b.name ? 1 : -1)
+        orderOption === "descending"
+          ? a.name < b.name
+            ? 1
+            : -1
+          : a.name > b.name
+          ? 1
+          : -1
       );
 
       sortedBabyaNdMomcare.sort((a, b) =>
-        orderOption === "descending" ? (a.name < b.name ? 1 : -1) : (a.name > b.name ? 1 : -1)
+        orderOption === "descending"
+          ? a.name < b.name
+            ? 1
+            : -1
+          : a.name > b.name
+          ? 1
+          : -1
       );
     }
-  
+
     // setProducts(sortedProducts);
     shop_med(sortedMeds);
     shop_heatlcare(sortedHealthcare);
     shop_homecare(sortedHomecare);
     shop_babyMoM(sortedBabyaNdMomcare);
-
   };
-  
 
   return (
     <div className="Shop-container">
-      <div className="content">
-        <h2>Shop Here</h2>
-        <p>
-          Here you can find all your necessary products of Healthcare, Home
-          Care, Baby & Mom Care, and Medicines in one place.
-        </p>
-      </div>
+      {/* Show categories only on the main shop page */}
+      {isBaseRoute && (
+        <>
+          <div className="content">
+            <h2>Shop Here</h2>
+            <p>
+              Here you can find all your necessary products of Healthcare, Home
+              Care, Baby & Mom Care, and Medicines in one place.
+            </p>
+          </div>
 
-      {/* Dropdowns for sorting */}
-      <div className="dropdown-container">
-        <div className="sort-container">
-          <label htmlFor="sort" className="sort-label">
-            Sort by:
-          </label>
-          <select
-            id="sort"
-            className="sort-dropdown"
-            onChange={handleSortChange}
-          >
-            <option value="">Select</option>
-            <option value="bestSales">Best Sales</option>
-            <option value="popularity">Popularity</option>
-            <option value="price">Price</option>
-          </select>
-        </div>
+          {/* Dropdowns for sorting */}
+          <div className="dropdown-container">
+            <div className="sort-container">
+              <label htmlFor="sort" className="sort-label">
+                Sort by:
+              </label>
+              <select
+                id="sort"
+                className="sort-dropdown"
+                onChange={handleSortChange}
+              >
+                <option value="">Select</option>
+                <option value="bestSales">Best Sales</option>
+                <option value="popularity">Popularity</option>
+                <option value="price">Price</option>
+              </select>
+            </div>
 
-        <div className="order-container">
-          <label htmlFor="order" className="order-label">
-            Order by:
-          </label>
-          <select
-            id="order"
-            className="order-dropdown"
-            onChange={handleOrderChange}
-          >
-            <option value="">Select</option>
-            <option value="ascending">Ascending</option>
-            <option value="descending">Descending</option>
-          </select>
-        </div>
-      </div>
+            <div className="order-container">
+              <label htmlFor="order" className="order-label">
+                Order by:
+              </label>
+              <select
+                id="order"
+                className="order-dropdown"
+                onChange={handleOrderChange}
+              >
+                <option value="">Select</option>
+                <option value="ascending">Ascending</option>
+                <option value="descending">Descending</option>
+              </select>
+            </div>
+          </div>
 
+          <div className="category-container">
+            <strong>Category</strong>
+          </div>
 
+          <section className="mt-5">
+            <div id="products-container">
+              {Products.map((product, i) => {
+                // Format the name for URL and display
+                const urlName = product.name
+                  .toLowerCase()
+                  .replace(/\s+/g, "")
+                  .replace(/_/g, "");
+                const displayName = product.name.replace(/_/g, " ");
 
+                return (
+                  <div key={i} className="products-card">
+                    <img
+                      src={product.image || "default-image.jpg"}
+                      alt={product.name}
+                      className="product-image"
+                    />
+                    <div className="products_type-info">
+                      <h3>
+                        <Link to={`/shop/${urlName}`}>{displayName}</Link>
+                      </h3>
+                      <p>{product.description}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
 
-      <div className="category-container">
-        <strong>Category</strong>
-      </div>
+          <div className="medi-container">
+            <strong>Medicines</strong>
+          </div>
 
-      <section className="mt-5">
-        <div id="products-container">
-          {Products.map((product, i) => {
-            // Format the name for URL and display
-            const urlName = product.name
-              .toLowerCase()
-              .replace(/\s+/g, "")
-              .replace(/_/g, "");
-            const displayName = product.name.replace(/_/g, " ");
+          <section className="mt-5">
+            <div id="med-container">
+              {Med.map((med, i) => {
+                // Format the name for URL and display
+                const urlName = med.name
+                  .toLowerCase()
+                  .replace(/\s+/g, "")
+                  .replace(/_/g, "");
+                const displayName = med.name.replace(/_/g, " ");
 
-            return (
-              <div key={i} className="products-card">
-                <img
-                  src={product.image || "default-image.jpg"}
-                  alt={product.name}
-                  className="product-image"
-                />
-                <div className="products_type-info">
-                  <h3>
-                    <Link to={`/${urlName}`}>{displayName}</Link>
-                  </h3>
-                  <p>{product.description}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+                return (
+                  <div key={i} className="med-card">
+                    <img
+                      src={med.image || "default-image.jpg"}
+                      alt={med.name}
+                      className="med-image"
+                    />
+                    <div className="med-info">
+                      <h3>
+                        <Link to={`/${urlName}`}>{displayName}</Link>
+                      </h3>
+                      <p>{med.Generic_Name}</p>
+                      <h4>{med.price}</h4>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
 
+          <div className="health-container">
+            <strong>HealthCare</strong>
+          </div>
 
+          <section className="mt-5">
+            <div id="healthcare_Products-container">
+              {healthcare.map((healthcare_Products, i) => {
+                // Format the name for URL and display
+                const urlName = healthcare_Products.name
+                  .toLowerCase()
+                  .replace(/\s+/g, "")
+                  .replace(/_/g, "");
+                const displayName = healthcare_Products.name.replace(/_/g, " ");
 
-      <div className="medi-container">
-        <strong>Medicines</strong>
-      </div>
+                return (
+                  <div key={i} className="healthcare_Products-card">
+                    <img
+                      src={healthcare_Products.image || "default-image.jpg"}
+                      alt={healthcare_Products.name}
+                      className="healthcare_Products-image"
+                    />
+                    <div className="healthcare_Products-info">
+                      <h3>
+                        <Link to={`/${urlName}`}>{displayName}</Link>
+                      </h3>
 
-      <section className="mt-5">
-        <div id="med-container">
-          {Med.map((med, i) => {
-            // Format the name for URL and display
-            const urlName = med.name
-              .toLowerCase()
-              .replace(/\s+/g, "")
-              .replace(/_/g, "");
-            const displayName = med.name.replace(/_/g, " ");
+                      <h4>{healthcare_Products.price}</h4>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
 
-            return (
-              <div key={i} className="med-card">
-                <img
-                  src={med.image || "default-image.jpg"}
-                  alt={med.name}
-                  className="med-image"
-                />
-                <div className="med-info">
-                  <h3>
-                    <Link to={`/${urlName}`}>{displayName}</Link>
-                  </h3>
-                  <p>{med.Generic_Name}</p>
-                  <h4>{med.price}</h4>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+          <div className="homecare-container">
+            <strong>HomeCare</strong>
+          </div>
 
+          <section className="mt-5">
+            <div id="homecare_Products-container">
+              {homecare.map((homecare_Products, i) => {
+                // Format the name for URL and display
+                const urlName = homecare_Products.name
+                  .toLowerCase()
+                  .replace(/\s+/g, "")
+                  .replace(/_/g, "");
+                const displayName = homecare_Products.name.replace(/_/g, " ");
 
+                return (
+                  <div key={i} className="homecare_Products-card">
+                    <img
+                      src={homecare_Products.image || "default-image.jpg"}
+                      alt={homecare_Products.name}
+                      className="homecare_Products-image"
+                    />
+                    <div className="homecare_Products-info">
+                      <h3>
+                        <Link to={`/${urlName}`}>{displayName}</Link>
+                      </h3>
+                      <h4>{homecare_Products.price}</h4>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
 
-      <div className="health-container">
-        <strong>HealthCare</strong>
-      </div>
+          <div className="babyANDmom-container">
+            <strong>Baby & Mom</strong>
+          </div>
 
-      <section className="mt-5">
-        <div id="healthcare_Products-container">
-          {healthcare.map((healthcare_Products, i) => {
-            // Format the name for URL and display
-            const urlName = healthcare_Products.name
-              .toLowerCase()
-              .replace(/\s+/g, "")
-              .replace(/_/g, "");
-            const displayName = healthcare_Products.name.replace(/_/g, " ");
+          <section className="mt-5">
+            <div id="babyANDmom_Products-container">
+              {baby_mom.map((babyANDmom_Products, i) => {
+                // Format the name for URL and display
+                const urlName = babyANDmom_Products.name
+                  .toLowerCase()
+                  .replace(/\s+/g, "")
+                  .replace(/_/g, "");
+                const displayName = babyANDmom_Products.name.replace(/_/g, " ");
 
-            return (
-              <div key={i} className="healthcare_Products-card">
-                <img
-                  src={healthcare_Products.image || "default-image.jpg"}
-                  alt={healthcare_Products.name}
-                  className="healthcare_Products-image"
-                />
-                <div className="healthcare_Products-info">
-                  <h3>
-                    <Link to={`/${urlName}`}>{displayName}</Link>
-                  </h3>
-                  
-                  <h4>{healthcare_Products.price}</h4>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+                return (
+                  <div key={i} className="babyANDmom_Products-card">
+                    <img
+                      src={babyANDmom_Products.image || "default-image.jpg"}
+                      alt={babyANDmom_Products.name}
+                      className="babyANDmom_Products-image"
+                    />
+                    <div className="babyANDmom_Products-info">
+                      <h3>
+                        <Link to={`/${urlName}`}>{displayName}</Link>
+                      </h3>
 
-
-      <div className="homecare-container">
-        <strong>HomeCare</strong>
-      </div>
-
-      <section className="mt-5">
-        <div id="homecare_Products-container">
-          {homecare.map((homecare_Products, i) => {
-            // Format the name for URL and display
-            const urlName = homecare_Products.name
-              .toLowerCase()
-              .replace(/\s+/g, "")
-              .replace(/_/g, "");
-            const displayName = homecare_Products.name.replace(/_/g, " ");
-
-            return (
-              <div key={i} className="homecare_Products-card">
-                <img
-                  src={homecare_Products.image || "default-image.jpg"}
-                  alt={homecare_Products.name}
-                  className="homecare_Products-image"
-                />
-                <div className="homecare_Products-info">
-                  <h3>
-                    <Link to={`/${urlName}`}>{displayName}</Link>
-                  </h3>
-                  <h4>{homecare_Products.price}</h4>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-
-      <div className="babyANDmom-container">
-        <strong>Baby & Mom</strong>
-      </div>
-
-      <section className="mt-5">
-        <div id="babyANDmom_Products-container">
-          {baby_mom.map((babyANDmom_Products, i) => {
-            // Format the name for URL and display
-            const urlName = babyANDmom_Products.name
-              .toLowerCase()
-              .replace(/\s+/g, "")
-              .replace(/_/g, "");
-            const displayName = babyANDmom_Products.name.replace(/_/g, " ");
-
-            return (
-              <div key={i} className="babyANDmom_Products-card">
-                <img
-                  src={babyANDmom_Products.image || "default-image.jpg"}
-                  alt={babyANDmom_Products.name}
-                  className="babyANDmom_Products-image"
-                />
-                <div className="babyANDmom_Products-info">
-                  <h3>
-                    <Link to={`/${urlName}`}>{displayName}</Link>
-                  </h3>
-                 
-                  <h4>{babyANDmom_Products.price}</h4>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-
+                      <h4>{babyANDmom_Products.price}</h4>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        </>
+      )}
+      <Outlet />
     </div>
   );
 };
