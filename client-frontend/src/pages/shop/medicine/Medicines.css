@@ -1,0 +1,206 @@
+/* Dropdown Containers */
+.dropdown-container {
+  display: flex;
+  justify-content: space-between; /* Align dropdowns to left and right */
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.sort-container {
+  display: flex;
+  /* flex-direction: column; Stack items vertically */
+  align-items: center; /* Align to the left */
+  /* margin-bottom: 1rem; Add spacing below */
+}
+
+.order-container {
+  display: flex;
+  align-items: center;
+}
+
+.sort-label {
+  font-size: 1rem;
+  color: #2c3e50;
+  margin-right: 0.5rem; /* Space below Sort by */
+}
+
+.order-label {
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+.sort-dropdown {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #d9eaf2;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #2c3e50;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  margin-bottom: 0.5rem; /* Space below Dropdown */
+}
+.order-dropdown {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #d9eaf2;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  color: #2c3e50;
+  cursor: pointer;
+}
+
+.sort-dropdown:focus {
+  outline: none;
+  border-color: #006bb3;
+}
+.order-dropdown:focus {
+  outline: none;
+  border-color: #006bb3;
+}
+
+.med-container {
+  margin-top: 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Centering the Grid & Adding Space on Both Sides */
+#med-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Always 4 columns */
+  gap: 1.5rem; /* Spacing between cards */
+  justify-content: center;
+  padding: 1rem;
+  max-width: 1200px; /* Limit width to keep space on both sides */
+  margin: 0 auto; /* Center the grid horizontally */
+}
+
+/* Individual Card Styling */
+.med-card {
+  background-color: #d9d9d9; /* Matches Home.css */
+  border: 1px solid #c8c5c5;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Pushes text to the right */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%; /* Make sure cards take full space in columns */
+  max-width: 240px; /* Limit card width for a neat look */
+  margin: auto; /* Center the cards */
+  height: 150px;
+}
+
+.med-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Image Styling (Left Side) */
+.med-image {
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-right: auto; /* Push image to the left */
+}
+
+/* Info Section (Text Right, Image Left) */
+.med-info {
+  text-align: right;
+  flex: 1;
+  padding-left: 1rem;
+}
+
+/* Product Name */
+.med-info h3 {
+  color: #006bb3;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Price */
+.med-info h4 {
+  color: #003c64;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+/* Generic Name */
+.med-info p {
+  color: #4a6c81;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  #med-container {
+    grid-template-columns: repeat(
+      3,
+      1fr
+    ); /* 3 cards per row on medium screens */
+    max-width: 900px; /* Adjust width to maintain spacing */
+  }
+}
+
+@media (max-width: 768px) {
+  #med-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on tablets */
+    max-width: 600px; /* Keep spacing */
+  }
+
+  .med-card {
+    padding: 1rem;
+  }
+
+  .med-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .med-info h3 {
+    font-size: 1.1rem;
+  }
+
+  .med-info h4 {
+    font-size: 0.9rem;
+  }
+
+  .med-info p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #med-container {
+    grid-template-columns: repeat(1, 1fr); /* 1 card per row on small screens */
+    max-width: 350px; /* Keep centered */
+  }
+
+  .med-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .med-info {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .med-image {
+    margin: 0 auto;
+  }
+}

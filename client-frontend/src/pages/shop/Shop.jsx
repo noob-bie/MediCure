@@ -6,30 +6,30 @@ import { Home_Care_link, Baby_Mom_Care_link, Medicine_link } from "./link.jsx";
 const Products_type = [
   {
     name: "Baby & Mom Care",
-    description: "Care Comes to You",
+    description: "Nurture for Moms and Little ones",
     image: Baby_Mom_Care_link,
   },
 
   {
     name: "Healthcare",
-    description: "Care Comes to You",
+    description: "Essential Healthcare Wellness and Vitality",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdckwZSGAFtD6SqoOZA-QUOSRuY_Sob7paMg&s",
   },
   {
     name: "Home Care",
-    description: "Care Comes to You",
+    description: "Healty Solution for Every Home",
     image: Home_Care_link,
   },
 
   {
     name: "Medicines",
-    description: "Care Comes to You",
+    description: "Reliable medications for being healthy and protected.",
     image: Medicine_link,
   },
 ];
 
-const med = [
+const goods = [
   {
     name: " Napa (500mg)",
     Generic_Name: "Paracetamol",
@@ -114,256 +114,52 @@ const med = [
   },
 ];
 
-const healthcare_Products = [
-  {
-    name: " Napa (500mg)",
-    price: "৳30",
-    image:
-      "https://epharma.com.bd/storage/app/public/YAc63qF4DRdd4GParo03FyE17vVRCKEFFZc2eGoi.webp",
-  },
-  {
-    name: " Ace (500mg)",
-    price: "৳12",
-    image:
-      "https://medeasy.health/_next/image?url=https://api.medeasy.health/media/medicines/ace-500-mg.jpg&w=750&q=75",
-  },
-  {
-    name: "Losectil (20mg)",
-    price: "৳60",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8xMDg5MVwvMTA4OTEtbG9zZWN0aWwtMjAtQ2FwLWNvcHkta3BhMHF6LmpwZWciLCJlZGl0cyI6W119",
-  },
-  {
-    name: "Maxpro (20mg)",
-    price: "৳60",
-    image:
-      "https://medex.com.bd/storage/images/packaging/maxpro-20-mg-tablet-11414064409-i1-pVhK0C8pZNFoIMztwlWS.jpg",
-  },
-  {
-    name: "Alatrol (10 mg)",
-    price: "৳25",
-    image:
-      "https://medex.com.bd/storage/images/packaging/alatrol-10-mg-tablet-59253519459-i1-OXgsEr7yWZ4WnGge2aGp.jpg",
-  },
-  {
-    name: "Isentin M (2.5mg + 500 mg)",
-    price: "৳50",
-    image: "https://www.hplbd.com/products/Isentin_M.jpg",
-  },
-  {
-    name: "Losium (50mg)",
-    price: "৳70",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8xMDkwOFwvMTA5MDgtTG9zaXVtLTUwLWNvcHktdHJidTVnLmpwZWciLCJlZGl0cyI6W119",
-  },
-  {
-    name: " Anzitor (10mg)",
-    price: "৳90",
-    image:
-      "https://medex.com.bd/storage/images/packaging/anzitor-10-mg-tablet-72972527143-i1-WpHt9POqX2ML6NCWDQMN.webp",
-  },
-  {
-    name: "Avloclav (250 mg+125 mg)",
-    price: "৳100",
-    image: "https://www.acipharma.net/assets/images/products/avloclave-sus.jpg",
-  },
-  {
-    name: "Azicin (250mg)",
-    price: "৳120",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8yMDk5XC8yMDk5LUF6aXRob2Npbi0yNTAtY29weS1ja3o1NjAuanBlZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MzAwLCJoZWlnaHQiOjMwMCwiZml0Ijoib3V0c2lkZSJ9fX0=",
-  },
-  {
-    name: "Saline",
-    price: "৳15",
-    image:
-      "https://medex.com.bd/storage/images/packaging/orsaline-n-1025-gm-powder-76097023982-i1-qf6Cczs1KJaSziGlKNZY.webp",
-  },
-  {
-    name: "Ceevit(250 mg)",
-    price: "৳40",
-    image:
-      "https://medeasy.health/_next/image?url=https%3A%2F%2Fapi.medeasy.health%2Fmedia%2Fmedicines%2Fmedeasy_ceevit_250.jpg&w=750&q=75",
-  },
-];
-
-const homecare_Products = [
-  {
-    name: " Napa (500mg)",
-    price: "৳30",
-    image:
-      "https://epharma.com.bd/storage/app/public/YAc63qF4DRdd4GParo03FyE17vVRCKEFFZc2eGoi.webp",
-  },
-  {
-    name: " Ace (500mg)",
-    price: "৳12",
-    image:
-      "https://medeasy.health/_next/image?url=https://api.medeasy.health/media/medicines/ace-500-mg.jpg&w=750&q=75",
-  },
-  {
-    name: "Losectil (20mg)",
-    price: "৳60",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8xMDg5MVwvMTA4OTEtbG9zZWN0aWwtMjAtQ2FwLWNvcHkta3BhMHF6LmpwZWciLCJlZGl0cyI6W119",
-  },
-  {
-    name: "Maxpro (20mg)",
-    price: "৳60",
-    image:
-      "https://medex.com.bd/storage/images/packaging/maxpro-20-mg-tablet-11414064409-i1-pVhK0C8pZNFoIMztwlWS.jpg",
-  },
-  {
-    name: "Alatrol (10 mg)",
-    price: "৳25",
-    image:
-      "https://medex.com.bd/storage/images/packaging/alatrol-10-mg-tablet-59253519459-i1-OXgsEr7yWZ4WnGge2aGp.jpg",
-  },
-  {
-    name: "Isentin M (2.5mg + 500 mg)",
-    price: "৳50",
-    image: "https://www.hplbd.com/products/Isentin_M.jpg",
-  },
-  {
-    name: "Losium (50mg)",
-    price: "৳70",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8xMDkwOFwvMTA5MDgtTG9zaXVtLTUwLWNvcHktdHJidTVnLmpwZWciLCJlZGl0cyI6W119",
-  },
-  {
-    name: " Anzitor (10mg)",
-    price: "৳90",
-    image:
-      "https://medex.com.bd/storage/images/packaging/anzitor-10-mg-tablet-72972527143-i1-WpHt9POqX2ML6NCWDQMN.webp",
-  },
-  {
-    name: "Avloclav (250 mg+125 mg)",
-    price: "৳100",
-    image: "https://www.acipharma.net/assets/images/products/avloclave-sus.jpg",
-  },
-  {
-    name: "Azicin (250mg)",
-    price: "৳120",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8yMDk5XC8yMDk5LUF6aXRob2Npbi0yNTAtY29weS1ja3o1NjAuanBlZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MzAwLCJoZWlnaHQiOjMwMCwiZml0Ijoib3V0c2lkZSJ9fX0=",
-  },
-  {
-    name: "Saline",
-    price: "৳15",
-    image:
-      "https://medex.com.bd/storage/images/packaging/orsaline-n-1025-gm-powder-76097023982-i1-qf6Cczs1KJaSziGlKNZY.webp",
-  },
-  {
-    name: "Ceevit(250 mg)",
-    price: "৳40",
-    image:
-      "https://medeasy.health/_next/image?url=https%3A%2F%2Fapi.medeasy.health%2Fmedia%2Fmedicines%2Fmedeasy_ceevit_250.jpg&w=750&q=75",
-  },
-];
-
-const babyANDmom_Products = [
-  {
-    name: " Napa (500mg)",
-    price: "৳30",
-    image:
-      "https://epharma.com.bd/storage/app/public/YAc63qF4DRdd4GParo03FyE17vVRCKEFFZc2eGoi.webp",
-  },
-  {
-    name: " Ace (500mg)",
-    price: "৳12",
-    image:
-      "https://medeasy.health/_next/image?url=https://api.medeasy.health/media/medicines/ace-500-mg.jpg&w=750&q=75",
-  },
-  {
-    name: "Losectil (20mg)",
-    price: "৳60",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8xMDg5MVwvMTA4OTEtbG9zZWN0aWwtMjAtQ2FwLWNvcHkta3BhMHF6LmpwZWciLCJlZGl0cyI6W119",
-  },
-  {
-    name: "Maxpro (20mg)",
-    price: "৳60",
-    image:
-      "https://medex.com.bd/storage/images/packaging/maxpro-20-mg-tablet-11414064409-i1-pVhK0C8pZNFoIMztwlWS.jpg",
-  },
-  {
-    name: "Alatrol (10 mg)",
-    price: "৳25",
-    image:
-      "https://medex.com.bd/storage/images/packaging/alatrol-10-mg-tablet-59253519459-i1-OXgsEr7yWZ4WnGge2aGp.jpg",
-  },
-  {
-    name: "Isentin M (2.5mg + 500 mg)",
-    price: "৳50",
-    image: "https://www.hplbd.com/products/Isentin_M.jpg",
-  },
-  {
-    name: "Losium (50mg)",
-    price: "৳70",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8xMDkwOFwvMTA5MDgtTG9zaXVtLTUwLWNvcHktdHJidTVnLmpwZWciLCJlZGl0cyI6W119",
-  },
-  {
-    name: " Anzitor (10mg)",
-    price: "৳90",
-    image:
-      "https://medex.com.bd/storage/images/packaging/anzitor-10-mg-tablet-72972527143-i1-WpHt9POqX2ML6NCWDQMN.webp",
-  },
-  {
-    name: "Avloclav (250 mg+125 mg)",
-    price: "৳100",
-    image: "https://www.acipharma.net/assets/images/products/avloclave-sus.jpg",
-  },
-  {
-    name: "Azicin (250mg)",
-    price: "৳120",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8yMDk5XC8yMDk5LUF6aXRob2Npbi0yNTAtY29weS1ja3o1NjAuanBlZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MzAwLCJoZWlnaHQiOjMwMCwiZml0Ijoib3V0c2lkZSJ9fX0=",
-  },
-  {
-    name: "Saline",
-    price: "৳15",
-    image:
-      "https://medex.com.bd/storage/images/packaging/orsaline-n-1025-gm-powder-76097023982-i1-qf6Cczs1KJaSziGlKNZY.webp",
-  },
-  {
-    name: "Ceevit(250 mg)",
-    price: "৳40",
-    image:
-      "https://medeasy.health/_next/image?url=https%3A%2F%2Fapi.medeasy.health%2Fmedia%2Fmedicines%2Fmedeasy_ceevit_250.jpg&w=750&q=75",
-  },
-];
-
 const Shop = () => {
   const [Products, setProducts] = useState([]);
   const [sortOption, setSortOption] = useState("");
   const [orderOption, setOrderOption] = useState("");
-  const [Med, shop_med] = useState([]);
-  const [healthcare, shop_heatlcare] = useState([]);
-  const [homecare, shop_homecare] = useState([]);
-  const [baby_mom, shop_babyMoM] = useState([]);
+  const [Goods, shop_goods] = useState([]);
+
   const location = useLocation();
 
   // Check if we are at the base route or a sub-route
   const isBaseRoute = location.pathname === "/shop";
+
+  // Define content based on the URL path
+  const pageContent = {
+    "/shop/medicines": {
+      title: "Welcome to the realm of Medicines",
+      description: "Find Your all emergency medicines here.",
+    },
+    "/shop/homecare": {
+      title: "Homecare Essentials",
+      description: "All your homecare needs in one place.",
+    },
+    "/shop/healthcare": {
+      title: "Healthcare Products",
+      description: "Your health, our priority.",
+    },
+    "/shop/baby&momcare": {
+      title: "Baby & Mom Care",
+      description: "Best products for moms and babies.",
+    },
+  };
+  // Default shop content
+  const defaultContent = {
+    title: "Shop Here",
+    description:
+      "Here you can find all your necessary products of Healthcare, Home Care, Baby & Mom Care, and Medicines in one place.",
+  };
+
+  // Determine content based on the current route
+  const content = pageContent[location.pathname] || defaultContent;
 
   useEffect(() => {
     setProducts(Products_type);
   }, []);
 
   useEffect(() => {
-    shop_med(med);
-  }, []);
-
-  useEffect(() => {
-    shop_heatlcare(healthcare_Products);
-  }, []);
-
-  useEffect(() => {
-    shop_homecare(homecare_Products);
-  }, []);
-
-  useEffect(() => {
-    shop_babyMoM(babyANDmom_Products);
+    shop_goods(goods);
   }, []);
 
   // Handle sort option change
@@ -396,108 +192,26 @@ const Shop = () => {
 
   // Function to apply sorting based on current options
   const applySortingAndOrdering = (sortOption, orderOption) => {
-    // let sortedProducts = [...Products];
-    let sortedMeds = [...Med];
-    let sortedHealthcare = [...healthcare];
-    let sortedHomecare = [...homecare];
-    let sortedBabyaNdMomcare = [...baby_mom];
+    let sortedGoods = [...Goods];
 
     if (sortOption === "bestSales") {
-      // sortedProducts.sort((a, b) => (orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales));
-      sortedMeds.sort((a, b) =>
-        orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales
-      );
-      sortedHealthcare.sort((a, b) =>
-        orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales
-      );
-      sortedHomecare.sort((a, b) =>
-        orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales
-      );
-      sortedBabyaNdMomcare.sort((a, b) =>
+      sortedGoods.sort((a, b) =>
         orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales
       );
     } else if (sortOption === "popularity") {
-      // sortedProducts.sort((a, b) => (orderOption === "descending" ? b.popularity - a.popularity : a.popularity - b.popularity));
-      sortedMeds.sort((a, b) =>
-        orderOption === "descending"
-          ? b.popularity - a.popularity
-          : a.popularity - b.popularity
-      );
-      sortedHealthcare.sort((a, b) =>
-        orderOption === "descending"
-          ? b.popularity - a.popularity
-          : a.popularity - b.popularity
-      );
-      sortedHomecare.sort((a, b) =>
-        orderOption === "descending"
-          ? b.popularity - a.popularity
-          : a.popularity - b.popularity
-      );
-      sortedBabyaNdMomcare.sort((a, b) =>
+      sortedGoods.sort((a, b) =>
         orderOption === "descending"
           ? b.popularity - a.popularity
           : a.popularity - b.popularity
       );
     } else if (sortOption === "price") {
-      sortedMeds.sort((a, b) => {
-        let priceA = parseFloat(a.price.replace("৳", "").trim()) || 0;
-        let priceB = parseFloat(b.price.replace("৳", "").trim()) || 0;
-        return orderOption === "descending" ? priceB - priceA : priceA - priceB;
-      });
-
-      sortedHealthcare.sort((a, b) => {
-        let priceA = parseFloat(a.price.replace("৳", "").trim()) || 0;
-        let priceB = parseFloat(b.price.replace("৳", "").trim()) || 0;
-        return orderOption === "descending" ? priceB - priceA : priceA - priceB;
-      });
-
-      sortedHomecare.sort((a, b) => {
-        let priceA = parseFloat(a.price.replace("৳", "").trim()) || 0;
-        let priceB = parseFloat(b.price.replace("৳", "").trim()) || 0;
-        return orderOption === "descending" ? priceB - priceA : priceA - priceB;
-      });
-
-      sortedBabyaNdMomcare.sort((a, b) => {
+      sortedGoods.sort((a, b) => {
         let priceA = parseFloat(a.price.replace("৳", "").trim()) || 0;
         let priceB = parseFloat(b.price.replace("৳", "").trim()) || 0;
         return orderOption === "descending" ? priceB - priceA : priceA - priceB;
       });
     } else {
-      // Default: Sort by name
-      // sortedProducts.sort((a, b) =>
-      //   orderOption === "descending" ? (a.name < b.name ? 1 : -1) : (a.name > b.name ? 1 : -1)
-      // );
-      sortedMeds.sort((a, b) =>
-        orderOption === "descending"
-          ? a.name < b.name
-            ? 1
-            : -1
-          : a.name > b.name
-          ? 1
-          : -1
-      );
-
-      sortedHealthcare.sort((a, b) =>
-        orderOption === "descending"
-          ? a.name < b.name
-            ? 1
-            : -1
-          : a.name > b.name
-          ? 1
-          : -1
-      );
-
-      sortedHomecare.sort((a, b) =>
-        orderOption === "descending"
-          ? a.name < b.name
-            ? 1
-            : -1
-          : a.name > b.name
-          ? 1
-          : -1
-      );
-
-      sortedBabyaNdMomcare.sort((a, b) =>
+      sortedGoods.sort((a, b) =>
         orderOption === "descending"
           ? a.name < b.name
             ? 1
@@ -509,25 +223,18 @@ const Shop = () => {
     }
 
     // setProducts(sortedProducts);
-    shop_med(sortedMeds);
-    shop_heatlcare(sortedHealthcare);
-    shop_homecare(sortedHomecare);
-    shop_babyMoM(sortedBabyaNdMomcare);
+    shop_goods(sortedGoods);
   };
 
   return (
     <div className="Shop-container">
+      <div className="content">
+        <h2>{content.title}</h2>
+        <p>{content.description}</p>
+      </div>
       {/* Show categories only on the main shop page */}
       {isBaseRoute && (
         <>
-          <div className="content">
-            <h2>Shop Here</h2>
-            <p>
-              Here you can find all your necessary products of Healthcare, Home
-              Care, Baby & Mom Care, and Medicines in one place.
-            </p>
-          </div>
-
           {/* Dropdowns for sorting */}
           <div className="dropdown-container">
             <div className="sort-container">
@@ -595,134 +302,33 @@ const Shop = () => {
             </div>
           </section>
 
-          <div className="medi-container">
-            <strong>Medicines</strong>
+          <div className="goods-container">
+            <strong>Find Your Daily Necessaries </strong>
           </div>
 
           <section className="mt-5">
-            <div id="med-container">
-              {Med.map((med, i) => {
+            <div id="goods-container">
+              {Goods.map((goods, i) => {
                 // Format the name for URL and display
-                const urlName = med.name
+                const urlName = goods.name
                   .toLowerCase()
                   .replace(/\s+/g, "")
                   .replace(/_/g, "");
-                const displayName = med.name.replace(/_/g, " ");
+                const displayName = goods.name.replace(/_/g, " ");
 
                 return (
-                  <div key={i} className="med-card">
+                  <div key={i} className="goods-card">
                     <img
-                      src={med.image || "default-image.jpg"}
-                      alt={med.name}
-                      className="med-image"
+                      src={goods.image || "default-image.jpg"}
+                      alt={goods.name}
+                      className="goods-image"
                     />
-                    <div className="med-info">
+                    <div className="goods-info">
                       <h3>
                         <Link to={`/${urlName}`}>{displayName}</Link>
                       </h3>
-                      <p>{med.Generic_Name}</p>
-                      <h4>{med.price}</h4>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-
-          <div className="health-container">
-            <strong>HealthCare</strong>
-          </div>
-
-          <section className="mt-5">
-            <div id="healthcare_Products-container">
-              {healthcare.map((healthcare_Products, i) => {
-                // Format the name for URL and display
-                const urlName = healthcare_Products.name
-                  .toLowerCase()
-                  .replace(/\s+/g, "")
-                  .replace(/_/g, "");
-                const displayName = healthcare_Products.name.replace(/_/g, " ");
-
-                return (
-                  <div key={i} className="healthcare_Products-card">
-                    <img
-                      src={healthcare_Products.image || "default-image.jpg"}
-                      alt={healthcare_Products.name}
-                      className="healthcare_Products-image"
-                    />
-                    <div className="healthcare_Products-info">
-                      <h3>
-                        <Link to={`/${urlName}`}>{displayName}</Link>
-                      </h3>
-
-                      <h4>{healthcare_Products.price}</h4>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-
-          <div className="homecare-container">
-            <strong>HomeCare</strong>
-          </div>
-
-          <section className="mt-5">
-            <div id="homecare_Products-container">
-              {homecare.map((homecare_Products, i) => {
-                // Format the name for URL and display
-                const urlName = homecare_Products.name
-                  .toLowerCase()
-                  .replace(/\s+/g, "")
-                  .replace(/_/g, "");
-                const displayName = homecare_Products.name.replace(/_/g, " ");
-
-                return (
-                  <div key={i} className="homecare_Products-card">
-                    <img
-                      src={homecare_Products.image || "default-image.jpg"}
-                      alt={homecare_Products.name}
-                      className="homecare_Products-image"
-                    />
-                    <div className="homecare_Products-info">
-                      <h3>
-                        <Link to={`/${urlName}`}>{displayName}</Link>
-                      </h3>
-                      <h4>{homecare_Products.price}</h4>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-
-          <div className="babyANDmom-container">
-            <strong>Baby & Mom</strong>
-          </div>
-
-          <section className="mt-5">
-            <div id="babyANDmom_Products-container">
-              {baby_mom.map((babyANDmom_Products, i) => {
-                // Format the name for URL and display
-                const urlName = babyANDmom_Products.name
-                  .toLowerCase()
-                  .replace(/\s+/g, "")
-                  .replace(/_/g, "");
-                const displayName = babyANDmom_Products.name.replace(/_/g, " ");
-
-                return (
-                  <div key={i} className="babyANDmom_Products-card">
-                    <img
-                      src={babyANDmom_Products.image || "default-image.jpg"}
-                      alt={babyANDmom_Products.name}
-                      className="babyANDmom_Products-image"
-                    />
-                    <div className="babyANDmom_Products-info">
-                      <h3>
-                        <Link to={`/${urlName}`}>{displayName}</Link>
-                      </h3>
-
-                      <h4>{babyANDmom_Products.price}</h4>
+                      <p>{goods.Generic_Name}</p>
+                      <h4>{goods.price}</h4>
                     </div>
                   </div>
                 );
