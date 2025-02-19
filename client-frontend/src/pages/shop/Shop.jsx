@@ -3,7 +3,8 @@ import "./Shop.css";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { Home_Care_link, Baby_Mom_Care_link, Medicine_link } from "./link.jsx";
 
-const Products_type = [
+
+const Category_type = [
   {
     name: "Baby & Mom Care",
     description: "Nurture for Moms and Little ones",
@@ -113,9 +114,9 @@ const goods = [
       "https://medeasy.health/_next/image?url=https%3A%2F%2Fapi.medeasy.health%2Fmedia%2Fmedicines%2Fmedeasy_ceevit_250.jpg&w=750&q=75",
   },
 ];
-
+export {goods};
 const Shop = () => {
-  const [Products, setProducts] = useState([]);
+  const [Category, setCategory] = useState([]);
   const [sortOption, setSortOption] = useState("");
   const [orderOption, setOrderOption] = useState("");
   const [Goods, shop_goods] = useState([]);
@@ -155,7 +156,7 @@ const Shop = () => {
   const content = pageContent[location.pathname] || defaultContent;
 
   useEffect(() => {
-    setProducts(Products_type);
+    setCategory(Category_type);
   }, []);
 
   useEffect(() => {
@@ -274,27 +275,27 @@ const Shop = () => {
           </div>
 
           <section className="mt-5">
-            <div id="products-container">
-              {Products.map((product, i) => {
+            <div id="Category-container">
+              {Category.map((category, i) => {
                 // Format the name for URL and display
-                const urlName = product.name
+                const urlName = category.name
                   .toLowerCase()
                   .replace(/\s+/g, "")
                   .replace(/_/g, "");
-                const displayName = product.name.replace(/_/g, " ");
+                const displayName = category.name.replace(/_/g, " ");
 
                 return (
-                  <div key={i} className="products-card">
+                  <div key={i} className="category-card">
                     <img
-                      src={product.image || "default-image.jpg"}
-                      alt={product.name}
-                      className="product-image"
+                      src={category.image || "default-image.jpg"}
+                      alt={category.name}
+                      className="category-image"
                     />
-                    <div className="products_type-info">
+                    <div className="category_type-info">
                       <h3>
                         <Link to={`/shop/${urlName}`}>{displayName}</Link>
                       </h3>
-                      <p>{product.description}</p>
+                      <p>{category.description}</p>
                     </div>
                   </div>
                 );
