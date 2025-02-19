@@ -203,7 +203,7 @@ const Homecare = () => {
                 />
                 <div className="homecare_Products-info">
                   <h3>
-                    <Link to={`/${urlName}`}>{displayName}</Link>
+                    <Link to={`/shop/homecare/${urlName}`}>{displayName}</Link>
                   </h3>
                   <h4>{homecare_Products.price}</h4>
                 </div>

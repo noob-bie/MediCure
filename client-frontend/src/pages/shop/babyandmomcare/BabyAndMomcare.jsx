@@ -202,7 +202,7 @@ const BabyAndMomcare = () => {
                 />
                 <div className="babyANDmom_Products-info">
                   <h3>
-                    <Link to={`/${urlName}`}>{displayName}</Link>
+                    <Link to={`/shop/baby&momcare/${urlName}`}>{displayName}</Link>
                   </h3>
 
                   <h4>{babyANDmom_Products.price}</h4>

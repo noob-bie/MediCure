@@ -206,7 +206,7 @@ const Healthcare = () => {
                 />
                 <div className="healthcare_Products-info">
                   <h3>
-                    <Link to={`/${urlName}`}>{displayName}</Link>
+                    <Link to={`/shop/healthcare/${urlName}`}>{displayName}</Link>
                   </h3>
 
                   <h4>{healthcare_Products.price}</h4>

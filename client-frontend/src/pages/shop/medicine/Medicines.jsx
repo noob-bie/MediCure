@@ -130,13 +130,11 @@ const Medicines = () => {
     let sortedMeds = [...Med];
 
     if (sortOption === "bestSales") {
-      // sortedProducts.sort((a, b) => (orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales));
-      sortedMeds.sort((a, b) =>
+ sortedMeds.sort((a, b) =>
         orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales
       );
     } else if (sortOption === "popularity") {
-      // sortedProducts.sort((a, b) => (orderOption === "descending" ? b.popularity - a.popularity : a.popularity - b.popularity));
-      sortedMeds.sort((a, b) =>
+   sortedMeds.sort((a, b) =>
         orderOption === "descending"
           ? b.popularity - a.popularity
           : a.popularity - b.popularity
@@ -148,10 +146,6 @@ const Medicines = () => {
         return orderOption === "descending" ? priceB - priceA : priceA - priceB;
       });
     } else {
-      // Default: Sort by name
-      // sortedProducts.sort((a, b) =>
-      //   orderOption === "descending" ? (a.name < b.name ? 1 : -1) : (a.name > b.name ? 1 : -1)
-      // );
       sortedMeds.sort((a, b) =>
         orderOption === "descending"
           ? a.name < b.name
@@ -223,7 +217,7 @@ const Medicines = () => {
                 />
                 <div className="med-info">
                   <h3>
-                    <Link to={`/${urlName}`}>{displayName}</Link>
+                    <Link to={`/shop/medicines/${urlName}`}>{displayName}</Link>
                   </h3>
                   <p>{med.Generic_Name}</p>
                   <h4>{med.price}</h4>
@@ -234,12 +228,6 @@ const Medicines = () => {
         </div>
       </section>
     </div>
-
-    /**
-
-
-
- */
   );
 };
 

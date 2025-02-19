@@ -325,7 +325,7 @@ const Shop = () => {
                     />
                     <div className="goods-info">
                       <h3>
-                        <Link to={`/${urlName}`}>{displayName}</Link>
+                        <Link to={`/shop/${urlName}`}>{displayName}</Link>
                       </h3>
                       <p>{goods.Generic_Name}</p>
                       <h4>{goods.price}</h4>

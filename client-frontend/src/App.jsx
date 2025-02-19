@@ -14,6 +14,7 @@ import Healthcare from "./pages/shop/healthcare/Healthcare";
 import Homecare from "./pages/shop/homecare/Homecare";
 import Medicines from "./pages/shop/medicine/Medicines";
 import BabyAndMomcare from "./pages/shop/babyandmomcare/BabyAndMomcare";
+import SingleProduct from  "./pages/singleProduct/SingleProduct";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -43,6 +44,7 @@ function App() {
             { path: "homecare", element: <Homecare /> },
             { path: "medicines", element: <Medicines /> },
             { path: "baby&momcare", element: <BabyAndMomcare /> },
+            
           ],
         },
 
@@ -50,6 +52,12 @@ function App() {
         { path: "/profile", element: <Profile /> },
         { path: "/login", element: <Login /> },
         { path: "/signup", element: <Signup /> },
+        { path: "/shop/:productName", element: <SingleProduct /> },
+        { path: "/shop/baby&momcare/:productName", element: <SingleProduct /> },
+        { path: "/shop/healthcare/:productName", element: <SingleProduct /> },
+        { path: "/shop/homecare/:productName", element: <SingleProduct /> },
+        { path: "/shop/medicines/:productName", element: <SingleProduct /> },
+
         isAdmin && { path: "/admin", element: <AdminPanel /> },
       ].filter(Boolean),
     },
