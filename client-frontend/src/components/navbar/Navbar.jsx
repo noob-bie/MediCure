@@ -1,16 +1,33 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchActive, setIsSearchActive] = useState(false);
 
+  useEffect(() => {
+    // Check authentication status from localStorage
+    const authStatus = localStorage.getItem("isAuthenticated") === "true";
+    const adminStatus = localStorage.getItem("isAdmin") === "true";
+    setIsAuthenticated(authStatus);
+    setIsAdmin(adminStatus);
+  }, []);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("isAdmin");
+    setIsAuthenticated(false);
+    setIsAdmin(false);
+    navigate("/");
   };
 
   return (
@@ -46,14 +63,18 @@ const Navbar = () => {
 
         <div className="nav-right">
           {isAuthenticated ? (
-            <Link to="/profile" className="profile-icon">
-              👤
-            </Link>
+            <div className="profile-section">
+              <Link to="/profile" className="profile-icon">
+                👤 Profile
+              </Link>
+              <button className="logout-btn" onClick={handleLogout}>
+                 Logout
+              </button>
+            </div>
           ) : (
             <>
               <Link to="/login">Login</Link>
               <Link to="/signup">Signup</Link>
-             
             </>
           )}
         </div>

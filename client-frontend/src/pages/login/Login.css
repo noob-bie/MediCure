@@ -75,12 +75,25 @@
     font-size: 16px;
     background: #fff;
     cursor: pointer;
-  }
+}
   
-  .input select:focus {
+.input select:focus {
     outline: none;
     border-color: #007bff;
-  }  
+}  
+
+.forgot-password {
+    text-align: center;
+    margin-top: 15px;
+    color: #797979;
+    font-size: 16px;
+}
+
+.forgot-password span {
+    color: #478dff;
+    cursor: pointer;
+    font-weight: bold;
+}  
 
 .no-account {
     text-align: center;

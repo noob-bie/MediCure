@@ -5,8 +5,11 @@ import axiosInstance from '../../utils/axiosInstance';
 
 import person from '../../assets/images/person.png';
 import email from '../../assets/images/email.png';
-import phone from '../../assets/images/phone.png';
-import password from '../../assets/images/password.png';
+import Phone from '../../assets/images/Phone.png';
+import Password from '../../assets/images/Password.png';
+import {Link, useNavigate} from 'react-router-dom';
+import Login from '../login/Login';
+
 
 const Signup = () => {
   const [role, setRole] = useState("user");
@@ -14,17 +17,37 @@ const Signup = () => {
   const [emailValue, setEmail] = useState("");
   const [phoneValue, setPhone] = useState("");
   const [passwordValue, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  
 
   const handleSignup = async () => {
+
+    // Validation
+    if (!emailValue.includes("@")) {
+      alert("Invalid email! Email must contain '@'.");
+      return;
+    }
+    if (phoneValue.length !== 11 || isNaN(phoneValue)) {
+      alert("Phone number must be exactly 11 digits.");
+      return;
+    }
+    if (passwordValue.length < 6) {
+      alert("Password must be at least 6 characters.");
+      return;
+    }
+
+
     try {
       const response = await axiosInstance.post('/register', {
         name,
-        email: emailValue,
+        email: emailValue.toLowerCase(), //Convert to lowercase
         phone: phoneValue,
         password: passwordValue,
-        role,
+        role: "user", //Default role
       });
       alert(response.data.message);
+      navigate('/login');
     } catch (error) {
       alert("Signup failed: " + (error.response?.data?.message || "Unknown error"));
     }
@@ -38,14 +61,6 @@ const Signup = () => {
       </div>
 
       <div className="inputs">
-        {/* Role Dropdown */}
-        <div className="input">
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-          </select>
-        </div>
-
         <div className="input">
           <img src={person} alt="Person" />
           <input 
@@ -61,11 +76,11 @@ const Signup = () => {
           placeholder="Email Id" 
           type="email"
           value={emailValue} 
-          onChange={(e) => setEmail(e.target.value)} 
+          onChange={(e) => setEmail(e.target.value.toLowerCase())} // Convert to lowercase
           />
         </div>
         <div className="input">
-          <img src={phone} alt="Phone" />
+          <img src={Phone} alt="Phone" />
           <input 
           placeholder="Phone Number" 
           type="text"
@@ -74,7 +89,7 @@ const Signup = () => {
           />
         </div>
         <div className="input">
-          <img src={password} alt="Password" />
+          <img src={Password} alt="Password" />
           <input 
           placeholder="Password" 
           type="password" 
@@ -85,7 +100,7 @@ const Signup = () => {
       </div>
 
       <div className="have-account">
-        Already have an account? <span>Login</span>
+        Already have an account? <Link to="/login">Login</Link>
       </div>
 
       <div className="submit-container">

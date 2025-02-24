@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Route;
     Route::get('/health-check', function () {
         return response()->json(['message' => 'Backend is running!']);
     });
+    Route::middleware(['jwt.auth'])->group(function () {
+        Route::get('/profile', [UserController::class, 'profile']);
+    });
+    
 
 
 
