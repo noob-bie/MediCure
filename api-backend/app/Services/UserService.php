@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Lcobucci\JWT\Signer\Key\InMemory; // Import the InMemory class
 use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Configuration;
 use DateTimeImmutable;
+
+
 
 class UserService
 {
@@ -18,8 +21,8 @@ class UserService
     public function __construct()
     {
         $this->jwtConfig = Configuration::forSymmetricSigner(
-            new Sha256(), 
-            new Key(env('JWT_SECRET')) // Load secret key from .env
+            new Sha256(),
+            InMemory::plainText(env('JWT_SECRET')) // Use InMemory::plainText
         );
     }
 
@@ -59,6 +62,26 @@ class UserService
         $token = $this->generateJwtToken($user);
 
         return ['status' => 'success', 'user' => $user, 'token' => $token];
+        // Print the token directly
+        dd($token); // This will stop execution and display the token
+
+
+        /*
+
+        http://127.0.0.1:8000/api/login
+
+
+        fetch("http://127.0.0.1:8000/api/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ phone: "01996410700", password: "123456" })
+        })
+        .then(response => response.json())
+        .then(data => console.log("Response:", data))
+        .catch(error => console.error("Error:", error));
+
+        */
+        
     }
 
     private function generateJwtToken($user)
