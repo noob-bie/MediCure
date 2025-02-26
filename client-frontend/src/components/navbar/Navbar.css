@@ -75,17 +75,35 @@
 }
 
 .nav-middle a,
-.nav-right a {
+.nav-right a,
+.logout-btn {
   font-size: 1rem;
   padding: 5px 10px;
   border-radius: 5px;
   transition: background-color 0.3s ease, color 0.3s ease;
+  text-decoration: none;
+  color: #0077b6;
+  font-weight: 600;
 }
 
 .nav-middle a:hover,
-.nav-right a:hover {
+.nav-right a:hover,
+.logout-btn:hover {
   background-color: #b2ebf2;
   color: #005f73;
+}
+
+/* Profile Section */
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-icon {
+  font-size: 1rem;
+  color: #0077b6;
+  font-weight: bold;
 }
 
 /* Responsive Design */
@@ -130,7 +148,8 @@
   }
 
   .nav-middle a,
-  .nav-right a {
+  .nav-right a,
+  .logout-btn {
     text-align: center;
     width: 100%;
   }

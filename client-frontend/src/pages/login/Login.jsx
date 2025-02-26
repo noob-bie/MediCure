@@ -1,16 +1,34 @@
 import React, { useState } from 'react';
 import './Login.css';
 import axiosInstance from '../../utils/axiosInstance';
+import {Link, useNavigate} from 'react-router-dom';
+import Signup from '../signup/Signup';
 
-import phone from '../../assets/images/phone.png';
-import password from '../../assets/images/password.png';
+import Phone from '../../assets/images/Phone.png';
+import Password from '../../assets/images/Password.png';
 
 const Login = () => {
   const [role, setRole] = useState("user"); // Default role: User
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
+
+    localStorage.setItem("isAuthenticated", "true");
+    localStorage.setItem("isAdmin", "false"); // Change this to "true" for admin users
+    navigate("/");
+
+    // Validation checks
+    if (phone.length !== 11 || isNaN(phone)) {
+      alert("Phone number must be exactly 11 digits.");
+      return;
+    }
+    if (password.length < 6) {
+      alert("Wrong password.");
+      return;
+    }
+
     try {
       const response = await axiosInstance.post('/login', {
         phone,
@@ -18,8 +36,9 @@ const Login = () => {
         role,
       });
       alert(response.data.message);
+      navigate('/');
     } catch (error) {
-      alert("Login failed: " + (error.response?.data?.message || "Unknown error"));
+      alert("Login failed: " + (error.response?.data?.message || "Invalid phone number or password."));
     }
   };
 
@@ -36,11 +55,12 @@ const Login = () => {
           <select value={role} onChange={(e) => setRole(e.target.value)}>
             <option value="user">User</option>
             <option value="admin">Admin</option>
+            <option value="delivery man">Delivery Man</option>
           </select>
         </div>
 
         <div className="input">
-          <img src={phone} alt="Phone" />
+          <img src={Phone} alt="Phone" />
           <input 
           placeholder="Phone Number" 
           type="text"
@@ -50,7 +70,7 @@ const Login = () => {
         </div>
 
         <div className="input">
-          <img src={password} alt="Password" />
+          <img src={Password} alt="Password" />
           <input placeholder="Password" 
           type="password"
           value={password} 
@@ -59,8 +79,12 @@ const Login = () => {
         </div>
       </div>
 
+      <div className="forgot-password">
+        Forgot password? <span>Click Here!</span>
+      </div>
+
       <div className="no-account">
-        Do not have an account? <span>Signup</span>
+        Do not have an account? <Link to="/signup">Signup</Link>
       </div>
 
       <div className="submit-container">
