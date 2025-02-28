@@ -32,7 +32,7 @@ class UserController extends Controller
         $result = $this->userService->loginUser($data);
 
         if ($result['status'] === 'error') {
-        return response()->json(['message' => $result['message']], 401);
+            return response()->json(['message' => $result['message']], 401);
         }
 
         return response()->json([
@@ -40,5 +40,10 @@ class UserController extends Controller
             'user' => $result['user'],
             'token' => $result['token']
         ], 200);
+    }
+
+    public function profile()
+    {
+        return response()->json(['user' => auth()->user()], 200);
     }
 }
