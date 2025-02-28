@@ -8,16 +8,12 @@ import Phone from '../../assets/images/Phone.png';
 import Password from '../../assets/images/Password.png';
 
 const Login = () => {
-  const [role, setRole] = useState("user"); // Default role: User
+  const [role, setRole] = useState("user"); 
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-
-    localStorage.setItem("isAuthenticated", "true");
-    localStorage.setItem("isAdmin", "false"); // Change this to "true" for admin users
-    navigate("/");
 
     // Validation checks
     if (phone.length !== 11 || isNaN(phone)) {
@@ -35,6 +31,11 @@ const Login = () => {
         password,
         role,
       });
+
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("userRole", response.data.user.role);
+      
       alert(response.data.message);
       navigate('/');
     } catch (error) {

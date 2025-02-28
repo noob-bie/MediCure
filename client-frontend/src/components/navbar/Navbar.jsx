@@ -5,7 +5,7 @@ import "./Navbar.css";
 const Navbar = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [userRole, setUserRole] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchActive, setIsSearchActive] = useState(false);
@@ -13,9 +13,9 @@ const Navbar = () => {
   useEffect(() => {
     // Check authentication status from localStorage
     const authStatus = localStorage.getItem("isAuthenticated") === "true";
-    const adminStatus = localStorage.getItem("isAdmin") === "true";
+    const storedRole = localStorage.getItem("userRole");
     setIsAuthenticated(authStatus);
-    setIsAdmin(adminStatus);
+    setUserRole(storedRole);
   }, []);
 
   const toggleMenu = () => {
@@ -24,9 +24,10 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("token"); // Remove token on logout
+    localStorage.removeItem("userRole"); // Remove role on logout
     setIsAuthenticated(false);
-    setIsAdmin(false);
+    setUserRole(null);
     navigate("/");
   };
 
@@ -58,7 +59,7 @@ const Navbar = () => {
         <div className="nav-middle">
           <Link to="/shop">Shop</Link>
           <Link to="/cart">Cart</Link>
-          {isAdmin && <Link to="/admin">Admin Panel</Link>}
+          {userRole === "admin" && <Link to="/admin">Admin Panel</Link>}
         </div>
 
         <div className="nav-right">
@@ -67,7 +68,10 @@ const Navbar = () => {
               <Link to="/profile" className="profile-icon">
                 👤 Profile
               </Link>
-            
+              {/* <button onClick={handleLogout} className="logout-button">
+                Logout
+              </button>{" "}
+              Added Logout button */}
             </div>
           ) : (
             <>

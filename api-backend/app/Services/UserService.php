@@ -52,9 +52,24 @@ class UserService
 
     public function loginUser(array $data)
     {
+
+        $validator = Validator::make($data, [
+            'phone' => 'required|string',
+            'password' => 'required|string',
+            'role' => 'required|string|in:user,admin,delivery man' // Validate role (Action 2 & 3)
+        ]);
+
+        if ($validator->fails()) {
+            return ['status' => 'error', 'message' => 'Validation error', 'errors' => $validator->errors()]; // More informative error
+        }
+
         $user = User::where('phone', $data['phone'])->first();
 
-        if (!$user || !Hash::check($data['password'], $user->password)) {
+        if (!$user) {
+            return ['status' => 'error', 'message' => 'Invalid credentials']; // More generic message
+        }
+
+        if (!Hash::check($data['password'], $user->password) || $user->role !== $data['role']) {
             return ['status' => 'error', 'message' => 'Invalid credentials'];
         }
 
@@ -62,9 +77,6 @@ class UserService
         $token = $this->generateJwtToken($user);
 
         return ['status' => 'success', 'user' => $user, 'token' => $token];
-        // Print the token directly
-        dd($token); // This will stop execution and display the token
-
 
         /*
 
@@ -81,7 +93,7 @@ class UserService
         .catch(error => console.error("Error:", error));
 
         */
-        
+
     }
 
     private function generateJwtToken($user)
