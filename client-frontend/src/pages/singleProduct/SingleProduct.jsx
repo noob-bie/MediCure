@@ -41,9 +41,9 @@ const SingleProduct = () => {
           <h4 className="generic-name">{product.Generic_Name}</h4>
           <h3 className="product-price">Price: {product.price}</h3>
 
-          {/* Buy Button (Moved to Right) */}
-          <div className="buy-button-container">
-            <button className="buy-button">Buy</button>
+          {/*Add_to_Cart Button (Moved to Right) */}
+          <div className="Add_to_Cart-button-container">
+            <button className="Add_to_Cart-button">Add to Cart</button>
           </div>
         </div>
       </div>

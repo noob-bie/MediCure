@@ -67,21 +67,6 @@
     padding-left: 10px;
 }
 
-.input select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    background: #fff;
-    cursor: pointer;
-  }
-  
-  .input select:focus {
-    outline: none;
-    border-color: #007bff;
-  }  
-
 .have-account {
     text-align: center;
     margin-top: 15px;
@@ -89,10 +74,20 @@
     font-size: 16px;
 }
 
-.have-account span {
+/*.have-account span {
     color: #478dff;
     cursor: pointer;
     font-weight: bold;
+}*/
+
+.have-account a {
+    color: #478dff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.have-account a:hover {
+    text-decoration: underline;
 }
 
 .submit-container {
