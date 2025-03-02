@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
-import defaultAvatar from "../../assets/images/defaultAvatar.png";
+import download from "../../assets/images/download.png";
 
 const Profile = () => {
   const [profileData, setProfileData] = useState(null);
@@ -67,7 +67,7 @@ const Profile = () => {
       <div className="profile-card">
         <div className="profile-header">
           <img
-            src={defaultAvatar}
+            src={download}
             alt="Default Avatar"
             className="profile-avatar"
           />
