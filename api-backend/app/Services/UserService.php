@@ -111,4 +111,7 @@ class UserService
             ->getToken($this->jwtConfig->signer(), $this->jwtConfig->signingKey())
             ->toString();
     }
+    public function getJwtConfig() {
+        return $this->jwtConfig;
+    }
 }

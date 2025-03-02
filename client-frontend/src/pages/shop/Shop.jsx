@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./Shop.css";
-import { Outlet, Link, useLocation } from "react-router-dom";
+import { Outlet, Link, useLocation,useParams } from "react-router-dom";
 import { Home_Care_link, Baby_Mom_Care_link, Medicine_link } from "./link.jsx";
+import axiosInstance from "../../utils/axiosInstance.js";
 
 
 const Category_type = [
@@ -30,98 +31,19 @@ const Category_type = [
   },
 ];
 
-const goods = [
-  {
-    name: " Napa (500mg)",
-    Generic_Name: "Paracetamol",
-    price: "৳30",
-    image:
-      "https://epharma.com.bd/storage/app/public/YAc63qF4DRdd4GParo03FyE17vVRCKEFFZc2eGoi.webp",
-  },
-  {
-    name: " Ace (500mg)",
-    Generic_Name: "Paracetamol",
-    price: "৳12",
-    image:
-      "https://medeasy.health/_next/image?url=https://api.medeasy.health/media/medicines/ace-500-mg.jpg&w=750&q=75",
-  },
-  {
-    name: "Losectil (20mg)",
-    Generic_Name: "Omeprazole ",
-    price: "৳60",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8xMDg5MVwvMTA4OTEtbG9zZWN0aWwtMjAtQ2FwLWNvcHkta3BhMHF6LmpwZWciLCJlZGl0cyI6W119",
-  },
-  {
-    name: "Maxpro (20mg)",
-    Generic_Name: "Esomoprazole ",
-    price: "৳60",
-    image:
-      "https://medex.com.bd/storage/images/packaging/maxpro-20-mg-tablet-11414064409-i1-pVhK0C8pZNFoIMztwlWS.jpg",
-  },
-  {
-    name: "Alatrol (10 mg)",
-    Generic_Name: "Cetirizine",
-    price: "৳25",
-    image:
-      "https://medex.com.bd/storage/images/packaging/alatrol-10-mg-tablet-59253519459-i1-OXgsEr7yWZ4WnGge2aGp.jpg",
-  },
-  {
-    name: "Isentin M (2.5mg + 500 mg)",
-    Generic_Name: "Linagliptin + Metformin Hydrochloride",
-    price: "৳50",
-    image: "https://www.hplbd.com/products/Isentin_M.jpg",
-  },
-  {
-    name: "Losium (50mg)",
-    Generic_Name: "Losartan Potassium",
-    price: "৳70",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8xMDkwOFwvMTA5MDgtTG9zaXVtLTUwLWNvcHktdHJidTVnLmpwZWciLCJlZGl0cyI6W119",
-  },
-  {
-    name: " Anzitor (10mg)",
-    Generic_Name: "Atorvastatin Calcium",
-    price: "৳90",
-    image:
-      "https://medex.com.bd/storage/images/packaging/anzitor-10-mg-tablet-72972527143-i1-WpHt9POqX2ML6NCWDQMN.webp",
-  },
-  {
-    name: "Avloclav (250 mg+125 mg)",
-    Generic_Name: "Amoxicillin + Clavulanic Acid",
-    price: "৳100",
-    image: "https://www.acipharma.net/assets/images/products/avloclave-sus.jpg",
-  },
-  {
-    name: "Azicin (250mg)",
-    Generic_Name: "Azithromycin Dihydrate",
-    price: "৳120",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8yMDk5XC8yMDk5LUF6aXRob2Npbi0yNTAtY29weS1ja3o1NjAuanBlZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MzAwLCJoZWlnaHQiOjMwMCwiZml0Ijoib3V0c2lkZSJ9fX0=",
-  },
-  {
-    name: "Saline",
-    Generic_Name: "Orsaline-N",
-    price: "৳15",
-    image:
-      "https://medex.com.bd/storage/images/packaging/orsaline-n-1025-gm-powder-76097023982-i1-qf6Cczs1KJaSziGlKNZY.webp",
-  },
-  {
-    name: "Ceevit(250 mg)",
-    Generic_Name: "Vitamin C [Ascorbic acid]",
-    price: "৳40",
-    image:
-      "https://medeasy.health/_next/image?url=https%3A%2F%2Fapi.medeasy.health%2Fmedia%2Fmedicines%2Fmedeasy_ceevit_250.jpg&w=750&q=75",
-  },
-];
-export {goods};
+
 const Shop = () => {
   const [Category, setCategory] = useState([]);
   const [sortOption, setSortOption] = useState("");
   const [orderOption, setOrderOption] = useState("");
-  const [Goods, shop_goods] = useState([]);
+  const [products, setProducts] = useState([]); 
+  const [allProducts, setAllProducts] = useState([]);
+
+  const [loadingProducts, setLoadingProducts] = useState(false); // Loading state
+  const [productsError, setProductsError] = useState(null);
 
   const location = useLocation();
+  const { categoryName } = useParams();
 
   // Check if we are at the base route or a sub-route
   const isBaseRoute = location.pathname === "/shop";
@@ -160,8 +82,28 @@ const Shop = () => {
   }, []);
 
   useEffect(() => {
-    shop_goods(goods);
-  }, []);
+    const fetchProducts = async () => {
+      setLoadingProducts(true); // Set loading to true before API call
+      setProductsError(null); // Clear any previous errors
+      try {
+          let apiUrl = "/products"; // Base API URL
+          if (location.pathname.startsWith('/shop/') && location.pathname !== '/shop') { // Check if path starts with /shop/ and is not just /shop (meaning category route)
+              const category = location.pathname.split('/')[2]; // Extract category from path e.g., /shop/healthcare => healthcare
+              apiUrl = `/products?category=${category}`; // Add category as query parameter
+          }
+
+          const res = await axiosInstance.get(apiUrl);
+          setProducts(res.data);
+          setAllProducts(res.data);
+        } catch(err) {  console.error("Error fetching products:", err);
+        }
+        finally {
+          setLoadingProducts(false); // Set loading to false after API call (success or error)
+        }
+      };
+      fetchProducts();
+  }, [location.pathname]);
+
 
   // Handle sort option change
   const handleSortChange = (e) => {
@@ -171,7 +113,6 @@ const Shop = () => {
     // If sorting by price, popularity, or best sales, wait for order selection
     if (
       (selectedOption === "price" ||
-        selectedOption === "popularity" ||
         selectedOption === "bestSales") &&
       !orderOption
     ) {
@@ -193,26 +134,20 @@ const Shop = () => {
 
   // Function to apply sorting based on current options
   const applySortingAndOrdering = (sortOption, orderOption) => {
-    let sortedGoods = [...Goods];
+    let sortedProducts = [...allProducts];
 
     if (sortOption === "bestSales") {
-      sortedGoods.sort((a, b) =>
-        orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales
-      );
-    } else if (sortOption === "popularity") {
-      sortedGoods.sort((a, b) =>
-        orderOption === "descending"
-          ? b.popularity - a.popularity
-          : a.popularity - b.popularity
+      sortedProducts.sort((a, b) =>
+        orderOption === "descending" ? b.sales_count - a.sales_count : a.sales_count - b.sales_count
       );
     } else if (sortOption === "price") {
-      sortedGoods.sort((a, b) => {
+      sortedProducts.sort((a, b) => {
         let priceA = parseFloat(a.price.replace("৳", "").trim()) || 0;
         let priceB = parseFloat(b.price.replace("৳", "").trim()) || 0;
         return orderOption === "descending" ? priceB - priceA : priceA - priceB;
       });
     } else {
-      sortedGoods.sort((a, b) =>
+      sortedProducts.sort((a, b) =>
         orderOption === "descending"
           ? a.name < b.name
             ? 1
@@ -223,8 +158,7 @@ const Shop = () => {
       );
     }
 
-    // setProducts(sortedProducts);
-    shop_goods(sortedGoods);
+    setProducts(sortedProducts);
   };
 
   return (
@@ -249,7 +183,6 @@ const Shop = () => {
               >
                 <option value="">Select</option>
                 <option value="bestSales">Best Sales</option>
-                <option value="popularity">Popularity</option>
                 <option value="price">Price</option>
               </select>
             </div>
@@ -309,31 +242,24 @@ const Shop = () => {
 
           <section className="mt-5">
             <div id="goods-container">
-              {Goods.map((goods, i) => {
-                // Format the name for URL and display
-                const urlName = goods.name
-                  .toLowerCase()
-                  .replace(/\s+/g, "")
-                  .replace(/_/g, "");
-                const displayName = goods.name.replace(/_/g, " ");
-
-                return (
-                  <div key={i} className="goods-card">
-                    <img
-                      src={goods.image || "default-image.jpg"}
-                      alt={goods.name}
-                      className="goods-image"
-                    />
+            {products.length === 0 ? (
+                <p>Loading products...</p>
+              ) : (
+                products.map((product) => (
+                  <div key={product.id} className="goods-card">
+                    <img src={product.image ? product.image : "default-image.jpg"} alt={product.name} className="goods-image" />
                     <div className="goods-info">
                       <h3>
-                        <Link to={`/shop/${urlName}`}>{displayName}</Link>
+                      <Link to={`/shop/${product.id}`}>{product.name}</Link>
                       </h3>
-                      <p>{goods.Generic_Name}</p>
-                      <h4>{goods.price}</h4>
+                      <p>{product.category}</p>
+                      {console.log("Product Price Type:", typeof product.price, "Value:", product.price)}
+                      <h4>৳{product.price ? parseFloat(product.price).toFixed(2) : "N/A"}</h4>
                     </div>
                   </div>
-                );
-              })}
+                ))
+              )}
+
             </div>
           </section>
         </>
