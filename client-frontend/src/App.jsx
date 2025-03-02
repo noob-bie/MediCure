@@ -16,10 +16,11 @@ import Medicines from "./pages/shop/medicine/Medicines";
 import BabyAndMomcare from "./pages/shop/babyandmomcare/BabyAndMomcare";
 import SingleProduct from  "./pages/singleProduct/SingleProduct";
 import Checkout from "./pages/checkout/Checkout";
+import Payment from "./pages/payment/Payment";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const isAdmin = localStorage.getItem("userRole") === "admin"; // Fetch admin role from storage
+
 
 
   const Layout = () => {
@@ -50,8 +51,10 @@ function App() {
           ],
         },
 
-        { path: "/cart", element: <Cart /> },
+        { path: "/cart", element: <Cart cartItems={cartItems} setCartItems={setCartItems} /> }, // Pass props
+
         { path: "/checkout", element: <Checkout /> },
+        { path: "/payment", element: <Payment /> },
         { path: "/profile", element: <Profile /> },
         { path: "/login", element: <Login /> },
         { path: "/signup", element: <Signup /> },

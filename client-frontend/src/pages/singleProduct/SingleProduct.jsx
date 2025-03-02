@@ -1,27 +1,55 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { goods } from "../shop/Shop"; // Ensure correct path
 import "./SingleProduct.css";
+import axiosInstance from "../../utils/axiosInstance";
+import { useState, useEffect } from "react";
 
 const SingleProduct = () => {
-  const { productName } = useParams();
+  const { productName, id  } = useParams();
   const decodedProductName = decodeURIComponent(productName);
+  const [product, setProduct] = useState(null);
 
-  // Find the product by matching the name
-  const product = goods.find(
-    (item) =>
-      item.name.toLowerCase().replace(/\s+/g, "").replace(/_/g, "") ===
-      decodedProductName.toLowerCase()
-  );
+  const [loading, setLoading] = useState(true);
 
-  if (!product) {
-    return <h2 className="not-found">Product Not Found</h2>;
+  const [error, setError] = useState(null);
+
+
+  useEffect(() => {
+    fetchProductDetails();
+  }, [id]);
+  
+
+  const fetchProductDetails = async () => {
+    setLoading(true);
+
+    setError(null);
+
+    try {
+      const response = await axiosInstance.get(`/products/${id}`);
+
+      setProduct(response.data.product);
+
+      setLoading(false);
+    } catch (err) {
+      console.error("Error fetching product details:", err);
+
+      setError(err);
+
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <h2 className="loading">Loading product details...</h2>;
+  }
+
+  if (error || !product) {
+    return <h2 className="not-loading">Product Not Found</h2>;
   }
 
   return (
     <div className="single-product-container">
       <div className="product-card">
-        {/* Product Image */}
         <div className="product-image-area">
           <img
             src={product.image}
@@ -31,19 +59,29 @@ const SingleProduct = () => {
           <div className="product-description-container">
             <h2 className="description-title">Product Description:</h2>
             <p className="full-description">
-              Data will be fetched{product.description}
+              {product.description || "No description available."}
             </p>
           </div>
         </div>
-        {/* Product Details */}
         <div className="product-details">
           <h2 className="product-name">{product.name}</h2>
-          <h4 className="generic-name">{product.Generic_Name}</h4>
-          <h3 className="product-price">Price: {product.price}</h3>
-
-          {/*Add_to_Cart Button (Moved to Right) */}
-          <div className="Add_to_Cart-button-container">
-            <button className="Add_to_Cart-button">Add to Cart</button>
+          {product.generic_name && (
+            <h4 className="generic-name">
+              Generic Name: {product.generic_name}
+            </h4>
+          )}
+          <h3 className="product-price">Price: ${product.price.toFixed(2)}</h3>
+          <h4 className="stock">Stock: {product.stock_quantity} units</h4>
+          {product.manufacturer && (
+            <h4 className="manufacturer">
+              Manufacturer: {product.manufacturer}
+            </h4>
+          )}
+          {product.expiration_date && (
+            <h4 className="expiry">Expiry Date: {product.expiration_date}</h4>
+          )}
+          <div className="buy-button-container">
+            <button className="buy-button">Buy</button>
           </div>
         </div>
       </div>
