@@ -68,10 +68,9 @@ const Navbar = () => {
               <Link to="/profile" className="profile-icon">
                 👤 Profile
               </Link>
-              {/* <button onClick={handleLogout} className="logout-button">
+             <button onClick={handleLogout} className="logout-button">
                 Logout
               </button>{" "}
-              Added Logout button */}
             </div>
           ) : (
             <>
