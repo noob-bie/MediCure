@@ -7,7 +7,7 @@ const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+
   const [isSearchActive, setIsSearchActive] = useState(false);
 
   useEffect(() => {
@@ -16,19 +16,10 @@ const Navbar = () => {
     const storedRole = localStorage.getItem("userRole");
     setIsAuthenticated(authStatus);
     setUserRole(storedRole);
-  }, []);
+  }, [localStorage.getItem("userRole")]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("token"); // Remove token on logout
-    localStorage.removeItem("userRole"); // Remove role on logout
-    setIsAuthenticated(false);
-    setUserRole(null);
-    navigate("/");
   };
 
   return (
@@ -68,10 +59,6 @@ const Navbar = () => {
               <Link to="/profile" className="profile-icon">
                 👤 Profile
               </Link>
-              {/* <button onClick={handleLogout} className="logout-button">
-                Logout
-              </button>{" "}
-              Added Logout button */}
             </div>
           ) : (
             <>

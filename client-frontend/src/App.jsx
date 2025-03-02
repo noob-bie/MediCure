@@ -18,7 +18,8 @@ import SingleProduct from  "./pages/singleProduct/SingleProduct";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const isAdmin = localStorage.getItem("userRole") === "admin"; // Fetch admin role from storage
+
 
   const Layout = () => {
     return (
@@ -58,7 +59,7 @@ function App() {
         { path: "/shop/homecare/:productName", element: <SingleProduct /> },
         { path: "/shop/medicines/:productName", element: <SingleProduct /> },
 
-        isAdmin && { path: "/admin", element: <AdminPanel /> },
+        isAdmin?  { path: "/admin", element: <AdminPanel /> }: null,
       ].filter(Boolean),
     },
   ]);
