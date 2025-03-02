@@ -20,7 +20,7 @@ import Payment from "./pages/payment/Payment";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const isAdmin = localStorage.getItem("userRole") === "admin";
   const [cartItems, setCartItems] = useState([]); // Initialize cartItems state
 
 
@@ -65,7 +65,7 @@ function App() {
         { path: "/shop/homecare/:productName", element: <SingleProduct /> },
         { path: "/shop/medicines/:productName", element: <SingleProduct /> },
 
-        isAdmin && { path: "/admin", element: <AdminPanel /> },
+        isAdmin ? { path: "/admin", element: <AdminPanel /> }: null,
       ].filter(Boolean),
     },
   ]);
