@@ -129,7 +129,7 @@
   }
   
   .checkout-btn {
-    background: #ff6200;
+    background: #0077b6;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -139,3 +139,6 @@
     cursor: pointer;
   }
   
+  .checkout-btn:hover {
+    background: #8fd7f4;
+  }

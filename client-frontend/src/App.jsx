@@ -15,6 +15,7 @@ import Homecare from "./pages/shop/homecare/Homecare";
 import Medicines from "./pages/shop/medicine/Medicines";
 import BabyAndMomcare from "./pages/shop/babyandmomcare/BabyAndMomcare";
 import SingleProduct from  "./pages/singleProduct/SingleProduct";
+import Checkout from "./pages/checkout/Checkout";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -49,6 +50,7 @@ function App() {
         },
 
         { path: "/cart", element: <Cart /> },
+        { path: "/checkout", element: <Checkout /> },
         { path: "/profile", element: <Profile /> },
         { path: "/login", element: <Login /> },
         { path: "/signup", element: <Signup /> },

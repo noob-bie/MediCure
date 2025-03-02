@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import "./Cart.css";
 import { FaTrash } from "react-icons/fa";
 
 const Cart = () => {
+  const navigate = useNavigate(); // Initialize navigation
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
@@ -69,6 +72,10 @@ const Cart = () => {
     setCartItems(cartItems.filter((item) => item.id !== id));
   };
 
+  const handleCheckout = () => {
+    navigate("/checkout", { state: { cartItems } }); // Passing cartItems as state
+  };  
+
   return (
     <div className="cart-container">
       <h2>My Cart</h2>
@@ -105,10 +112,28 @@ const Cart = () => {
           <span>Subtotal:</span>
           <span>৳ {cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}</span>
         </div>
-        <button className="checkout-btn">Check Out ({cartItems.length})</button>
+        <button className="checkout-btn" onClick={handleCheckout}>
+          Check Out ({cartItems.length})
+        </button>
       </div>
     </div>
   );
+};
+
+//Add PropTypes Validation
+Cart.propTypes = {
+  cartItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      store: PropTypes.string.isRequired,
+      productName: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      originalPrice: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      quantity: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  setCartItems: PropTypes.func.isRequired,
 };
 
 export default Cart;
