@@ -20,7 +20,8 @@ import Payment from "./pages/payment/Payment";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [cartItems, setCartItems] = useState([]); // Initialize cartItems state
 
 
   const Layout = () => {
@@ -64,7 +65,7 @@ function App() {
         { path: "/shop/homecare/:productName", element: <SingleProduct /> },
         { path: "/shop/medicines/:productName", element: <SingleProduct /> },
 
-        isAdmin?  { path: "/admin", element: <AdminPanel /> }: null,
+        isAdmin && { path: "/admin", element: <AdminPanel /> },
       ].filter(Boolean),
     },
   ]);
