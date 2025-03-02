@@ -54,4 +54,7 @@ class ProductService
 
         return null;
     }
+    public function createProduct(array $data) {
+        return Product::create($data);
+    }
 }
