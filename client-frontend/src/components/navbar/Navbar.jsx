@@ -59,7 +59,7 @@ const Navbar = () => {
               <Link to="/profile" className="profile-icon">
                 👤 Profile
               </Link>
-            </div>
+           </div>
           ) : (
             <>
               <Link to="/login">Login</Link>
