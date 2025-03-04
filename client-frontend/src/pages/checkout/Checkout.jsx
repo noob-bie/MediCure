@@ -1,10 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom"; 
 import "./Checkout.css";
 
 const Checkout = () => {
   const { state } = useLocation();
   const cartItems = state ? state.cartItems : [];
+
+  const navigate = useNavigate();
+
+  const handlePlaceOrder = () => {
+    navigate("/payment");
+  };
 
   return (
     <div className="checkout-container">
@@ -66,7 +73,9 @@ const Checkout = () => {
           <span>Total:</span>
           <span>৳ {cartItems.reduce((total, item) => total + item.price * item.quantity, 0) + 80}</span>
         </div>
-        <button className="place-order-btn">Place Order</button>
+        <button className="place-order-btn" onClick={handlePlaceOrder}>
+         Place Order
+        </button>
       </div>
     </div>
   );
