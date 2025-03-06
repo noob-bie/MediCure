@@ -15,6 +15,23 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->decimal('price', 10, 2);
+            $table->string('category');
+            $table->text('description')->nullable();
+            $table->integer('stock_quantity')->default(0);
+            $table->string('manufacturer')->nullable();
+            $table->date('expiration_date')->nullable();
+            $table->longText('image')->nullable();
+            $table->integer('sales_count')->default(0);
+            // Medicine-Specific Attributes (Nullable for normal products)
+            $table->string('generic_name')->nullable();
+            $table->string('dosage')->nullable();
+            $table->string('indications')->nullable();
+            $table->string('contraindications')->nullable();
+            // Normal Product-Specific Attributes (Nullable for medicines)
+            $table->string('brand')->nullable();
+            $table->string('unit')->nullable(); // e.g., 'ml', 'gm', 'piece' - for lotion, balm etc.
             $table->timestamps();
         });
     }
