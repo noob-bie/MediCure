@@ -5,7 +5,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import { useState, useEffect } from "react";
 
 const SingleProduct = () => {
-  const { productName, id  } = useParams();
+  const { productName, id } = useParams();
   const decodedProductName = decodeURIComponent(productName);
   const [product, setProduct] = useState(null);
 
@@ -13,11 +13,9 @@ const SingleProduct = () => {
 
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
     fetchProductDetails();
   }, [id]);
-  
 
   const fetchProductDetails = async () => {
     setLoading(true);

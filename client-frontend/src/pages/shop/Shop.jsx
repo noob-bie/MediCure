@@ -91,10 +91,11 @@ const Shop = () => {
               const category = location.pathname.split('/')[2]; // Extract category from path e.g., /shop/healthcare => healthcare
               apiUrl = `/products?category=${category}`; // Add category as query parameter
           }
-
+          console.log("Hello wrolds")
           const res = await axiosInstance.get(apiUrl);
           setProducts(res.data);
           setAllProducts(res.data);
+          console.log("Products:", res.data);
         } catch(err) {  console.error("Error fetching products:", err);
         }
         finally {
@@ -245,6 +246,7 @@ const Shop = () => {
             {products.length === 0 ? (
                 <p>Loading products...</p>
               ) : (
+                console.log("Products:", products),
                 products.map((product) => (
                   <div key={product.id} className="goods-card">
                     <img src={product.image ? product.image : "default-image.jpg"} alt={product.name} className="goods-image" />
