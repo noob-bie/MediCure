@@ -3,7 +3,7 @@
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-
+use App\Http\Controllers\CartController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,6 +23,10 @@ Route::get('/health-check', function () {
 });
 Route::middleware(['jwt.auth'])->group(function () {
     Route::get('/profile', [UserController::class, 'profile']);
+    Route::get('/cart', [CartController::class, 'index']); // View current user's cart
+    Route::post('/cart/items', [CartController::class, 'addItem']); // Add item to cart
+    Route::put('/cart/items/{cart_item_id}', [CartController::class, 'updateItem']); // Update item quantity
+    Route::delete('/cart/items/{cart_item_id}', [CartController::class, 'removeItem']); // Remove item from cart
 });
 // Route::middleware(['auth:api', 'admin'])->group(function () { // Apply auth and admin middleware to this group
 //     Route::post('/admin/products', [ProductController::class, 'store']); // Admin adds product
