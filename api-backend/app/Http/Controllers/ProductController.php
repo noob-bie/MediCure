@@ -21,19 +21,21 @@ class ProductController extends Controller
     protected $productService;
     protected $userService;
 
-    public function __construct(ProductService $productService, UserService $userService) {
+    public function __construct(ProductService $productService, UserService $userService)
+    {
         $this->productService = $productService;
         $this->userService = $userService;
     }
 
     // Fetch all products
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         $category = $request->query('category');
         $sortBy = $request->query('sortBy');
         $sortDirection = $request->query('sortDirection', 'asc');
 
         if ($category) {
-            $products = $this->productService->getProductsByCategory($category,$sortBy, $sortDirection ); // Fetch products by category
+            $products = $this->productService->getProductsByCategory($category, $sortBy, $sortDirection); // Fetch products by category
         } else {
             $products = $this->productService->getAllProducts($sortBy, $sortDirection); // Fetch all products if no category parameter
         }
@@ -41,7 +43,8 @@ class ProductController extends Controller
     }
 
     // Fetch a single product
-    public function show($id) {
+    public function show($id)
+    {
         $product = $this->productService->getProductById($id);
         return $product ? response()->json($product) : response()->json(['error' => 'Product not found'], 404);
     }
@@ -70,7 +73,8 @@ class ProductController extends Controller
         }
     }
     // Add a product (Admin only)
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $tokenString = $request->bearerToken();
         if (!$tokenString) {
             return response()->json(['error' => 'Unauthorized - No token provided'], 401);
@@ -83,14 +87,14 @@ class ProductController extends Controller
         }
 
 
-            $userId = $token->claims()->get('uid');
-            $userRole = $token->claims()->get('role');
+        $userId = $token->claims()->get('uid');
+        $userRole = $token->claims()->get('role');
 
-            $user = User::find($userId);
+        $user = User::find($userId);
 
-            if (!$user || $userRole !== 'admin') {
-                return response()->json(['error' => 'Unauthorized - Admin role required'], 403);
-            }
+        if (!$user || $userRole !== 'admin') {
+            return response()->json(['error' => 'Unauthorized - Admin role required'], 403);
+        }
 
 
 
@@ -114,9 +118,4 @@ class ProductController extends Controller
         $product = $this->productService->createProduct($request->all());
         return response()->json($product, 201);
     }
-
-
-
-
-
 }
