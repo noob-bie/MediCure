@@ -1,0 +1,62 @@
+.payment-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  .payment-option h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .payment-method {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #f8f8f8;
+    border-radius: 6px;
+  }
+  
+  .payment-method .cash-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  
+  /* Removed the delivery charge section */
+  
+  /* Order Total */
+  .order-total {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    font-size: 16px;
+    padding: 10px;
+    background: #f1f1f1;
+    border-radius: 6px;
+  }
+  
+  .confirm-order-btn {
+    width: 100%;
+    padding: 12px;
+    background: #0077b6;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  
+  .confirm-order-btn:hover {
+    background: #8fd7f4;
+  }
+  

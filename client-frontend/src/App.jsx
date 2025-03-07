@@ -14,11 +14,14 @@ import Healthcare from "./pages/shop/healthcare/Healthcare";
 import Homecare from "./pages/shop/homecare/Homecare";
 import Medicines from "./pages/shop/medicine/Medicines";
 import BabyAndMomcare from "./pages/shop/babyandmomcare/BabyAndMomcare";
-import SingleProduct from  "./pages/singleProduct/SingleProduct";
+import SingleProduct from "./pages/singleProduct/SingleProduct";
+import Checkout from "./pages/checkout/Checkout";
+import Payment from "./pages/payment/Payment";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const isAdmin = localStorage.getItem("userRole") === "admin";
+  const [cartItems, setCartItems] = useState([]);
 
   const Layout = () => {
     return (
@@ -38,27 +41,30 @@ function App() {
         { path: "/", element: <Home /> },
         {
           path: "/shop",
-          element: <Shop />, // Shop is now a parent route
+          element: <Shop />,
           children: [
             { path: "healthcare", element: <Healthcare /> },
             { path: "homecare", element: <Homecare /> },
             { path: "medicines", element: <Medicines /> },
             { path: "baby&momcare", element: <BabyAndMomcare /> },
-            
           ],
         },
-
-        { path: "/cart", element: <Cart /> },
+        {
+          path: "/cart",
+          element: <Cart cartItems={cartItems} setCartItems={setCartItems} />, // Pass props here
+        },
+        { path: "/checkout", element: <Checkout /> },
+        { path: "/payment", element: <Payment /> },
         { path: "/profile", element: <Profile /> },
         { path: "/login", element: <Login /> },
         { path: "/signup", element: <Signup /> },
-        { path: "/shop/:productName", element: <SingleProduct /> },
-        { path: "/shop/baby&momcare/:productName", element: <SingleProduct /> },
-        { path: "/shop/healthcare/:productName", element: <SingleProduct /> },
-        { path: "/shop/homecare/:productName", element: <SingleProduct /> },
-        { path: "/shop/medicines/:productName", element: <SingleProduct /> },
-
-        isAdmin && { path: "/admin", element: <AdminPanel /> },
+        { path: "/product/:id", element: <SingleProduct /> }, // Corrected route
+        // { path: "/products/:id", element: <SingleProduct /> },
+        // { path: "/products/baby&momcare/:productName", element: <SingleProduct /> },
+        // { path: "/products/healthcare/:productName", element: <SingleProduct /> },
+        // { path: "/products/homecare/:productName", element: <SingleProduct /> },
+        // { path: "/products/medicines/:productName", element: <SingleProduct /> },
+        isAdmin ? { path: "/admin", element: <AdminPanel /> } : null,
       ].filter(Boolean),
     },
   ]);

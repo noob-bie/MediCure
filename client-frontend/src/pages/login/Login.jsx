@@ -1,32 +1,31 @@
-import React, { useState } from 'react';
-import './Login.css';
-import axiosInstance from '../../utils/axiosInstance';
-import {Link, useNavigate} from 'react-router-dom';
-import Signup from '../signup/Signup';
+import React, { useState } from "react";
+import "./Login.css";
+import axiosInstance from "../../utils/axiosInstance";
+import { Link, useNavigate } from "react-router-dom";
+import Signup from "../signup/Signup";
 
-import Phone from '../../assets/images/Phone.png';
-import Password from '../../assets/images/Password.png';
+import Phone from "../../assets/images/Phone.png";
+import Password from "../../assets/images/Password.png";
 
 const Login = () => {
-  const [role, setRole] = useState("user"); 
+  const [role, setRole] = useState("user");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-
     // Validation checks
     if (phone.length !== 11 || isNaN(phone)) {
       alert("Phone number must be exactly 11 digits.");
       return;
     }
     if (password.length < 6) {
-      alert("Wrong password.");
+      alert("Password must contain 6 Characters");
       return;
     }
 
     try {
-      const response = await axiosInstance.post('/login', {
+      const response = await axiosInstance.post("/login", {
         phone,
         password,
         role,
@@ -35,21 +34,24 @@ const Login = () => {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("isAuthenticated", "true");
       localStorage.setItem("userRole", response.data.user.role);
-      
+
       alert(response.data.message);
-      navigate('/');
+      navigate("/");
     } catch (error) {
-      alert("Login failed: " + (error.response?.data?.message || "Invalid phone number or password."));
+      alert(
+        "Login failed: " +
+          (error.response?.data?.message || "Invalid phone number or password.")
+      );
     }
   };
 
   return (
-    <div className='container'>
+    <div className="container">
       <div className="header">
         <div className="text">Login</div>
         <div className="underline"></div>
       </div>
-      
+
       <div className="inputs">
         {/* Role Dropdown */}
         <div className="input">
@@ -62,20 +64,21 @@ const Login = () => {
 
         <div className="input">
           <img src={Phone} alt="Phone" />
-          <input 
-          placeholder="Phone Number" 
-          type="text"
-          value={phone} 
-          onChange={(e) => setPhone(e.target.value)} 
+          <input
+            placeholder="Phone Number"
+            type="text"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
         </div>
 
         <div className="input">
           <img src={Password} alt="Password" />
-          <input placeholder="Password" 
-          type="password"
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
+          <input
+            placeholder="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
       </div>
@@ -89,7 +92,9 @@ const Login = () => {
       </div>
 
       <div className="submit-container">
-        <div className="submit" onClick={handleLogin}>Login</div>
+        <div className="submit" onClick={handleLogin}>
+          Login
+        </div>
       </div>
     </div>
   );
