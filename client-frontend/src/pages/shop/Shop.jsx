@@ -252,7 +252,7 @@ const Shop = () => {
                     <img src={product.image ? product.image : "default-image.jpg"} alt={product.name} className="goods-image" />
                     <div className="goods-info">
                       <h3>
-                      <Link to={`/shop/${product.id}`}>{product.name}</Link>
+                      <Link to={`/product/${product.id}`}>{product.name}</Link>
                       </h3>
                       <p>{product.category}</p>
                       {console.log("Product Price Type:", typeof product.price, "Value:", product.price)}

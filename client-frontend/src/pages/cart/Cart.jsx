@@ -121,19 +121,19 @@ const Cart = () => {
 };
 
 //Add PropTypes Validation
-Cart.propTypes = {
-  cartItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      store: PropTypes.string.isRequired,
-      productName: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      originalPrice: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      quantity: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  setCartItems: PropTypes.func.isRequired,
-};
+// Cart.propTypes = {
+//   cartItems: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.number.isRequired,
+//       store: PropTypes.string.isRequired,
+//       productName: PropTypes.string.isRequired,
+//       price: PropTypes.number.isRequired,
+//       originalPrice: PropTypes.number.isRequired,
+//       image: PropTypes.string.isRequired,
+//       quantity: PropTypes.number.isRequired,
+//     })
+//   ).isRequired,
+//   setCartItems: PropTypes.func.isRequired,
+// };
 
 export default Cart;
