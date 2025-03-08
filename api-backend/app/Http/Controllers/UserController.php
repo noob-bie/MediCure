@@ -35,6 +35,10 @@ class UserController extends Controller
             return response()->json(['message' => $result['message']], 401);
         }
 
+        if (!$result['token']) {
+            return response()->json(['message' => 'Token not generated!'], 500);
+        }
+
         return response()->json([
             'message' => 'Login successful',
             'user' => $result['user'],

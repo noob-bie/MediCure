@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Cart;
+use App\Models\CartItem;
+use App\Models\Product;
+use App\Services\CartService;
+
+class CartController extends Controller {
+    protected $cartService;
+
+    public function __construct(CartService $cartService) {
+        $this->cartService = $cartService;
+    }
+
+    public function index(Request $request) {
+        return response()->json($this->cartService->getCartForUser($request->user()));
+    }
+
+    public function addItem(Request $request) {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1'
+        ]);
+        return response()->json($this->cartService->addItemToCart($request->user(), $request->all()));
+    }
+
+    public function updateItem(Request $request, $cart_item_id) {
+        $request->validate([
+            'quantity' => 'required|integer|min:1'
+        ]);
+        return response()->json($this->cartService->updateCartItemQuantity($request->user(), $cart_item_id, $request->all()));
+    }
+
+    public function removeItem($cart_item_id) {
+        return response()->json($this->cartService->removeCartItem($cart_item_id));
+    }
+}

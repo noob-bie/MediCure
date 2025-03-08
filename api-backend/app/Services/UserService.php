@@ -115,4 +115,14 @@ class UserService
     {
         return $this->jwtConfig;
     }
+
+    public function getUserIdFromToken($token)
+    {
+        try {
+            $uid = $token->claims()->get('uid');
+            return $uid;
+        } catch (\Exception $e) {
+            return null; // Return null if something goes wrong (invalid token format)
+        }
+    }
 }
