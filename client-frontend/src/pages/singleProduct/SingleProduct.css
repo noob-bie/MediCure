@@ -29,10 +29,23 @@
 
 .product-actions {
   display: flex;
-  justify-content: center; /* Center buttons horizontally in mobile view */
-  gap: 1rem; /* Spacing between buttons */
-  margin-top: 2rem; /* Space above the buttons */
-  width: 100%; /* Take full width */
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Ensure buttons are of equal size */
+.add-to-cart-button,
+.checkout-button {
+  flex: 1; /* Makes buttons equal in width */
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 150px;
+  text-align: center;
 }
 
 /* Desktop Layout */
@@ -58,7 +71,9 @@
 
   /* Desktop layout for buttons (side-by-side) - NEW PART INTEGRATED HERE */
   .product-actions {
-      justify-content: flex-end; /* Align buttons to the right on desktop */
+    justify-content: flex-end;
+    padding-right: 1.5rem;
+    flex-direction: row;
   }
 }
 
@@ -76,6 +91,7 @@
       max-width: 100%;
       box-sizing: border-box;
   }
+
 }
 
 /* Left Section */
@@ -195,4 +211,17 @@
 
 .checkout-button:hover {
   background-color: #1e7e34; /* Darker green on hover */
+}
+
+@media (max-width: 768px) {
+  .product-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .add-to-cart-button,
+  .checkout-button {
+    width: 90%; /* Ensures equal width */
+    max-width: 300px; /* Prevents overly wide buttons */
+  }
 }

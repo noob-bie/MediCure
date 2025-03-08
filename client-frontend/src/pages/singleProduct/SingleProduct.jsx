@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./SingleProduct.css";
 import axiosInstance from "../../utils/axiosInstance";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const SingleProduct = () => {
     const { id } = useParams();
@@ -41,9 +41,9 @@ const SingleProduct = () => {
 
     const handleAddToCart = async () => {
         try {
-            const response = await axiosInstance.post('/cart/items', {
+            const response = await axiosInstance.post("/cart/items", {
                 product_id: product.id,
-                quantity: 1 // Default quantity is 1
+                quantity: 1, // Default quantity is 1
             });
             console.log("Product added to cart:", response.data);
             alert("Product added to cart successfully!"); // Simple success feedback
@@ -54,12 +54,11 @@ const SingleProduct = () => {
     };
 
     const handleCheckout = () => {
-        navigate('/checkout'); // Navigate to checkout page
+        navigate("/checkout"); // Navigate to checkout page
         console.log("Checkout clicked for product ID:", product.id);
         // In a real application, you might want to redirect to the checkout page
         // or initiate the checkout process here.
     };
-
 
     return (
         <div className="single-product-container">
@@ -68,7 +67,11 @@ const SingleProduct = () => {
                 <div className="product-info">
                     <h1 className="product-name">{product.name}</h1>
                     {product.image && (
-                        <img src={product.image} alt={product.name} className="product-image" />
+                        <img
+                            src={product.image}
+                            alt={product.name}
+                            className="product-image"
+                        />
                     )}
                     <h4 className="product-price">Price: ৳{product.price}</h4>
                     <p className="product-category">Category: {product.category}</p>
@@ -119,9 +122,29 @@ const SingleProduct = () => {
                         </p>
                     )}
                     {Object.keys(product).map((key) => {
-                        const excludedKeys = ['id', 'name', 'image', 'price', 'category', 'description', 'manufacturer', 'expiration_date', 'generic_name', 'dosage', 'indications', 'contraindications', 'brand', 'unit', 'created_at', 'updated_at'];
+                        const excludedKeys = [
+                            "id",
+                            "name",
+                            "image",
+                            "price",
+                            "category",
+                            "description",
+                            "manufacturer",
+                            "expiration_date",
+                            "generic_name",
+                            "dosage",
+                            "indications",
+                            "contraindications",
+                            "brand",
+                            "unit",
+                            "created_at",
+                            "updated_at",
+                        ];
                         if (!excludedKeys.includes(key) && product[key]) {
-                            let displayLabel = key.replace(/_/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toUpperCase();
+                            let displayLabel = key
+                                .replace(/_/g, " ")
+                                .replace(/([a-z])([A-Z])/g, "$1 $2")
+                                .toUpperCase();
                             return (
                                 <p key={key} className="product-detail-item">
                                     <strong>{displayLabel}:</strong> {product[key]}
@@ -142,6 +165,7 @@ const SingleProduct = () => {
                     </button>
                 </div>
             </div>
+
         </div>
     );
 };
