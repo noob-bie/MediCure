@@ -31,6 +31,12 @@ const Login = () => {
         role,
       });
 
+      console.log("Login Response:", response.data); 
+      if (!response.data.token) {
+        alert("Token not received!");
+        return;
+      }
+
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("isAuthenticated", "true");
       localStorage.setItem("userRole", response.data.user.role);

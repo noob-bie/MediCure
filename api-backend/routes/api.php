@@ -34,3 +34,4 @@ Route::middleware(['jwt.auth'])->group(function () {
 Route::post('/admin/products', [ProductController::class, 'store']);
 Route::get('/products', [ProductController::class, 'index']); // List all products (public)
 Route::get('/products/{id}', [ProductController::class, 'show']); // Single product detail (public)
+

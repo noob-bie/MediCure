@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+use App\Models\User;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class JwtMiddleware
                 return response()->json(['message' => 'Token not provided'], 401);
             }
 
+
             // Load JWT configuration
             $config = Configuration::forSymmetricSigner(
                 new Sha256(),
@@ -32,6 +34,8 @@ class JwtMiddleware
             if (!$config->validator()->validate($parsedToken, ...$config->validationConstraints())) {
                 return response()->json(['message' => 'Invalid token'], 401);
             }
+
+
 
             return $next($request);
         } catch (Exception $e) {
