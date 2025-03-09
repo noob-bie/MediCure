@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
-use Lcobucci\JWT\Signer\Key\InMemory; // Import the InMemory class
+use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Configuration;
 use DateTimeImmutable;
@@ -22,7 +22,7 @@ class UserService
     {
         $this->jwtConfig = Configuration::forSymmetricSigner(
             new Sha256(),
-            InMemory::plainText(env('JWT_SECRET')) // Use InMemory::plainText
+            InMemory::plainText(env('JWT_SECRET'))
         );
     }
 
@@ -56,17 +56,17 @@ class UserService
         $validator = Validator::make($data, [
             'phone' => 'required|string',
             'password' => 'required|string',
-            'role' => 'required|string|in:user,admin,delivery man' // Validate role (Action 2 & 3)
+            'role' => 'required|string|in:user,admin,delivery man'
         ]);
 
         if ($validator->fails()) {
-            return ['status' => 'error', 'message' => 'Validation error', 'errors' => $validator->errors()]; // More informative error
+            return ['status' => 'error', 'message' => 'Validation error', 'errors' => $validator->errors()];
         }
 
         $user = User::where('phone', $data['phone'])->first();
 
         if (!$user) {
-            return ['status' => 'error', 'message' => 'Invalid credentials']; // More generic message
+            return ['status' => 'error', 'message' => 'Invalid credentials'];
         }
 
         if (!Hash::check($data['password'], $user->password) || $user->role !== $data['role']) {
@@ -93,7 +93,6 @@ class UserService
         .catch(error => console.error("Error:", error));
 
         */
-
     }
 
     private function generateJwtToken($user)
@@ -101,14 +100,29 @@ class UserService
         $now = new DateTimeImmutable();
 
         return $this->jwtConfig->builder()
-            ->issuedBy('http://localhost') // Change to your app's domain
+            ->issuedBy('http://localhost')
             ->permittedFor('http://localhost:5173')
             ->identifiedBy(uniqid(), true)
             ->issuedAt($now)
-            ->expiresAt($now->modify('+1 hour')) // Token expires in 1 hour
-            ->withClaim('uid', $user->id) // Store user ID in token
-            ->withClaim('role', $user->role) // Store role in token
+            ->expiresAt($now->modify('+1 month'))
+            ->withClaim('uid', $user->id)
+            ->withClaim('role', $user->role)
             ->getToken($this->jwtConfig->signer(), $this->jwtConfig->signingKey())
             ->toString();
+    }
+
+    public function getJwtConfig()
+    {
+        return $this->jwtConfig;
+    }
+
+    public function getUserIdFromToken($token)
+    {
+        try {
+            $uid = $token->claims()->get('uid');
+            return $uid;
+        } catch (\Exception $e) {
+            return null; // Return null if something goes wrong (invalid token format)
+        }
     }
 }
