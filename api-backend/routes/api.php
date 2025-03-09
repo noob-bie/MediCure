@@ -1,10 +1,13 @@
 <?php
 
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaymentController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,25 +18,38 @@ use App\Http\Controllers\PaymentController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-//Route::get('/test', [TestController::class, 'getTestHuman'])->middleware('test.middleware');
-//Route::get('/test/{id}', [TestController::class, 'getTestHumanWithId']);
+
+// Authentication routes
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
+
+// Health check route
 Route::get('/health-check', function () {
     return response()->json(['message' => 'Backend is running!']);
 });
+
+// Protected routes (require authentication)
 Route::middleware(['jwt.auth'])->group(function () {
-    Route::get('/profile', [UserController::class, 'profile']);
+    // User profile
+    Route::get('/profile', [ProfileController::class, 'getUserProfile']);
+
+    // Cart management
     Route::get('/cart', [CartController::class, 'index']); // View current user's cart
     Route::post('/cart/items', [CartController::class, 'addItem']); // Add item to cart
     Route::put('/cart/items/{cart_item_id}', [CartController::class, 'updateItem']); // Update item quantity
     Route::delete('/cart/items/{cart_item_id}', [CartController::class, 'removeItem']); // Remove item from cart
-});
-// Route::middleware(['auth:api', 'admin'])->group(function () { // Apply auth and admin middleware to this group
-//     Route::post('/admin/products', [ProductController::class, 'store']); // Admin adds product
-// });
-Route::post('/admin/products', [ProductController::class, 'store']);
-Route::get('/products', [ProductController::class, 'index']); // List all products (public)
-Route::get('/products/{id}', [ProductController::class, 'show']); // Single product detail (public)
 
-Route::middleware('auth:api')->post('/confirm-order', [PaymentController::class, 'confirmOrder']);
+    // Order management
+    Route::post('/orders', [OrderController::class, 'placeOrder']); // Place an order
+    Route::get('/orders', [OrderController::class, 'getOrders']); // Get user orders
+
+    // Payment processing
+    Route::post('/confirm-order', [PaymentController::class, 'confirmOrder']); // Confirm order payment
+});
+
+// Admin routes (consider adding admin middleware later)
+Route::post('/admin/products', [ProductController::class, 'store']); // Admin adds product
+
+// Public product routes
+Route::get('/products', [ProductController::class, 'index']); // List all products
+Route::get('/products/{id}', [ProductController::class, 'show']); // Single product detail
