@@ -1,0 +1,102 @@
+/* Profile.css */
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background: linear-gradient(to right, #e0eafc, #63a4ff);
+    padding: 20px;
+  }
+  
+  .profile-card {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    text-align: center;
+  }
+  
+  .profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: center; /* Center the content */
+  }
+  
+  .profile-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .profile-card h2 {
+    margin: 0;
+    color: #333;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  
+  .profile-info {
+    text-align: left;
+    margin-bottom: 30px;
+  }
+  
+  .profile-info p {
+    margin-bottom: 10px;
+    color: #555;
+    font-size: 1.1rem;
+  }
+  
+  .profile-info strong {
+    font-weight: 600;
+    color: #333;
+    margin-right: 5px;
+  }
+  
+  .profile-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .profile-button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .profile-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+  
+  .profile-button.logout {
+    background-color: #dc3545;
+  }
+  
+  .profile-button.logout:hover {
+    background-color: #c82333;
+  }
+  
+  .profile-container.loading,
+  .profile-container.error,
+  .profile-container.not-found {
+    background: white;
+    color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .profile-container.error {
+    color: red;
+  }

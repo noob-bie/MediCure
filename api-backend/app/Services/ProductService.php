@@ -54,7 +54,10 @@ class ProductService
 
         return null;
     }
-    public function createProduct(array $data) {
+
+    // Create a new product
+    public function createProduct(array $data)
+    {
         return Product::create($data);
     }
 }
