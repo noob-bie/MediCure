@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,3 +36,4 @@ Route::post('/admin/products', [ProductController::class, 'store']);
 Route::get('/products', [ProductController::class, 'index']); // List all products (public)
 Route::get('/products/{id}', [ProductController::class, 'show']); // Single product detail (public)
 
+Route::middleware('auth:api')->post('/confirm-order', [PaymentController::class, 'confirmOrder']);
