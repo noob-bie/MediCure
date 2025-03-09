@@ -1,84 +1,104 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom"; 
+// checkout.jsx
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom"; // Import useLocation
+import axiosInstance from "../../utils/axiosInstance";
 import "./Checkout.css";
 
 const Checkout = () => {
-  const { state } = useLocation();
-  const cartItems = state ? state.cartItems : [];
+    const [formData, setFormData] = useState({
+        delivery_address: "",
+        // payment_method is removed from formData
+    });
+    const [loading, setLoading] = useState(false);
+    // message state is removed as order placement is moved
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [selectedCartItems, setSelectedCartItems] = useState([]);
+    const [cartTotal, setCartTotal] = useState(0);
 
-  const navigate = useNavigate();
+    useEffect(() => {
+        if (location.state && location.state.selectedCartItems) {
+            setSelectedCartItems(location.state.selectedCartItems);
+        }
+    }, [location.state]);
 
-  const handlePlaceOrder = () => {
-    navigate("/payment");
-  };
+    useEffect(() => {
+        const calculateTotal = () => {
+            let total = 0;
+            selectedCartItems.forEach(item => {
+                total += item.quantity * item.product.price;
+            });
+            setCartTotal(total);
+        };
+        calculateTotal();
+    }, [selectedCartItems]);
 
-  return (
-    <div className="checkout-container">
-      <h2>Checkout</h2>
-      
-      {/* Customer Info */}
-      <div className="customer-info">
-        <h3>Ishrat Jahan Mim</h3>
-        <span>1975728958</span>
-        <p>Insaf Tower, Happy Homes, Kunipara, Tejgaon, Dhaka - North, Dhaka</p>
-      </div>
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-      {/* Cart Items */}
-      {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        cartItems.map((item) => (
-          <div key={item.id} className="checkout-item">
-            <h4>{item.store}</h4>
-            <div className="item-details">
-              <img src={item.image} alt={item.productName} />
-              <div className="info">
-                <p className="product-name">{item.productName}</p>
-                <p className="price">
-                  ৳{item.price} x {item.quantity} = ৳{item.price * item.quantity}
-                </p>
-              </div>
-            </div>
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        // message state is no longer used here
 
-            {/* Delivery Info */}
-            <div className="delivery-option">
-              <p><strong>Standard Delivery</strong></p>
-              <p>Guaranteed by 5-8 Mar</p>
-              <p>৳ 80</p>
-            </div>
-          </div>
-        ))
-      )}
+        console.log("Form Data (for Delivery Address):", formData); // Log delivery address
+        console.log("Order Items (to be sent to payment page):", selectedCartItems.map(item => ({ // Log order items
+            product_id: item.product.id,
+            quantity: item.quantity,
+            price: item.product.price,
+        })));
 
-      {/* Order Summary */}
-      <div className="summary">
-        <div>
-          <span>Merchandise Subtotal ({cartItems.length} Items)</span>
-          <span>৳ {cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}</span>
+        // Navigate to payment page, passing formData and selectedCartItems as state
+        navigate("/payment", { state: { formData, selectedCartItems } });
+
+        setLoading(false); // Loading state set to false after navigation (or after payment page load if needed)
+
+    };
+
+    return (
+        <div className="checkout-container">
+            <h2>Checkout</h2>
+
+            {selectedCartItems.length > 0 ? (
+                <div className="checkout-items-list">
+                    <h3>Order Summary:</h3>
+                    {selectedCartItems.map(item => (
+                        <div key={item.id} className="checkout-item">
+                            <p>{item.product.name} x {item.quantity}</p>
+                            <p>৳{item.quantity * item.product.price}</p>
+                        </div>
+                    ))}
+                    <div className="checkout-total">
+                        <strong>Total: ৳{cartTotal}</strong>
+                    </div>
+                </div>
+            ) : (
+                <p>No items selected for checkout. Please select items in your cart.</p>
+            )}
+
+            {selectedCartItems.length > 0 && (
+                <form onSubmit={handleSubmit}>
+                    <label>Delivery Address:</label>
+                    <input
+                        type="text"
+                        name="delivery_address"
+                        value={formData.delivery_address}
+                        onChange={handleChange}
+                        required
+                    />
+
+                    {/* Payment Method Label and Select Removed */}
+
+                    <button type="submit" disabled={loading}>
+                        {loading ? "Proceeding to Payment..." : "Proceed to Payment"}
+                    </button>
+                </form>
+            )}
+
+            {/* Message section removed */}
         </div>
-        <div>
-          <span>Shipping Fee Subtotal</span>
-          <span>৳ 80</span>
-        </div>
-        <div>
-          <span>Voucher & Code</span>
-          <a href="#">View or enter code</a>
-        </div>
-      </div>
-
-      {/* Total & Place Order */}
-      <div className="checkout-footer">
-        <div className="total">
-          <span>Total:</span>
-          <span>৳ {cartItems.reduce((total, item) => total + item.price * item.quantity, 0) + 80}</span>
-        </div>
-        <button className="place-order-btn" onClick={handlePlaceOrder}>
-         Place Order
-        </button>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Checkout;
