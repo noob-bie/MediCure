@@ -5,8 +5,8 @@ import axiosInstance from '../../utils/axiosInstance';
 
 import person from '../../assets/images/person.png';
 import email from '../../assets/images/email.png';
-import Phone from '../../assets/images/Phone.png';
-import Password from '../../assets/images/Password.png';
+import Phone from '../../assets/images/phone.png';
+import Password from '../../assets/images/password.png';
 import {Link, useNavigate} from 'react-router-dom';
 import Login from '../login/Login';
 
