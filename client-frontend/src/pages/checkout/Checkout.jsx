@@ -1,16 +1,14 @@
 // checkout.jsx
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; // Import useLocation
+import { useNavigate, useLocation } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import "./Checkout.css";
 
 const Checkout = () => {
     const [formData, setFormData] = useState({
         delivery_address: "",
-        // payment_method is removed from formData
     });
     const [loading, setLoading] = useState(false);
-    // message state is removed as order placement is moved
     const navigate = useNavigate();
     const location = useLocation();
     const [selectedCartItems, setSelectedCartItems] = useState([]);
@@ -40,20 +38,17 @@ const Checkout = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        // message state is no longer used here
 
-        console.log("Form Data (for Delivery Address):", formData); // Log delivery address
-        console.log("Order Items (to be sent to payment page):", selectedCartItems.map(item => ({ // Log order items
+        console.log("Form Data (Delivery Address):", formData);
+        console.log("Order Items (to payment page):", selectedCartItems.map(item => ({
             product_id: item.product.id,
             quantity: item.quantity,
             price: item.product.price,
         })));
+        console.log("Calculated cartTotal in Checkout:", cartTotal); // Debug log
 
-        // Navigate to payment page, passing formData and selectedCartItems as state
-        navigate("/payment", { state: { formData, selectedCartItems } });
-
-        setLoading(false); // Loading state set to false after navigation (or after payment page load if needed)
-
+        navigate("/payment", { state: { formData, selectedCartItems, totalAmount: cartTotal } });
+        setLoading(false);
     };
 
     return (
@@ -88,15 +83,11 @@ const Checkout = () => {
                         required
                     />
 
-                    {/* Payment Method Label and Select Removed */}
-
                     <button type="submit" disabled={loading}>
                         {loading ? "Proceeding to Payment..." : "Proceed to Payment"}
                     </button>
                 </form>
             )}
-
-            {/* Message section removed */}
         </div>
     );
 };
