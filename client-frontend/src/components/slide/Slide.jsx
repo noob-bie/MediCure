@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./Slide.css";
 import slide1 from "../../assets/images/slide1.png";
 import slide2 from "../../assets/images/slide2.png";
@@ -18,9 +18,10 @@ const Slide = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideInterval = useRef(null);
 
-  const nextSlide = () => {
+  // Wrap nextSlide in useCallback to avoid re-creating it on each render
+  const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
+  }, [slides.length]);
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
@@ -29,19 +30,16 @@ const Slide = () => {
   useEffect(() => {
     slideInterval.current = setInterval(nextSlide, 5000);
     return () => clearInterval(slideInterval.current);
-  }, []);
+  }, [nextSlide]); // Now nextSlide is stable, preventing infinite loops
 
   return (
     <div className="slider">
       <div
         className="slides"
-        style={{ transform: `translateX(-${currentSlide * 100}%)` }} // This handles the sliding effect
+        style={{ transform: `translateX(-${currentSlide * 100}%)` }}
       >
         {slides.map((slide, index) => (
-          <div
-            key={slide.id}
-            className="slide"
-          >
+          <div key={slide.id} className="slide">
             <img src={slide.image} alt={`Slide ${slide.id}`} />
             {index === currentSlide && <div className="caption">{slide.caption}</div>}
           </div>

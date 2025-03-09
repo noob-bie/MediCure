@@ -16,7 +16,7 @@ const Navbar = () => {
     const storedRole = localStorage.getItem("userRole");
     setIsAuthenticated(authStatus);
     setUserRole(storedRole);
-  }, [localStorage.getItem("userRole")]);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
