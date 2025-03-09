@@ -1,3 +1,5 @@
+/* SingleProduct.css */
+
 /* Fix margin overflow issue */
 .single-product-container {
   display: flex;
@@ -25,6 +27,27 @@
   overflow: hidden; /* Prevents content from spilling */
 }
 
+.product-actions {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Ensure buttons are of equal size */
+.add-to-cart-button,
+.checkout-button {
+  flex: 1; /* Makes buttons equal in width */
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 150px;
+  text-align: center;
+}
+
 /* Desktop Layout */
 @media (min-width: 769px) {
   .product-card {
@@ -37,13 +60,20 @@
       max-width: 48%;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.6rem;
   }
 
   .product-details {
       flex: 1;
       max-width: 48%;
       padding: 1.5rem;
+  }
+
+  /* Desktop layout for buttons (side-by-side) - NEW PART INTEGRATED HERE */
+  .product-actions {
+    justify-content: flex-end;
+    padding-right: 1.5rem;
+    flex-direction: row;
   }
 }
 
@@ -61,6 +91,7 @@
       max-width: 100%;
       box-sizing: border-box;
   }
+
 }
 
 /* Left Section */
@@ -148,4 +179,49 @@
   font-size: 1.4rem;
   color: #006bb3;
   margin-top: 1.5rem;
+}
+
+/* *** Product Actions (Add to Cart, Checkout Buttons) - NEW PART *** */
+.add-to-cart-button,
+.checkout-button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 120px; /* Minimum width for buttons */
+  text-align: center; /* Ensure text is centered in button */
+}
+
+.add-to-cart-button {
+  background-color: #007bff; /* Blue color */
+  color: white;
+}
+
+.add-to-cart-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.checkout-button {
+  background-color: #28a745; /* Green color */
+  color: white;
+}
+
+.checkout-button:hover {
+  background-color: #1e7e34; /* Darker green on hover */
+}
+
+@media (max-width: 768px) {
+  .product-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .add-to-cart-button,
+  .checkout-button {
+    width: 90%; /* Ensures equal width */
+    max-width: 300px; /* Prevents overly wide buttons */
+  }
 }

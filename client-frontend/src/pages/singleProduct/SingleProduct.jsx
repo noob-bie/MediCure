@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import "./SingleProduct.css"; // Import CSS file
+import "./SingleProduct.css";
 import axiosInstance from "../../utils/axiosInstance";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const SingleProduct = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate(); // Hook for navigation
 
     useEffect(() => {
         const fetchProductDetails = async () => {
@@ -37,6 +39,27 @@ const SingleProduct = () => {
         return <h2 className="not-loading">Product Not Found</h2>;
     }
 
+    const handleAddToCart = async () => {
+        try {
+            const response = await axiosInstance.post("/cart/items", {
+                product_id: product.id,
+                quantity: 1, // Default quantity is 1
+            });
+            console.log("Product added to cart:", response.data);
+            alert("Product added to cart successfully!"); // Simple success feedback
+        } catch (err) {
+            console.error("Error adding product to cart:", err);
+            alert("Failed to add product to cart. Please try again."); // Simple error feedback
+        }
+    };
+
+    const handleCheckout = () => {
+        navigate("/checkout"); // Navigate to checkout page
+        console.log("Checkout clicked for product ID:", product.id);
+        // In a real application, you might want to redirect to the checkout page
+        // or initiate the checkout process here.
+    };
+
     return (
         <div className="single-product-container">
             <div className="product-card">
@@ -44,7 +67,11 @@ const SingleProduct = () => {
                 <div className="product-info">
                     <h1 className="product-name">{product.name}</h1>
                     {product.image && (
-                        <img src={product.image} alt={product.name} className="product-image" />
+                        <img
+                            src={product.image}
+                            alt={product.name}
+                            className="product-image"
+                        />
                     )}
                     <h4 className="product-price">Price: ৳{product.price}</h4>
                     <p className="product-category">Category: {product.category}</p>
@@ -53,6 +80,7 @@ const SingleProduct = () => {
 
                 {/* Right Side: Additional Details */}
                 <div className="product-details">
+                    {/* Conditionally render nullable attributes */}
                     {product.manufacturer && (
                         <p className="product-detail-item">
                             <strong>Manufacturer:</strong> {product.manufacturer}
@@ -93,8 +121,51 @@ const SingleProduct = () => {
                             <strong>Unit:</strong> {product.unit}
                         </p>
                     )}
+                    {Object.keys(product).map((key) => {
+                        const excludedKeys = [
+                            "id",
+                            "name",
+                            "image",
+                            "price",
+                            "category",
+                            "description",
+                            "manufacturer",
+                            "expiration_date",
+                            "generic_name",
+                            "dosage",
+                            "indications",
+                            "contraindications",
+                            "brand",
+                            "unit",
+                            "created_at",
+                            "updated_at",
+                        ];
+                        if (!excludedKeys.includes(key) && product[key]) {
+                            let displayLabel = key
+                                .replace(/_/g, " ")
+                                .replace(/([a-z])([A-Z])/g, "$1 $2")
+                                .toUpperCase();
+                            return (
+                                <p key={key} className="product-detail-item">
+                                    <strong>{displayLabel}:</strong> {product[key]}
+                                </p>
+                            );
+                        }
+                        return null;
+                    })}
+                </div>
+
+                {/* Buttons Container */}
+                <div className="product-actions">
+                    <button className="add-to-cart-button" onClick={handleAddToCart}>
+                        Add to Cart
+                    </button>
+                    <button className="checkout-button" onClick={handleCheckout}>
+                        Checkout
+                    </button>
                 </div>
             </div>
+
         </div>
     );
 };
