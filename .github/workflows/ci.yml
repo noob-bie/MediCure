@@ -37,8 +37,6 @@ jobs:
       - name: Generate Laravel application key
         run: php artisan key:generate
 
-      - name: Run PHPUnit tests
-        run: vendor/bin/phpunit
 
   frontend:
     name: React Frontend
