@@ -4,8 +4,8 @@ import axiosInstance from "../../utils/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import Signup from "../signup/Signup";
 
-import Phone from "../../assets/images/Phone.png";
-import Password from "../../assets/images/Password.png";
+import Phone from "../../assets/images/phone.png";
+import Password from "../../assets/images/password.png";
 
 const Login = () => {
   const [role, setRole] = useState("user");
