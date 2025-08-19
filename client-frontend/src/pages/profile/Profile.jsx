@@ -66,11 +66,7 @@ const Profile = () => {
     <div className="profile-container">
       <div className="profile-card">
         <div className="profile-header">
-          <img
-            src={download}
-            alt="Default Avatar"
-            className="profile-avatar"
-          />
+          <img src={download} alt="Default Avatar" className="profile-avatar" />
           <h2>Profile</h2>
         </div>
         <div className="profile-info">
@@ -91,7 +87,12 @@ const Profile = () => {
           </p>
         </div>
         <div className="profile-actions">
-          <button className="profile-button">Order History</button>
+          <button
+            onClick={() => navigate("/orders")}
+            className="profile-button"
+          >
+            My Orders
+          </button>
           <button className="profile-button">Edit Profile</button>
           <button onClick={handleLogout} className="profile-button logout">
             Logout

@@ -1,95 +1,99 @@
-import React, { useState } from "react"; // Import useState
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axiosInstance from "../../utils/axiosInstance"; // Import axiosInstance
+import axiosInstance from "../../utils/axiosInstance";
 import "./Payment.css";
 import cashIcon from "../../assets/images/cash-icon.png";
 
 const Payment = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { orderId, totalAmount } = location.state || {}; // Receiving orderId and totalAmount from Checkout
-    const [confirmationMessage, setConfirmationMessage] = useState(null); // State for confirmation message
-    const [errorMessage, setErrorMessage] = useState(null); // State for error message
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { orderId, totalAmount , selectedCartItems} = location.state || {};
+  const [showPopup, setShowPopup] = useState(false); // State for popup visibility
+  const [errorMessage, setErrorMessage] = useState(null);
 
-    console.log("Payment Component - location.state:", location.state);
-    console.log("Payment Component - totalAmount:", totalAmount);
+const handleConfirmOrder = async () => {
+  if (!orderId) {
+    setErrorMessage("Order ID is missing. Please go back to checkout.");
+    return;
+  }
 
-    const handleConfirmOrder = async () => {
-        if (!orderId) {
-            console.error("Order ID is missing. Cannot confirm order.");
-            setErrorMessage("Order ID is missing. Please go back to checkout.");
-            return;
-        }
+  try {
+    const response = await axiosInstance.post(`/confirm-order`, {
+      order_id: orderId,
+    });
 
-        console.log("Confirm Order button clicked for orderId:", orderId); // Debug log before API call
-        setConfirmationMessage(null); // Clear any previous confirmation message
-        setErrorMessage(null); // Clear any previous error message
+    if (response.status === 200) {
+      // remove only the selected items from cart
+      const itemIds = selectedCartItems.map(item => item.id);
 
-        try {
-            // Use axiosInstance.post to confirm order
-            const response = await axiosInstance.post(
-                `/confirm-order`, // Use relative URL
-                { order_id: orderId }
-            );
+      await axiosInstance.post(`/cart/remove-items`, { item_ids: itemIds });
 
-            console.log("Confirm Order API Response:", response); // Log API response
+      setShowPopup(true);
+    } else {
+      setErrorMessage("Failed to confirm order. Please try again.");
+    }
+  } catch (error) {
+    console.error("Error confirming order:", error);
+    setErrorMessage("Failed to confirm order. Please try again.");
+  }
+};
 
-            if (response.status === 200) {
-                console.log("Order confirmed successfully!");
-                setConfirmationMessage("Order confirmed! Your order will be delivered soon."); // Set success message
-                // Optionally, you can navigate to a confirmation page instead of alert and navigate home immediately
-                // setTimeout(() => { navigate("/"); }, 3000); // Navigate home after 3 seconds, for example
-            } else {
-                console.error("Failed to confirm order. Status:", response.status, response.data);
-                setErrorMessage("Failed to confirm order. Please try again."); // Set error message
-            }
-        } catch (error) {
-            console.error("Error confirming order:", error);
-            setErrorMessage("Failed to confirm order. Please try again."); // Set error message
-        }
-    };
 
-    return (
-        <div className="payment-container">
-            <h2>Select Payment Method</h2>
+  const handleOkClick = () => {
+    // ✅ clear any local cart cache you might be keeping
+    try {
+      localStorage.removeItem("cart");
+      localStorage.removeItem("cartItems");
+      // if you track a count/badge etc.
+      localStorage.removeItem("cartCount");
+    } catch (e) {
+      // ignore
+    }
 
-            {/* Payment Method Section */}
-            <div className="payment-option">
-                <h3>Available Payment Method</h3>
-                <div className="payment-method">
-                    <img src={cashIcon} alt="Cash on Delivery" className="cash-icon" />
-                    <span>Cash on Delivery</span>
-                </div>
-            </div>
+    setShowPopup(false);
+    navigate("/shop");
+  };
 
-            {/* Order Total */}
-            <div className="order-total">
-                <span>Total Amount:</span>
-                <span>৳ {totalAmount || "N/A"}</span>
-            </div>
+  return (
+    <div className="payment-container">
+      <h2>Select Payment Method</h2>
 
-            {/* Confirmation Message Section */}
-            {confirmationMessage && (
-                <div className="confirmation-message success">
-                    {confirmationMessage}
-                </div>
-            )}
-            {errorMessage && (
-                <div className="confirmation-message error">
-                    {errorMessage}
-                </div>
-            )}
-
-            {/* Confirm Order Button */}
-            <button
-                className="confirm-order-btn"
-                onClick={handleConfirmOrder}
-                disabled={!orderId || confirmationMessage === "Order confirmed! Your order will be delivered soon."} // Disable after successful confirmation
-            >
-                Confirm Order
-            </button>
+      <div className="payment-option">
+        <h3>Available Payment Method</h3>
+        <div className="payment-method">
+          <img src={cashIcon} alt="Cash on Delivery" className="cash-icon" />
+          <span>Cash on Delivery</span>
         </div>
-    );
+      </div>
+
+      <div className="order-total">
+        <span>Total Amount:</span>
+        <span>৳ {totalAmount || "N/A"}</span>
+      </div>
+
+      {errorMessage && (
+        <div className="confirmation-message error">{errorMessage}</div>
+      )}
+
+      <button
+        className="confirm-order-btn"
+        onClick={handleConfirmOrder}
+        disabled={!orderId}
+      >
+        Confirm Order
+      </button>
+
+      {/* Popup Modal */}
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-box">
+            <p>Your order is confirmed and will be delivered soon.</p>
+            <button onClick={handleOkClick}>OK</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Payment;

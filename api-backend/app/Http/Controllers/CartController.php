@@ -34,7 +34,17 @@ class CartController extends Controller {
         return response()->json($this->cartService->updateCartItemQuantity($request->user(), $cart_item_id, $request->all()));
     }
 
-    public function removeItem($cart_item_id) {
-        return response()->json($this->cartService->removeCartItem($cart_item_id));
-    }
+public function removeItems(Request $request) {
+    $request->validate([
+        'item_ids' => 'required|array',
+        'item_ids.*' => 'integer|exists:cart_items,id'
+    ]);
+
+    CartItem::whereIn('id', $request->item_ids)
+            ->whereHas('cart', fn($q) => $q->where('user_id', $request->user()->id))
+            ->delete();
+
+    return response()->json(['message' => 'Selected items removed']);
+}
+
 }

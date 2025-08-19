@@ -17,6 +17,7 @@ import BabyAndMomcare from "./pages/shop/babyandmomcare/BabyAndMomcare";
 import SingleProduct from "./pages/singleProduct/SingleProduct";
 import Checkout from "./pages/checkout/Checkout";
 import Payment from "./pages/payment/Payment";
+import Orders from "./pages/orders/Orders";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -56,6 +57,7 @@ function App() {
         { path: "/checkout", element: <Checkout /> },
         { path: "/payment", element: <Payment /> },
         { path: "/profile", element: <Profile /> },
+        { path: "/orders", element: <Orders /> },
         { path: "/login", element: <Login /> },
         { path: "/signup", element: <Signup /> },
         { path: "/product/:id", element: <SingleProduct /> }, // Corrected route
