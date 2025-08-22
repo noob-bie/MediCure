@@ -26,4 +26,8 @@ class Product extends Model
         'brand',
         'unit'
     ];
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }

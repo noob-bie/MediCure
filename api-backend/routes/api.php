@@ -42,10 +42,12 @@ Route::middleware(['jwt.auth'])->group(function () {
     // Order management
     Route::post('/orders', [OrderController::class, 'placeOrder']); // Place an order
     Route::get('/orders', [OrderController::class, 'getOrders']); // Get user orders
-
+    Route:: get('/orders/pending', [OrderController::class, 'pendingPayments']);
     // Payment processing
+    Route::post('/cart/remove-items', [CartController::class, 'removeItems']);
     Route::post('/confirm-order', [PaymentController::class, 'confirmOrder']); // Confirm order payment
 });
+//Route::middleware('auth:sanctum')->get('/orders/pending', [OrderController::class, 'pendingPayments']);
 
 // Admin routes (consider adding admin middleware later)
 Route::post('/admin/products', [ProductController::class, 'store']); // Admin adds product
