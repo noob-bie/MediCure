@@ -1,87 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
-import "./BabyAndMomcare.css"
-const babyANDmom_Products = [
-  {
-    name: " Napa (500mg)",
-    price: "৳30",
-    image:
-      "https://epharma.com.bd/storage/app/public/YAc63qF4DRdd4GParo03FyE17vVRCKEFFZc2eGoi.webp",
-  },
-  {
-    name: " Ace (500mg)",
-    price: "৳12",
-    image:
-      "https://medeasy.health/_next/image?url=https://api.medeasy.health/media/medicines/ace-500-mg.jpg&w=750&q=75",
-  },
-  {
-    name: "Losectil (20mg)",
-    price: "৳60",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8xMDg5MVwvMTA4OTEtbG9zZWN0aWwtMjAtQ2FwLWNvcHkta3BhMHF6LmpwZWciLCJlZGl0cyI6W119",
-  },
-  {
-    name: "Maxpro (20mg)",
-    price: "৳60",
-    image:
-      "https://medex.com.bd/storage/images/packaging/maxpro-20-mg-tablet-11414064409-i1-pVhK0C8pZNFoIMztwlWS.jpg",
-  },
-  {
-    name: "Alatrol (10 mg)",
-    price: "৳25",
-    image:
-      "https://medex.com.bd/storage/images/packaging/alatrol-10-mg-tablet-59253519459-i1-OXgsEr7yWZ4WnGge2aGp.jpg",
-  },
-  {
-    name: "Isentin M (2.5mg + 500 mg)",
-    price: "৳50",
-    image: "https://www.hplbd.com/products/Isentin_M.jpg",
-  },
-  {
-    name: "Losium (50mg)",
-    price: "৳70",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8xMDkwOFwvMTA5MDgtTG9zaXVtLTUwLWNvcHktdHJidTVnLmpwZWciLCJlZGl0cyI6W119",
-  },
-  {
-    name: " Anzitor (10mg)",
-    price: "৳90",
-    image:
-      "https://medex.com.bd/storage/images/packaging/anzitor-10-mg-tablet-72972527143-i1-WpHt9POqX2ML6NCWDQMN.webp",
-  },
-  {
-    name: "Avloclav (250 mg+125 mg)",
-    price: "৳100",
-    image: "https://www.acipharma.net/assets/images/products/avloclave-sus.jpg",
-  },
-  {
-    name: "Azicin (250mg)",
-    price: "৳120",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8yMDk5XC8yMDk5LUF6aXRob2Npbi0yNTAtY29weS1ja3o1NjAuanBlZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MzAwLCJoZWlnaHQiOjMwMCwiZml0Ijoib3V0c2lkZSJ9fX0=",
-  },
-  {
-    name: "Saline",
-    price: "৳15",
-    image:
-      "https://medex.com.bd/storage/images/packaging/orsaline-n-1025-gm-powder-76097023982-i1-qf6Cczs1KJaSziGlKNZY.webp",
-  },
-  {
-    name: "Ceevit(250 mg)",
-    price: "৳40",
-    image:
-      "https://medeasy.health/_next/image?url=https%3A%2F%2Fapi.medeasy.health%2Fmedia%2Fmedicines%2Fmedeasy_ceevit_250.jpg&w=750&q=75",
-  },
-];
+import axiosInstance from "../../../utils/axiosInstance.js";
+import "./BabyAndMomcare.css";
 
 const BabyAndMomcare = () => {
+  const [babyMomProducts, setBabyMomProducts] = useState([]);
+  const [allBabyMomProducts, setAllBabyMomProducts] = useState([]);
   const [sortOption, setSortOption] = useState("");
   const [orderOption, setOrderOption] = useState("");
-
-  const [baby_mom, shop_babyMoM] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(false);
+  const [productsError, setProductsError] = useState(null);
 
   useEffect(() => {
-    shop_babyMoM(babyANDmom_Products);
+    const fetchBabyMomProducts = async () => {
+      setLoadingProducts(true);
+      setProductsError(null);
+      try {
+        // Fix: Properly encode the category parameter with & symbol
+        const categoryParam = encodeURIComponent("Baby & Mom Care");
+        const res = await axiosInstance.get(`/products?category=${categoryParam}`);
+        setBabyMomProducts(res.data);
+        setAllBabyMomProducts(res.data);
+        console.log("Baby & Mom Care products:", res.data);
+      } catch (err) {
+        console.error("Error fetching baby & mom care products:", err);
+        setProductsError("Failed to load baby & mom care products");
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+
+    fetchBabyMomProducts();
   }, []);
 
   // Handle sort option change
@@ -89,13 +38,8 @@ const BabyAndMomcare = () => {
     const selectedOption = e.target.value;
     setSortOption(selectedOption);
 
-    // If sorting by price, popularity, or best sales, wait for order selection
-    if (
-      (selectedOption === "price" ||
-        selectedOption === "popularity" ||
-        selectedOption === "bestSales") &&
-      !orderOption
-    ) {
+    // If sorting by price or best sales, wait for order selection
+    if ((selectedOption === "price" || selectedOption === "bestSales") && !orderOption) {
       return;
     }
 
@@ -114,38 +58,44 @@ const BabyAndMomcare = () => {
 
   // Function to apply sorting based on current options
   const applySortingAndOrdering = (sortOption, orderOption) => {
-    let sortedBabyaNdMomcare = [...baby_mom];
+    let sortedBabyMom = [...allBabyMomProducts];
 
     if (sortOption === "bestSales") {
-      sortedBabyaNdMomcare.sort((a, b) =>
-        orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales
-      );
-    } else if (sortOption === "popularity") {
-      sortedBabyaNdMomcare.sort((a, b) =>
-        orderOption === "descending"
-          ? b.popularity - a.popularity
-          : a.popularity - b.popularity
+      sortedBabyMom.sort((a, b) =>
+        orderOption === "descending" ? b.sales_count - a.sales_count : a.sales_count - b.sales_count
       );
     } else if (sortOption === "price") {
-      sortedBabyaNdMomcare.sort((a, b) => {
-        let priceA = parseFloat(a.price.replace("৳", "").trim()) || 0;
-        let priceB = parseFloat(b.price.replace("৳", "").trim()) || 0;
+      sortedBabyMom.sort((a, b) => {
+        let priceA = parseFloat(a.price) || 0;
+        let priceB = parseFloat(b.price) || 0;
         return orderOption === "descending" ? priceB - priceA : priceA - priceB;
       });
     } else {
-      sortedBabyaNdMomcare.sort((a, b) =>
+      sortedBabyMom.sort((a, b) =>
         orderOption === "descending"
-          ? a.name < b.name
-            ? 1
-            : -1
-          : a.name > b.name
-          ? 1
-          : -1
+          ? a.name < b.name ? 1 : -1
+          : a.name > b.name ? 1 : -1
       );
     }
 
-    shop_babyMoM(sortedBabyaNdMomcare);
+    setBabyMomProducts(sortedBabyMom);
   };
+
+  if (loadingProducts) {
+    return (
+      <div className="Homecare-container">
+        <p>Loading baby & mom care products...</p>
+      </div>
+    );
+  }
+
+  if (productsError) {
+    return (
+      <div className="Homecare-container">
+        <p>Error: {productsError}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="Homecare-container">
@@ -158,12 +108,13 @@ const BabyAndMomcare = () => {
           <select
             id="sort"
             className="sort-dropdown"
+            value={sortOption}
             onChange={handleSortChange}
           >
             <option value="">Select</option>
             <option value="bestSales">Best Sales</option>
-            <option value="popularity">Popularity</option>
             <option value="price">Price</option>
+            <option value="name">Name</option>
           </select>
         </div>
 
@@ -174,6 +125,7 @@ const BabyAndMomcare = () => {
           <select
             id="order"
             className="order-dropdown"
+            value={orderOption}
             onChange={handleOrderChange}
           >
             <option value="">Select</option>
@@ -185,31 +137,36 @@ const BabyAndMomcare = () => {
 
       <section className="mt-5">
         <div id="babyANDmom_Products-container">
-          {baby_mom.map((babyANDmom_Products, i) => {
-            // Format the name for URL and display
-            const urlName = babyANDmom_Products.name
-              .toLowerCase()
-              .replace(/\s+/g, "")
-              .replace(/_/g, "");
-            const displayName = babyANDmom_Products.name.replace(/_/g, " ");
+          {babyMomProducts.length === 0 ? (
+            <p>No baby & mom care products found.</p>
+          ) : (
+            babyMomProducts.map((product) => {
+              // Format the name for URL and display
+              const urlName = product.name
+                .toLowerCase()
+                .replace(/\s+/g, "")
+                .replace(/[()]/g, "");
+              const displayName = product.name;
 
-            return (
-              <div key={i} className="babyANDmom_Products-card">
-                <img
-                  src={babyANDmom_Products.image || "default-image.jpg"}
-                  alt={babyANDmom_Products.name}
-                  className="babyANDmom_Products-image"
-                />
-                <div className="babyANDmom_Products-info">
-                  <h3>
-                    <Link to={`/shop/baby&momcare/${urlName}`}>{displayName}</Link>
-                  </h3>
-
-                  <h4>{babyANDmom_Products.price}</h4>
+              return (
+                <div key={product.id} className="babyANDmom_Products-card">
+                  <img
+                    src={product.image || "default-image.jpg"}
+                    alt={product.name}
+                    className="babyANDmom_Products-image"
+                  />
+                  <div className="babyANDmom_Products-info">
+                    <h3>
+                      <Link to={`/product/${product.id}`}>{displayName}</Link>
+                    </h3>
+                    {product.brand && <p>Brand: {product.brand}</p>}
+                    {product.manufacturer && <p>Manufacturer: {product.manufacturer}</p>}
+                    <h4>৳{parseFloat(product.price).toFixed(2)}</h4>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </section>
     </div>

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductService
 {
@@ -17,6 +18,9 @@ class ProductService
             $query->orderBy('price', ($sortDirection === 'desc' ? 'desc' : 'asc'));
         } elseif ($sortBy === 'name') {
             $query->orderBy('name', ($sortDirection === 'desc' ? 'desc' : 'asc'));
+        } else {
+            // Default sorting by created_at (newest first)
+            $query->orderBy('created_at', 'desc');
         }
         return $query->get();
     }
@@ -31,6 +35,9 @@ class ProductService
             $query->orderBy('price', ($sortDirection === 'desc' ? 'desc' : 'asc'));
         } elseif ($sortBy === 'name') {
             $query->orderBy('name', ($sortDirection === 'desc' ? 'desc' : 'asc'));
+        } else {
+            // Default sorting by created_at (newest first)
+            $query->orderBy('created_at', 'desc');
         }
         // You can add more sorting options here in the future (e.g., for price, name, etc.)
 
@@ -59,5 +66,32 @@ class ProductService
     public function createProduct(array $data)
     {
         return Product::create($data);
+    }
+    public function getProductsCountByCategory($category = null)
+    {
+        if ($category) {
+            return Product::where('category', $category)->count();
+        }
+
+        return Product::groupBy('category')
+            ->selectRaw('category, count(*) as count')
+            ->pluck('count', 'category')
+            ->toArray();
+    }
+
+    // Get available categories with product counts
+    public function getAvailableCategories()
+    {
+        return Product::select('category')
+            ->selectRaw('count(*) as product_count')
+            ->groupBy('category')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'category' => $item->category,
+                    'display_name' => Product::getCategoryDisplayName($item->category),
+                    'count' => $item->product_count
+                ];
+            });
     }
 }

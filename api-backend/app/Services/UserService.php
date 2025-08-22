@@ -32,7 +32,8 @@ class UserService
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'phone' => 'required|string|unique:users',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
+            'address' => 'nullable|string|max:1000'
         ]);
 
         if ($validator->fails()) {
@@ -44,6 +45,7 @@ class UserService
             'email' => $data['email'],
             'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
+             'address' => $data['address'] ?? null,
             'role' => 'user'
         ]);
 

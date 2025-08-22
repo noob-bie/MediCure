@@ -27,6 +27,10 @@ Route::post('/login', [UserController::class, 'login']);
 Route::get('/health-check', function () {
     return response()->json(['message' => 'Backend is running!']);
 });
+// Public product routes
+Route::get('/products', [ProductController::class, 'index']); // List all products with category filtering
+Route::get('/products/{id}', [ProductController::class, 'show']); // Single product detail
+Route::get('/categories', [ProductController::class, 'getCategories']); // Get available categories
 
 // Protected routes (require authentication)
 Route::middleware(['jwt.auth'])->group(function () {
@@ -44,7 +48,9 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::get('/orders', [OrderController::class, 'getOrders']); // Get user orders
     Route:: get('/orders/pending', [OrderController::class, 'pendingPayments']);
     // Payment processing
-    Route::post('/cart/remove-items', [CartController::class, 'removeItems']);
+    //Route::post('/cart/remove-items', [CartController::class, 'removeItems']);
+    Route::post('/cart/remove-selected', [CartController::class, 'removeSelectedItems']);
+    
     Route::post('/confirm-order', [PaymentController::class, 'confirmOrder']); // Confirm order payment
 });
 //Route::middleware('auth:sanctum')->get('/orders/pending', [OrderController::class, 'pendingPayments']);
@@ -52,6 +58,3 @@ Route::middleware(['jwt.auth'])->group(function () {
 // Admin routes (consider adding admin middleware later)
 Route::post('/admin/products', [ProductController::class, 'store']); // Admin adds product
 
-// Public product routes
-Route::get('/products', [ProductController::class, 'index']); // List all products
-Route::get('/products/{id}', [ProductController::class, 'show']); // Single product detail

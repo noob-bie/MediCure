@@ -1,87 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
-import "./Healthcare.css"
-
-const healthcare_Products = [
-  {
-    name: " Napa (500mg)",
-    price: "৳30",
-    image:
-      "https://epharma.com.bd/storage/app/public/YAc63qF4DRdd4GParo03FyE17vVRCKEFFZc2eGoi.webp",
-  },
-  {
-    name: " Ace (500mg)",
-    price: "৳12",
-    image:
-      "https://medeasy.health/_next/image?url=https://api.medeasy.health/media/medicines/ace-500-mg.jpg&w=750&q=75",
-  },
-  {
-    name: "Losectil (20mg)",
-    price: "৳60",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8xMDg5MVwvMTA4OTEtbG9zZWN0aWwtMjAtQ2FwLWNvcHkta3BhMHF6LmpwZWciLCJlZGl0cyI6W119",
-  },
-  {
-    name: "Maxpro (20mg)",
-    price: "৳60",
-    image:
-      "https://medex.com.bd/storage/images/packaging/maxpro-20-mg-tablet-11414064409-i1-pVhK0C8pZNFoIMztwlWS.jpg",
-  },
-  {
-    name: "Alatrol (10 mg)",
-    price: "৳25",
-    image:
-      "https://medex.com.bd/storage/images/packaging/alatrol-10-mg-tablet-59253519459-i1-OXgsEr7yWZ4WnGge2aGp.jpg",
-  },
-  {
-    name: "Isentin M (2.5mg + 500 mg)",
-    price: "৳50",
-    image: "https://www.hplbd.com/products/Isentin_M.jpg",
-  },
-  {
-    name: "Losium (50mg)",
-    price: "৳70",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8xMDkwOFwvMTA5MDgtTG9zaXVtLTUwLWNvcHktdHJidTVnLmpwZWciLCJlZGl0cyI6W119",
-  },
-  {
-    name: " Anzitor (10mg)",
-    price: "৳90",
-    image:
-      "https://medex.com.bd/storage/images/packaging/anzitor-10-mg-tablet-72972527143-i1-WpHt9POqX2ML6NCWDQMN.webp",
-  },
-  {
-    name: "Avloclav (250 mg+125 mg)",
-    price: "৳100",
-    image: "https://www.acipharma.net/assets/images/products/avloclave-sus.jpg",
-  },
-  {
-    name: "Azicin (250mg)",
-    price: "৳120",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8yMDk5XC8yMDk5LUF6aXRob2Npbi0yNTAtY29weS1ja3o1NjAuanBlZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MzAwLCJoZWlnaHQiOjMwMCwiZml0Ijoib3V0c2lkZSJ9fX0=",
-  },
-  {
-    name: "Saline",
-    price: "৳15",
-    image:
-      "https://medex.com.bd/storage/images/packaging/orsaline-n-1025-gm-powder-76097023982-i1-qf6Cczs1KJaSziGlKNZY.webp",
-  },
-  {
-    name: "Ceevit(250 mg)",
-    price: "৳40",
-    image:
-      "https://medeasy.health/_next/image?url=https%3A%2F%2Fapi.medeasy.health%2Fmedia%2Fmedicines%2Fmedeasy_ceevit_250.jpg&w=750&q=75",
-  },
-];
+import axiosInstance from "../../../utils/axiosInstance.js";
+import "./Healthcare.css";
 
 const Healthcare = () => {
+  const [healthcare, setHealthcare] = useState([]);
+  const [allHealthcare, setAllHealthcare] = useState([]);
   const [sortOption, setSortOption] = useState("");
   const [orderOption, setOrderOption] = useState("");
-  const [healthcare, shop_heatlcare] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(false);
+  const [productsError, setProductsError] = useState(null);
 
   useEffect(() => {
-    shop_heatlcare(healthcare_Products);
+    const fetchHealthcareProducts = async () => {
+      setLoadingProducts(true);
+      setProductsError(null);
+      try {
+        const res = await axiosInstance.get("/products?category=healthcare");
+        setHealthcare(res.data);
+        setAllHealthcare(res.data);
+        console.log("Healthcare products:", res.data);
+      } catch (err) {
+        console.error("Error fetching healthcare products:", err);
+        setProductsError("Failed to load healthcare products");
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+
+    fetchHealthcareProducts();
   }, []);
 
   // Handle sort option change
@@ -89,13 +36,8 @@ const Healthcare = () => {
     const selectedOption = e.target.value;
     setSortOption(selectedOption);
 
-    // If sorting by price, popularity, or best sales, wait for order selection
-    if (
-      (selectedOption === "price" ||
-        selectedOption === "popularity" ||
-        selectedOption === "bestSales") &&
-      !orderOption
-    ) {
+    // If sorting by price or best sales, wait for order selection
+    if ((selectedOption === "price" || selectedOption === "bestSales") && !orderOption) {
       return;
     }
 
@@ -114,45 +56,47 @@ const Healthcare = () => {
 
   // Function to apply sorting based on current options
   const applySortingAndOrdering = (sortOption, orderOption) => {
-    let sortedHealthcare = [...healthcare];
+    let sortedHealthcare = [...allHealthcare];
 
     if (sortOption === "bestSales") {
       sortedHealthcare.sort((a, b) =>
-        orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales
-      );
-    } else if (sortOption === "popularity") {
-      sortedHealthcare.sort((a, b) =>
-        orderOption === "descending"
-          ? b.popularity - a.popularity
-          : a.popularity - b.popularity
+        orderOption === "descending" ? b.sales_count - a.sales_count : a.sales_count - b.sales_count
       );
     } else if (sortOption === "price") {
       sortedHealthcare.sort((a, b) => {
-        let priceA = parseFloat(a.price.replace("৳", "").trim()) || 0;
-        let priceB = parseFloat(b.price.replace("৳", "").trim()) || 0;
+        let priceA = parseFloat(a.price) || 0;
+        let priceB = parseFloat(b.price) || 0;
         return orderOption === "descending" ? priceB - priceA : priceA - priceB;
       });
     } else {
       sortedHealthcare.sort((a, b) =>
         orderOption === "descending"
-          ? a.name < b.name
-            ? 1
-            : -1
-          : a.name > b.name
-          ? 1
-          : -1
+          ? a.name < b.name ? 1 : -1
+          : a.name > b.name ? 1 : -1
       );
     }
 
-    // setProducts(sortedProducts);
-
-    shop_heatlcare(sortedHealthcare);
+    setHealthcare(sortedHealthcare);
   };
+
+  if (loadingProducts) {
+    return (
+      <div className="Healthcare-container">
+        <p>Loading healthcare products...</p>
+      </div>
+    );
+  }
+
+  if (productsError) {
+    return (
+      <div className="Healthcare-container">
+        <p>Error: {productsError}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="Healthcare-container">
-      {/* Show categories only on the main shop page */}
-
       {/* Dropdowns for sorting */}
       <div className="dropdown-container">
         <div className="sort-container">
@@ -162,12 +106,13 @@ const Healthcare = () => {
           <select
             id="sort"
             className="sort-dropdown"
+            value={sortOption}
             onChange={handleSortChange}
           >
             <option value="">Select</option>
             <option value="bestSales">Best Sales</option>
-            <option value="popularity">Popularity</option>
             <option value="price">Price</option>
+            <option value="name">Name</option>
           </select>
         </div>
 
@@ -178,6 +123,7 @@ const Healthcare = () => {
           <select
             id="order"
             className="order-dropdown"
+            value={orderOption}
             onChange={handleOrderChange}
           >
             <option value="">Select</option>
@@ -189,31 +135,36 @@ const Healthcare = () => {
 
       <section className="mt-5">
         <div id="healthcare_Products-container">
-          {healthcare.map((healthcare_Products, i) => {
-            // Format the name for URL and display
-            const urlName = healthcare_Products.name
-              .toLowerCase()
-              .replace(/\s+/g, "")
-              .replace(/_/g, "");
-            const displayName = healthcare_Products.name.replace(/_/g, " ");
+          {healthcare.length === 0 ? (
+            <p>No healthcare products found.</p>
+          ) : (
+            healthcare.map((product) => {
+              // Format the name for URL and display
+              const urlName = product.name
+                .toLowerCase()
+                .replace(/\s+/g, "")
+                .replace(/[()]/g, "");
+              const displayName = product.name;
 
-            return (
-              <div key={i} className="healthcare_Products-card">
-                <img
-                  src={healthcare_Products.image || "default-image.jpg"}
-                  alt={healthcare_Products.name}
-                  className="healthcare_Products-image"
-                />
-                <div className="healthcare_Products-info">
-                  <h3>
-                    <Link to={`/shop/healthcare/${urlName}`}>{displayName}</Link>
-                  </h3>
-
-                  <h4>{healthcare_Products.price}</h4>
+              return (
+                <div key={product.id} className="healthcare_Products-card">
+                  <img
+                    src={product.image || "default-image.jpg"}
+                    alt={product.name}
+                    className="healthcare_Products-image"
+                  />
+                  <div className="healthcare_Products-info">
+                    <h3>
+                      <Link to={`/product/${product.id}`}>{displayName}</Link>
+                    </h3>
+                    {product.brand && <p>Brand: {product.brand}</p>}
+                    {product.manufacturer && <p>Manufacturer: {product.manufacturer}</p>}
+                    <h4>৳{parseFloat(product.price).toFixed(2)}</h4>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </section>
     </div>

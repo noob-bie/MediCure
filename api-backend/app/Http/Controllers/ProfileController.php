@@ -20,6 +20,7 @@ class ProfileController extends Controller
             'name' => $user->name,
             'phone' => $user->phone,
             'email' => $user->email,
+             'address' => $user->address ?? 'Not provided',
             'role' => $user->role,
         ], 200);
     }
