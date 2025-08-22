@@ -18,6 +18,9 @@ import SingleProduct from "./pages/singleProduct/SingleProduct";
 import Checkout from "./pages/checkout/Checkout";
 import Payment from "./pages/payment/Payment";
 import Orders from "./pages/orders/Orders";
+import ProductManagement from "./pages/adminPanel/productManagement/ProductManagement";
+import OrderManagement from "./pages/adminPanel/oderManagement/OrderManagement";
+import DeliveryManagement from "./pages/adminPanel/deliveryManagement/DeliveryManagement";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -66,7 +69,26 @@ function App() {
         // { path: "/products/healthcare/:productName", element: <SingleProduct /> },
         // { path: "/products/homecare/:productName", element: <SingleProduct /> },
         // { path: "/products/medicines/:productName", element: <SingleProduct /> },
-        isAdmin ? { path: "/admin", element: <AdminPanel /> } : null,
+        isAdmin
+          ? {
+              path: "/admin",
+              element: <AdminPanel />,
+              children: [
+                {
+                  path: "product-management",
+                  element: <ProductManagement />,
+                },
+                {
+                  path: "order-management",
+                  element: <OrderManagement />,
+                },
+                {
+                  path: "delivery-management",
+                  element: <DeliveryManagement />,
+                },
+              ],
+            }
+          : null,
       ].filter(Boolean),
     },
   ]);

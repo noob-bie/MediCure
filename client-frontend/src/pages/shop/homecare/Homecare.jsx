@@ -1,87 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
+import axiosInstance from "../../../utils/axiosInstance.js";
 import "./Homecare.css";
 
-const homecare_Products = [
-  {
-    name: " Napa (500mg)",
-    price: "৳30",
-    image:
-      "https://epharma.com.bd/storage/app/public/YAc63qF4DRdd4GParo03FyE17vVRCKEFFZc2eGoi.webp",
-  },
-  {
-    name: " Ace (500mg)",
-    price: "৳12",
-    image:
-      "https://medeasy.health/_next/image?url=https://api.medeasy.health/media/medicines/ace-500-mg.jpg&w=750&q=75",
-  },
-  {
-    name: "Losectil (20mg)",
-    price: "৳60",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8xMDg5MVwvMTA4OTEtbG9zZWN0aWwtMjAtQ2FwLWNvcHkta3BhMHF6LmpwZWciLCJlZGl0cyI6W119",
-  },
-  {
-    name: "Maxpro (20mg)",
-    price: "৳60",
-    image:
-      "https://medex.com.bd/storage/images/packaging/maxpro-20-mg-tablet-11414064409-i1-pVhK0C8pZNFoIMztwlWS.jpg",
-  },
-  {
-    name: "Alatrol (10 mg)",
-    price: "৳25",
-    image:
-      "https://medex.com.bd/storage/images/packaging/alatrol-10-mg-tablet-59253519459-i1-OXgsEr7yWZ4WnGge2aGp.jpg",
-  },
-  {
-    name: "Isentin M (2.5mg + 500 mg)",
-    price: "৳50",
-    image: "https://www.hplbd.com/products/Isentin_M.jpg",
-  },
-  {
-    name: "Losium (50mg)",
-    price: "৳70",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8xMDkwOFwvMTA5MDgtTG9zaXVtLTUwLWNvcHktdHJidTVnLmpwZWciLCJlZGl0cyI6W119",
-  },
-  {
-    name: " Anzitor (10mg)",
-    price: "৳90",
-    image:
-      "https://medex.com.bd/storage/images/packaging/anzitor-10-mg-tablet-72972527143-i1-WpHt9POqX2ML6NCWDQMN.webp",
-  },
-  {
-    name: "Avloclav (250 mg+125 mg)",
-    price: "৳100",
-    image: "https://www.acipharma.net/assets/images/products/avloclave-sus.jpg",
-  },
-  {
-    name: "Azicin (250mg)",
-    price: "৳120",
-    image:
-      "https://cdn2.arogga.com/eyJidWNrZXQiOiJhcm9nZ2EiLCJrZXkiOiJQcm9kdWN0LXBfaW1hZ2VzXC8yMDk5XC8yMDk5LUF6aXRob2Npbi0yNTAtY29weS1ja3o1NjAuanBlZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MzAwLCJoZWlnaHQiOjMwMCwiZml0Ijoib3V0c2lkZSJ9fX0=",
-  },
-  {
-    name: "Saline",
-    price: "৳15",
-    image:
-      "https://medex.com.bd/storage/images/packaging/orsaline-n-1025-gm-powder-76097023982-i1-qf6Cczs1KJaSziGlKNZY.webp",
-  },
-  {
-    name: "Ceevit(250 mg)",
-    price: "৳40",
-    image:
-      "https://medeasy.health/_next/image?url=https%3A%2F%2Fapi.medeasy.health%2Fmedia%2Fmedicines%2Fmedeasy_ceevit_250.jpg&w=750&q=75",
-  },
-];
-
 const Homecare = () => {
+  const [homecare, setHomecare] = useState([]);
+  const [allHomecare, setAllHomecare] = useState([]);
   const [sortOption, setSortOption] = useState("");
   const [orderOption, setOrderOption] = useState("");
-  const [homecare, shop_homecare] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(false);
+  const [productsError, setProductsError] = useState(null);
 
   useEffect(() => {
-    shop_homecare(homecare_Products);
+    const fetchHomecareProducts = async () => {
+      setLoadingProducts(true);
+      setProductsError(null);
+      try {
+        const res = await axiosInstance.get("/products?category=Home Care");
+        setHomecare(res.data);
+        setAllHomecare(res.data);
+        console.log("Homecare products:", res.data);
+      } catch (err) {
+        console.error("Error fetching homecare products:", err);
+        setProductsError("Failed to load homecare products");
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+
+    fetchHomecareProducts();
   }, []);
 
   // Handle sort option change
@@ -89,13 +36,8 @@ const Homecare = () => {
     const selectedOption = e.target.value;
     setSortOption(selectedOption);
 
-    // If sorting by price, popularity, or best sales, wait for order selection
-    if (
-      (selectedOption === "price" ||
-        selectedOption === "popularity" ||
-        selectedOption === "bestSales") &&
-      !orderOption
-    ) {
+    // If sorting by price or best sales, wait for order selection
+    if ((selectedOption === "price" || selectedOption === "bestSales") && !orderOption) {
       return;
     }
 
@@ -114,40 +56,45 @@ const Homecare = () => {
 
   // Function to apply sorting based on current options
   const applySortingAndOrdering = (sortOption, orderOption) => {
-    let sortedHomecare = [...homecare];
+    let sortedHomecare = [...allHomecare];
 
     if (sortOption === "bestSales") {
       sortedHomecare.sort((a, b) =>
-        orderOption === "descending" ? b.sales - a.sales : a.sales - b.sales
-      );
-    } else if (sortOption === "popularity") {
-      sortedHomecare.sort((a, b) =>
-        orderOption === "descending"
-          ? b.popularity - a.popularity
-          : a.popularity - b.popularity
+        orderOption === "descending" ? b.sales_count - a.sales_count : a.sales_count - b.sales_count
       );
     } else if (sortOption === "price") {
       sortedHomecare.sort((a, b) => {
-        let priceA = parseFloat(a.price.replace("৳", "").trim()) || 0;
-        let priceB = parseFloat(b.price.replace("৳", "").trim()) || 0;
+        let priceA = parseFloat(a.price) || 0;
+        let priceB = parseFloat(b.price) || 0;
         return orderOption === "descending" ? priceB - priceA : priceA - priceB;
       });
     } else {
       sortedHomecare.sort((a, b) =>
         orderOption === "descending"
-          ? a.name < b.name
-            ? 1
-            : -1
-          : a.name > b.name
-          ? 1
-          : -1
+          ? a.name < b.name ? 1 : -1
+          : a.name > b.name ? 1 : -1
       );
-
-      // setProducts(sortedProducts);
-
-      shop_homecare(sortedHomecare);
     }
+
+    setHomecare(sortedHomecare);
   };
+
+  if (loadingProducts) {
+    return (
+      <div className="Homecare-container">
+        <p>Loading homecare products...</p>
+      </div>
+    );
+  }
+
+  if (productsError) {
+    return (
+      <div className="Homecare-container">
+        <p>Error: {productsError}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="Homecare-container">
       {/* Dropdowns for sorting */}
@@ -159,12 +106,13 @@ const Homecare = () => {
           <select
             id="sort"
             className="sort-dropdown"
+            value={sortOption}
             onChange={handleSortChange}
           >
             <option value="">Select</option>
             <option value="bestSales">Best Sales</option>
-            <option value="popularity">Popularity</option>
             <option value="price">Price</option>
+            <option value="name">Name</option>
           </select>
         </div>
 
@@ -175,6 +123,7 @@ const Homecare = () => {
           <select
             id="order"
             className="order-dropdown"
+            value={orderOption}
             onChange={handleOrderChange}
           >
             <option value="">Select</option>
@@ -186,30 +135,36 @@ const Homecare = () => {
 
       <section className="mt-5">
         <div id="homecare_Products-container">
-          {homecare.map((homecare_Products, i) => {
-            // Format the name for URL and display
-            const urlName = homecare_Products.name
-              .toLowerCase()
-              .replace(/\s+/g, "")
-              .replace(/_/g, "");
-            const displayName = homecare_Products.name.replace(/_/g, " ");
+          {homecare.length === 0 ? (
+            <p>No homecare products found.</p>
+          ) : (
+            homecare.map((product) => {
+              // Format the name for URL and display
+              const urlName = product.name
+                .toLowerCase()
+                .replace(/\s+/g, "")
+                .replace(/[()]/g, "");
+              const displayName = product.name;
 
-            return (
-              <div key={i} className="homecare_Products-card">
-                <img
-                  src={homecare_Products.image || "default-image.jpg"}
-                  alt={homecare_Products.name}
-                  className="homecare_Products-image"
-                />
-                <div className="homecare_Products-info">
-                  <h3>
-                    <Link to={`/shop/homecare/${urlName}`}>{displayName}</Link>
-                  </h3>
-                  <h4>{homecare_Products.price}</h4>
+              return (
+                <div key={product.id} className="homecare_Products-card">
+                  <img
+                    src={product.image || "default-image.jpg"}
+                    alt={product.name}
+                    className="homecare_Products-image"
+                  />
+                  <div className="homecare_Products-info">
+                    <h3>
+                      <Link to={`/product/${product.id}`}>{displayName}</Link>
+                    </h3>
+                    {product.brand && <p>Brand: {product.brand}</p>}
+                    {product.unit && <p>Unit: {product.unit}</p>}
+                    <h4>৳{parseFloat(product.price).toFixed(2)}</h4>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </section>
     </div>

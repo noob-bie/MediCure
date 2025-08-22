@@ -64,7 +64,8 @@ const Checkout = () => {
       navigate("/payment", {
         state: {
           formData,
-          selectedCartItems,
+          //selectedCartItems,
+          selectedCartItemIds: selectedCartItems.map(i => i.id), // ✅ pass only IDs
           totalAmount: cartTotal,
           orderId: response.data.order.id, // your backend returns { order: { id: ... } }
           

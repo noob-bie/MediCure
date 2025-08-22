@@ -8,6 +8,8 @@ use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+//use Illuminate\Support\Facades\Log;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use Lcobucci\JWT\Validation\Constraint\IssuedBy;
 use Lcobucci\JWT\Validation\Constraint\PermittedFor;
@@ -34,21 +36,46 @@ class ProductController extends Controller
         $sortBy = $request->query('sortBy');
         $sortDirection = $request->query('sortDirection', 'asc');
 
-        if ($category) {
-            $products = $this->productService->getProductsByCategory($category, $sortBy, $sortDirection); // Fetch products by category
-        } else {
-            $products = $this->productService->getAllProducts($sortBy, $sortDirection); // Fetch all products if no category parameter
+        try {
+            if ($category) {
+                $products = $this->productService->getProductsByCategory($category, $sortBy, $sortDirection);
+                
+                // Log for debugging
+                Log::info('Fetching products for category: ' . $category);
+               Log::info('Found products count: ' . $products->count());
+            } else {
+                $products = $this->productService->getAllProducts($sortBy, $sortDirection);
+            }
+
+            return response()->json($products);
+        } catch (\Exception $e) {
+            Log::error('Error fetching products: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to fetch products'], 500);
         }
-        return response()->json($products);
     }
 
     // Fetch a single product
     public function show($id)
     {
-        $product = $this->productService->getProductById($id);
-        return $product ? response()->json($product) : response()->json(['error' => 'Product not found'], 404);
+        try {
+            $product = $this->productService->getProductById($id);
+            return $product ? response()->json($product) : response()->json(['error' => 'Product not found'], 404);
+        } catch (\Exception $e) {
+            Log::error('Error fetching product: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to fetch product'], 500);
+        }
     }
 
+        public function getCategories()
+    {
+        try {
+            $categories = $this->productService->getAvailableCategories();
+            return response()->json($categories);
+        } catch (\Exception $e) {
+            Log::error('Error fetching categories: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to fetch categories'], 500);
+        }
+    }
     private function validateToken(string $tokenString): ?object
     {
         try {
@@ -97,7 +124,7 @@ class ProductController extends Controller
         }
 
 
-
+try{
         $request->validate([
             'name' => 'required|string',
             'price' => 'required|numeric',
@@ -118,4 +145,11 @@ class ProductController extends Controller
         $product = $this->productService->createProduct($request->all());
         return response()->json($product, 201);
     }
+        catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['error' => 'Validation failed', 'details' => $e->errors()], 422);
+        } catch (\Exception $e) {
+            Log::error('Error creating product: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to create product'], 500);
+        }
+}
 }
