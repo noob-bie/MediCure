@@ -51,6 +51,7 @@ const Navbar = () => {
           <Link to="/shop">Shop</Link>
           <Link to="/cart">Cart</Link>
           {userRole === "admin" && <Link to="/admin">Admin Panel</Link>}
+          {userRole === "delivery man" && <Link to="/delivery">Rider Panel</Link>}
         </div>
 
         <div className="nav-right">
