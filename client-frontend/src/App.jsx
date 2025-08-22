@@ -21,10 +21,15 @@ import Orders from "./pages/orders/Orders";
 import ProductManagement from "./pages/adminPanel/productManagement/ProductManagement";
 import OrderManagement from "./pages/adminPanel/oderManagement/OrderManagement";
 import DeliveryManagement from "./pages/adminPanel/deliveryManagement/DeliveryManagement";
+import RiderPanel from "./pages/riderPanel/RiderPanel";
+import MyOrders from "./pages/riderPanel/myOrders/MyOrders";
+import DeliveryHistory from "./pages/riderPanel/deliveryHistory/DeliveryHistory";
+import PaymentDetails from "./pages/riderPanel/paymentDetails/PaymentDetails";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const isAdmin = localStorage.getItem("userRole") === "admin";
+  const isDeliveryMan = localStorage.getItem("userRole") === "delivery man";
   const [cartItems, setCartItems] = useState([]);
 
   const Layout = () => {
@@ -69,29 +74,38 @@ function App() {
         // { path: "/products/healthcare/:productName", element: <SingleProduct /> },
         // { path: "/products/homecare/:productName", element: <SingleProduct /> },
         // { path: "/products/medicines/:productName", element: <SingleProduct /> },
-        isAdmin
-          ? {
+
+        ...(isAdmin
+        ? [
+            {
               path: "/admin",
               element: <AdminPanel />,
               children: [
-                {
-                  path: "product-management",
-                  element: <ProductManagement />,
-                },
-                {
-                  path: "order-management",
-                  element: <OrderManagement />,
-                },
-                {
-                  path: "delivery-management",
-                  element: <DeliveryManagement />,
-                },
+                { path: "product-management", element: <ProductManagement /> },
+                { path: "order-management", element: <OrderManagement /> },
+                { path: "delivery-management", element: <DeliveryManagement /> },
               ],
-            }
-          : null,
-      ].filter(Boolean),
-    },
-  ]);
+            },
+          ]
+        : []),
+
+        ...(isDeliveryMan
+        ? [
+            {
+              path: "/delivery",
+              element: <RiderPanel />,
+              children: [
+                { path: "my-orders", element: <MyOrders /> },
+                { path: "delivery-history", element: <DeliveryHistory /> },
+                { path: "payment-details", element: <PaymentDetails /> },
+              ],
+            },
+          ]
+        : []),
+    ],
+  },
+]);
+
 
   return (
     <div className="App">
