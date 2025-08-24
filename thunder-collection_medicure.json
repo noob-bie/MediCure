@@ -1,0 +1,79 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "medicure",
+    "collectionId": "98e98ed9-622d-4a53-a5af-d8dd4583d760",
+    "dateExported": "2025-08-14T12:35:20.460Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "30351898-c6d1-4116-a884-2ed58de790ca",
+            "colId": "98e98ed9-622d-4a53-a5af-d8dd4583d760",
+            "containerId": "",
+            "name": "login",
+            "url": "http://127.0.0.1:8000/api/login",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2025-03-02T03:51:18.955Z",
+            "modified": "2025-03-08T18:36:35.623Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MTczIiwianRpIjoiNjdjOTk2ODVhMDU3MCIsImlhdCI6MTc0MTI2NDUxNy42NTU0MzEsImV4cCI6MTc0Mzk0MjkxNy42NTU0MzEsInVpZCI6MSwicm9sZSI6ImFkbWluIn0.xIre8IVJP4ySRQZDN4p4wUpaiEqzAUq-4k-uHnVVHtY"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"phone\": \"01200000000\",\n    \"password\": \"user22\",\n    \"role\": \"user\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "90929f96-4420-4546-8a36-f98b170e8071",
+            "colId": "98e98ed9-622d-4a53-a5af-d8dd4583d760",
+            "containerId": "",
+            "name": "productstore",
+            "url": "http://127.0.0.1:8000/api/admin/products",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2025-03-02T04:22:11.087Z",
+            "modified": "2025-03-08T10:20:25.279Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MTczIiwianRpIjoiNjdjYzE5YmU0ZWNiYSIsImlhdCI6MTc0MTQyOTE4Mi4zMjA4MDgsImV4cCI6MTc0NDEwNzU4Mi4zMjA4MDgsInVpZCI6MSwicm9sZSI6ImFkbWluIn0.6AfQelRinlIA4g8nTbf3WGk8qOpDhLJjax0bn_f-QM0"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name\": \"Senora Sanitary Napkin\",\n    \"price\": 120.00,\n    \"category\": \"Healthcare\",\n    \"stock_quantity\": 400,\n    \"description\": \"Senora is a high-quality sanitary napkin with ultra-absorbent technology.\",\n    \"brand\": \"Senora\",\n    \"unit\": \"Pack of 10\",\n    \"manufacturer\": \"Square Toiletries Ltd.\",\n    \"image\": \"https://squaretoiletries.com/wp-content/uploads/2020/02/Senora-Regular-Panty-Pack-June-23.png\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "44db692a-98ac-49ac-a4d0-c4e831c0ef75",
+            "colId": "98e98ed9-622d-4a53-a5af-d8dd4583d760",
+            "containerId": "",
+            "name": "getproduct",
+            "url": "",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2025-03-02T06:42:36.854Z",
+            "modified": "2025-03-02T06:42:36.854Z",
+            "headers": []
+        },
+        {
+            "_id": "be0427cc-cf22-483b-a38a-08eb6ea6c3b8",
+            "colId": "98e98ed9-622d-4a53-a5af-d8dd4583d760",
+            "containerId": "",
+            "name": "getsingleproduct",
+            "url": "http://127.0.0.1:8000/api/products/1",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2025-03-07T06:08:59.911Z",
+            "modified": "2025-03-07T06:09:07.063Z",
+            "headers": []
+        }
+    ],
+    "ref": "JQzEPN_I0jRd0zhSrqXgvzTGUZHZjviwaHiV6jBTH12EznKnLVl9vhD0JX0duotsPoUBOQbPZWh7sPfGFIZxVg"
+}

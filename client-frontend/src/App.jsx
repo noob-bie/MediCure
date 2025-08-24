@@ -1,122 +1,87 @@
-import React, { useState } from "react";
-import "./App.css";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Navbar from "./components/navbar/Navbar";
-import Home from "./pages/home/Home";
-import Shop from "./pages/shop/Shop";
-import Cart from "./pages/cart/Cart";
-import Profile from "./pages/profile/Profile";
-import AdminPanel from "./pages/adminPanel/AdminPanel";
-import Login from "./pages/login/Login";
-import Signup from "./pages/signup/Signup";
-import Healthcare from "./pages/shop/healthcare/Healthcare";
-import Homecare from "./pages/shop/homecare/Homecare";
-import Medicines from "./pages/shop/medicine/Medicines";
-import BabyAndMomcare from "./pages/shop/babyandmomcare/BabyAndMomcare";
-import SingleProduct from "./pages/singleProduct/SingleProduct";
-import Checkout from "./pages/checkout/Checkout";
-import Payment from "./pages/payment/Payment";
-import Orders from "./pages/orders/Orders";
-import ProductManagement from "./pages/adminPanel/productManagement/ProductManagement";
-import OrderManagement from "./pages/adminPanel/oderManagement/OrderManagement";
-import DeliveryManagement from "./pages/adminPanel/deliveryManagement/DeliveryManagement";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Shop from "./pages/Shop";
+import ProductDetails from "./pages/ProductDetails";
+import Cart from "./pages/Cart";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Profile from "./pages/Profile";
 
-// Product management specific routes
-import AddProduct from "./pages/adminPanel/productManagement/addProduct/AddProduct";
-import UpdateProduct from "./pages/adminPanel/productManagement/updateProduct/UpdateProduct";
-import DeleteProduct from "./pages/adminPanel/productManagement/deleteProduct/DeleteProduct";
-import SingleProductUpdate from "./pages/adminPanel/productManagement/updateProduct/singleProductUpdate/SingleProductUpdate";
+// Admin Pages
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AddProduct from "./pages/admin/AddProduct";
+import UpdateProduct from "./pages/admin/UpdateProduct";
+import DeleteProduct from "./pages/admin/DeleteProduct";
+import SingleUpdateProduct from "./pages/admin/SingleUpdateProduct";
 
-// Rider Panel routes
-import RiderPanel from "./pages/riderPanel/RiderPanel";
-import MyOrders from "./pages/riderPanel/myOrders/MyOrders";
-import DeliveryHistory from "./pages/riderPanel/deliveryHistory/DeliveryHistory";
-import PaymentDetails from "./pages/riderPanel/paymentDetails/PaymentDetails";
+// DeliveryMan Pages
+import DeliveryManDashboard from "./pages/delivery/DeliveryManDashboard";
+import DeliveryOrders from "./pages/delivery/DeliveryOrders";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const isAdmin = localStorage.getItem("userRole") === "admin";
-  const isDeliveryMan = localStorage.getItem("userRole") === "delivery man";
-  const [cartItems, setCartItems] = useState([]);
+  const [userRole, setUserRole] = useState(null);
 
-  const Layout = () => (
-    <div>
-      <Navbar />
-      <Outlet />
-    </div>
-  );
+  // ✅ Sync auth state from localStorage (reactive, your approach)
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        { path: "/", element: <Home /> },
-        {
-          path: "/shop",
-          element: <Shop />,
-          children: [
-            { path: "healthcare", element: <Healthcare /> },
-            { path: "homecare", element: <Homecare /> },
-            { path: "medicines", element: <Medicines /> },
-            { path: "baby&momcare", element: <BabyAndMomcare /> },
-          ],
-        },
-        { path: "/cart", element: <Cart cartItems={cartItems} setCartItems={setCartItems} /> },
-        { path: "/checkout", element: <Checkout /> },
-        { path: "/payment", element: <Payment /> },
-        { path: "/profile", element: <Profile /> },
-        { path: "/orders", element: <Orders /> },
-        { path: "/login", element: <Login setIsAuthenticated={setIsAuthenticated} setUserRole={setUserRole} /> },
-        { path: "/signup", element: <Signup /> },
-        { path: "/product/:id", element: <SingleProduct /> },
+    if (token) {
+      setIsAuthenticated(true);
+      setUserRole(role);
+    } else {
+      setIsAuthenticated(false);
+      setUserRole(null);
+    }
+  }, []);
 
-        // Admin routes
-        ...(isAdmin
-          ? [
-              {
-                path: "/admin",
-                element: <AdminPanel />,
-                children: [
-                  {
-                    path: "product-management",
-                    element: <ProductManagement />,
-                    children: [
-                      { path: "add-product", element: <AddProduct /> },
-                      { path: "update-products", element: <UpdateProduct /> },
-                      { path: "delete-products", element: <DeleteProduct /> },
-                      { path: "update-single-product/:id", element: <SingleProductUpdate /> },
-                    ],
-                  },
-                  { path: "order-management", element: <OrderManagement /> },
-                  { path: "delivery-management", element: <DeliveryManagement /> },
-                ],
-              },
-            ]
-          : []),
-
-        // Delivery man routes
-        ...(isDeliveryMan
-          ? [
-              {
-                path: "/delivery",
-                element: <RiderPanel />,
-                children: [
-                  { path: "my-orders", element: <MyOrders /> },
-                  { path: "delivery-history", element: <DeliveryHistory /> },
-                  { path: "payment-details", element: <PaymentDetails /> },
-                ],
-              },
-            ]
-          : []),
-      ],
-    },
-  ]);
+  // ✅ Logout handler
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    setIsAuthenticated(false);
+    setUserRole(null);
+  };
 
   return (
-    <div className="App">
-      <RouterProvider router={router} />
-    </div>
+    <Router>
+      <Navbar isAuthenticated={isAuthenticated} userRole={userRole} onLogout={handleLogout} />
+
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} setUserRole={setUserRole} />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* Protected User Route */}
+        <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} />
+
+        {/* Admin Routes */}
+        {isAuthenticated && userRole === "admin" && (
+          <>
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/add-product" element={<AddProduct />} />
+            <Route path="/admin/update-product" element={<UpdateProduct />} />
+            <Route path="/admin/update-product/:id" element={<SingleUpdateProduct />} />
+            <Route path="/admin/delete-product" element={<DeleteProduct />} />
+          </>
+        )}
+
+        {/* DeliveryMan Routes */}
+        {isAuthenticated && userRole === "deliveryman" && (
+          <>
+            <Route path="/delivery" element={<DeliveryManDashboard />} />
+            <Route path="/delivery/orders" element={<DeliveryOrders />} />
+          </>
+        )}
+      </Routes>
+    </Router>
   );
 }
 

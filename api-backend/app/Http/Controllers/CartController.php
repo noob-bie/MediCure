@@ -59,11 +59,10 @@ public function removeItems(Request $request) {
         ]);
 
         // Delete only selected items belonging to the authenticated user
-        \App\Models\CartItem::whereIn('id', $request->item_ids)
+        CartItem::whereIn('id', $request->item_ids)
             ->whereHas('cart', fn($q) => $q->where('user_id', $request->user()->id))
             ->delete();
 
         return response()->json(['message' => 'Selected items removed from cart']);
     }
-    
 }
