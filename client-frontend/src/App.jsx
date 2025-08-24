@@ -21,6 +21,10 @@ import Orders from "./pages/orders/Orders";
 import ProductManagement from "./pages/adminPanel/productManagement/ProductManagement";
 import OrderManagement from "./pages/adminPanel/oderManagement/OrderManagement";
 import DeliveryManagement from "./pages/adminPanel/deliveryManagement/DeliveryManagement";
+import AddProduct from "./pages/adminPanel/productManagement/addProduct/AddProduct";
+import UpdateProduct from "./pages/adminPanel/productManagement/updateProduct/UpdateProduct";
+import DeleteProduct from "./pages/adminPanel/productManagement/deleteProduct/DeleteProduct";
+import SingleProductUpdate from "./pages/adminPanel/productManagement/updateProduct/singleProductUpdate/SingleProductUpdate";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -77,6 +81,12 @@ function App() {
                 {
                   path: "product-management",
                   element: <ProductManagement />,
+                  children: [
+                    { path: "Add Product", element: <AddProduct /> },
+                    { path: "Update Products", element: <UpdateProduct /> },
+                    { path: "Delete Products", element: <DeleteProduct /> },
+                    { path: "UpdateSingleProduct/:id", element: <SingleProductUpdate /> }, 
+                  ],
                 },
                 {
                   path: "order-management",

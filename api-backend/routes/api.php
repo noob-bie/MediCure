@@ -55,6 +55,10 @@ Route::middleware(['jwt.auth'])->group(function () {
 });
 //Route::middleware('auth:sanctum')->get('/orders/pending', [OrderController::class, 'pendingPayments']);
 
-// Admin routes (consider adding admin middleware later)
-Route::post('/admin/products', [ProductController::class, 'store']); // Admin adds product
-
+// Admin routes (require admin authentication)
+Route::middleware(['jwt.auth'])->group(function () {
+    // Product management (Admin only - validation happens in controller)
+    Route::post('/admin/products', [ProductController::class, 'store']); // Admin adds product
+    Route::put('/admin/products/{id}', [ProductController::class, 'update']); // Admin updates product
+    Route::delete('/admin/products/{id}', [ProductController::class, 'destroy']); // Admin deletes product
+});
