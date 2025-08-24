@@ -1,0 +1,250 @@
+/* ProductManagement.css */
+.page-container {
+  padding: 2rem;
+  background-color: #eaf6fc;
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+}
+
+.content {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #d9eaf2;
+}
+
+.content h2 {
+  color: #006bb3 !important;  /* Add !important to override any conflicting styles */
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Alternative: More specific selector */
+.page-container .content h2 {
+  color: #006bb3;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.content p {
+  color: #2c3e50;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.management-btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 180px;
+  color: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.add-btn {
+  background-color: #28a745;
+}
+
+.add-btn:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 12px rgba(40, 167, 69, 0.3);
+}
+
+.update-btn {
+  background-color: #007acc;
+}
+
+.update-btn:hover {
+  background-color: #005f99;
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 12px rgba(0, 122, 204, 0.3);
+}
+
+.delete-btn {
+  background-color: #dc3545;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 12px rgba(220, 53, 69, 0.3);
+}
+
+/* Notification Badge Styles */
+.notification-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #ff4757;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  animation: pulse-notification 2s infinite;
+  box-shadow: 0 2px 4px rgba(255, 71, 87, 0.4);
+}
+
+/* Expired Products Alert */
+.expired-products-alert {
+  background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  animation: fade-in-alert 0.5s ease-in-out;
+}
+
+.alert-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.alert-icon {
+  font-size: 1.5rem;
+  animation: shake 2s infinite;
+}
+
+.alert-text {
+  color: #721c24;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.alert-text strong {
+  color: #a71e2a;
+}
+
+/* Animations */
+@keyframes pulse-notification {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 2px 4px rgba(255, 71, 87, 0.4);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(255, 71, 87, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 2px 4px rgba(255, 71, 87, 0.4);
+  }
+}
+
+@keyframes fade-in-alert {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 50%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(-3deg); }
+  20%, 40% { transform: rotate(3deg); }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 1rem;
+  }
+
+  .content {
+    padding: 1.5rem;
+  }
+
+  .content h2 {
+    font-size: 1.5rem;
+  }
+
+  .button-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .management-btn {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .alert-content {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .alert-text {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-container {
+    padding: 0.5rem;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  .content h2 {
+    font-size: 1.3rem;
+  }
+
+  .content p {
+    font-size: 1rem;
+  }
+
+  .management-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .notification-badge {
+    width: 20px;
+    height: 20px;
+    font-size: 0.7rem;
+    top: -6px;
+    right: -6px;
+  }
+
+  .alert-text {
+    font-size: 0.8rem;
+  }
+
+  .alert-icon {
+    font-size: 1.2rem;
+  }
+}

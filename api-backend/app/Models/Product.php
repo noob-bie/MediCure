@@ -17,6 +17,7 @@ class Product extends Model
         'stock_quantity',
         'manufacturer',
         'expiration_date',
+        'manufacture_date',
         'image',
         'sales_count',
         'generic_name',
@@ -33,6 +34,7 @@ class Product extends Model
     protected $casts = [
         'price' => 'decimal:2',
         'expiration_date' => 'date',
+        'manufacture_date' => 'date',
         'sales_count' => 'integer',
         'stock_quantity' => 'integer'
     ];
@@ -93,5 +95,42 @@ class Product extends Model
             ->distinct()
             ->pluck('category')
             ->toArray();
+    }
+    // Validate manufacture and expiration dates
+    public function validateDates()
+    {
+        if ($this->manufacture_date && $this->expiration_date) {
+            return $this->expiration_date > $this->manufacture_date;
+        }
+        return true;
+    }
+    public function getImageUrlAttribute()
+    {
+        if (empty($this->image)) {
+            return null;
+        }
+
+        // If image already has data URI prefix, return as is
+        if (strpos($this->image, 'data:image/') === 0) {
+            return $this->image;
+        }
+
+        // If it's just base64, add the prefix
+        return 'data:image/jpeg;base64,' . $this->image;
+    }
+
+    // Optional: Override the toArray method to always include proper image format
+    public function toArray()
+    {
+        $array = parent::toArray();
+
+        // Ensure image is always in proper format when serialized
+        if (isset($array['image']) && !empty($array['image'])) {
+            if (strpos($array['image'], 'data:image/') !== 0) {
+                $array['image'] = 'data:image/jpeg;base64,' . $array['image'];
+            }
+        }
+
+        return $array;
     }
 }
