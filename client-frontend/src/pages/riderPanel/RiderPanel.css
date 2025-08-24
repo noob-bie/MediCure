@@ -1,0 +1,200 @@
+.rider-panel-container {
+  display: flex;
+  font-family: 'Arial', sans-serif;
+  background-color: #eaf6fc;
+  color: #2c3e50;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Hamburger Menu Button */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+  position: fixed;
+  top: 52px;
+  left: 20px;
+}
+
+.hamburger-btn span {
+  width: 100%;
+  height: 3px;
+  background-color: #007acc;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger-btn:hover span {
+  background-color: #005f99;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #ffffff;
+  border-right: 1px solid #d9eaf2;
+  padding: 2rem 1rem;
+  box-shadow: 2px 0px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-title {
+  color: #006bb3;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-menu li {
+  margin-bottom: 1rem;
+}
+
+.sidebar-btn {
+  width: 90%;
+  background-color: #007acc;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+.sidebar-btn:hover {
+  background-color: #005f99;
+  color: white;
+  text-decoration: none;
+}
+
+/* Sidebar Overlay for mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Dashboard */
+.dashboard {
+  flex: 1;
+  padding: 2rem;
+}
+
+.dashboard h2 {
+  color: #006bb3;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.dashboard-card {
+  background-color: #ffffff;
+  border: 1px solid #d9eaf2;
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-card h3 {
+  color: #006bb3;
+  margin-bottom: 0.8rem;
+  font-size: 1.2rem;
+}
+
+.dashboard-card .number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007acc;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .admin-panel-container {
+    flex-direction: column;
+  }
+
+  /* Show hamburger button on mobile */
+  .hamburger-btn {
+    display: flex;
+  }
+
+  /* Hide sidebar by default on mobile */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    z-index: 1000;
+  }
+
+  /* Show sidebar when open */
+  .sidebar-open {
+    transform: translateX(0);
+  }
+
+  /* Show overlay when sidebar is open */
+  .sidebar-overlay {
+    display: block;
+  }
+
+  .dashboard {
+    padding: 1rem;
+    padding-top: 4rem; /* Add top padding to account for hamburger button */
+  }
+
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .dashboard {
+    padding: 0.5rem;
+    padding-top: 4rem;
+  }
+
+  .dashboard-card {
+    padding: 1rem;
+  }
+}
