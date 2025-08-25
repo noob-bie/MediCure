@@ -25,6 +25,10 @@ import RiderPanel from "./pages/riderPanel/RiderPanel";
 import MyOrders from "./pages/riderPanel/myOrders/MyOrders";
 import DeliveryHistory from "./pages/riderPanel/deliveryHistory/DeliveryHistory";
 import PaymentDetails from "./pages/riderPanel/paymentDetails/PaymentDetails";
+import AddProduct from "./pages/adminPanel/productManagement/addProduct/AddProduct";
+import UpdateProduct from "./pages/adminPanel/productManagement/updateProduct/UpdateProduct";
+import DeleteProduct from "./pages/adminPanel/productManagement/deleteProduct/DeleteProduct";
+import SingleProductUpdate from "./pages/adminPanel/productManagement/updateProduct/singleProductUpdate/SingleProductUpdate";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -76,36 +80,53 @@ function App() {
         // { path: "/products/medicines/:productName", element: <SingleProduct /> },
 
         ...(isAdmin
-        ? [
-            {
-              path: "/admin",
-              element: <AdminPanel />,
-              children: [
-                { path: "product-management", element: <ProductManagement /> },
-                { path: "order-management", element: <OrderManagement /> },
-                { path: "delivery-management", element: <DeliveryManagement /> },
-              ],
-            },
-          ]
-        : []),
+          ? [
+              {
+                path: "/admin",
+                element: <AdminPanel />,
+                children: [
+                  {
+                    path: "product-management",
+                    element: <ProductManagement />,
+                    children: [
+                      { path: "Add Product", element: <AddProduct /> },
+                      { path: "Update Products", element: <UpdateProduct /> },
+                      { path: "Delete Products", element: <DeleteProduct /> },
+                      {
+                        path: "UpdateSingleProduct/:id",
+                        element: <SingleProductUpdate />,
+                      },
+                    ],
+                  },
+                  {
+                    path: "order-management",
+                    element: <OrderManagement />,
+                  },
+                  {
+                    path: "delivery-management",
+                    element: <DeliveryManagement />,
+                  },
+                ],
+              },
+            ]
+          : []),
 
         ...(isDeliveryMan
-        ? [
-            {
-              path: "/delivery",
-              element: <RiderPanel />,
-              children: [
-                { path: "my-orders", element: <MyOrders /> },
-                { path: "delivery-history", element: <DeliveryHistory /> },
-                { path: "payment-details", element: <PaymentDetails /> },
-              ],
-            },
-          ]
-        : []),
-    ],
-  },
-]);
-
+          ? [
+              {
+                path: "/delivery",
+                element: <RiderPanel />,
+                children: [
+                  { path: "my-orders", element: <MyOrders /> },
+                  { path: "delivery-history", element: <DeliveryHistory /> },
+                  { path: "payment-details", element: <PaymentDetails /> },
+                ],
+              },
+            ]
+          : []),
+      ],
+    },
+  ]);
 
   return (
     <div className="App">

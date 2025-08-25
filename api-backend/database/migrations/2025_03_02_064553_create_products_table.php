@@ -20,8 +20,9 @@ class CreateProductsTable extends Migration
             $table->string('category');
             $table->text('description')->nullable();
             $table->integer('stock_quantity')->default(0);
-            $table->string('manufacturer')->nullable();
-            $table->date('expiration_date')->nullable();
+            $table->string('manufacturer');
+            $table->date('expiration_date');
+            $table->date('manufacture_date');
             $table->longText('image')->nullable();
             $table->integer('sales_count')->default(0);
             // Medicine-Specific Attributes (Nullable for normal products)
