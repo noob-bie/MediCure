@@ -1,102 +1,466 @@
-/* Profile.css */
+/* Profile.css  */
 
 .profile-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 80vh;
-    background: linear-gradient(to right, #e0eafc, #63a4ff);
-    padding: 20px;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  /*  Using home theme background color */
+  background-color: #eaf6fc;
+  padding: 20px;
+  /* Using home theme text color */
+  color: #2c3e50;
+}
+
+.profile-card {
+  /*  Using home theme white background and border */
+  background-color: #ffffff;
+  border: 1px solid #d9eaf2;
+  padding: 40px;
+  border-radius: 8px;
+  /* Using home theme box shadow */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 450px;
+  text-align: center;
+  /* Using home theme hover transition */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  /*Smooth entrance animation */
+  animation: slideUp 0.6s ease-out;
+}
+
+/*  Card entrance animation */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*  Using home theme hover effect */
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  justify-content: center;
+  /*Added subtle animation delay for staggered effect */
+  animation: fadeInDown 0.8s ease-out 0.2s both;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-avatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  margin-right: 15px;
+  /* Using home theme primary color for border */
+  border: 3px solid #006bb3;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+/*  Avatar hover effect using home theme */
+.profile-avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.profile-card h2 {
+  margin: 0;
+  /*  Using home theme primary color and font weight */
+  color: #006bb3;
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.profile-info {
+  text-align: left;
+  margin-bottom: 35px;
+  /*  Added staggered animation */
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-info p {
+  /* Using home theme text spacing and color */
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+  color: #4a6c81;
+  font-size: 1.1rem;
+  padding: 12px 15px;
+  /*  Using home theme background and border styling */
+  background-color: #ffffff;
+  border: 1px solid #d9eaf2;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  border-left: 4px solid #006bb3;
+  /*  Added bold font-weight to make database values stand out */
+  font-weight: 600;
+}
+
+/*  Hover effect for info items using home theme */
+.profile-info p:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-left-color: #007acc;
+}
+
+.profile-info strong {
+  font-weight: bold;
+  /*Using home theme secondary color */
+  color: #007acc;
+  margin-right: 8px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+/* New selector to make database values (text after colons) extra bold */
+.profile-info p:not(:has(strong))::after,
+.profile-info p span {
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.profile-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  /*  Added animation delay */
+  animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.profile-button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  /*  Using home theme primary color */
+  background-color: #006bb3;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  /* Using home theme transition timing */
+  transition: all 0.2s ease;
+  min-width: 120px;
+  /*  Using home theme box shadow */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/*  Using home theme hover colors */
+.profile-button:hover {
+  background-color: #007acc;
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.profile-button:active {
+  transform: translateY(0);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-button.logout {
+  /* Using appropriate red color that fits the theme */
+  background-color: #e74c3c;
+}
+
+.profile-button.logout:hover {
+  background-color: #c0392b;
+}
+/* Add these styles to your existing Profile.css */
+
+/* Make profile avatar clickable when it has a custom image */
+.profile-avatar.clickable {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-avatar.clickable:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Image Modal Styles */
+.image-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  
+}
+
+.image-modal {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.close-modal-button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  font-size: 30px;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  transition: all 0.2s ease;
+  color: #333;
+}
+
+.close-modal-button:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-image {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+  display: block;
+}
+
+.modal-info {
+  padding: 20px;
+  text-align: center;
+  background: white;
+}
+
+.modal-info h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.modal-info p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Responsive design for modal */
+@media (max-width: 768px) {
+  .image-modal {
+    max-width: 95%;
+    max-height: 95%;
+  }
+  
+  .modal-image {
+    max-height: 60vh;
+  }
+  
+  .close-modal-button {
+    top: 5px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+    font-size: 24px;
+  }
+  
+  .modal-info {
+    padding: 15px;
+  }
+  
+  .modal-info h3 {
+    font-size: 16px;
+  }
+  
+  .modal-info p {
+    font-size: 12px;
+  }
+}
+
+/* Animation for modal */
+.image-modal-overlay {
+  animation: fadeIn 0.3s ease;
+}
+
+.image-modal {
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Update image status text */
+.image-status {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+  text-align: center;
+}
+/* Enhanced loading, error, and not-found states using home theme */
+.profile-container.loading,
+.profile-container.error,
+.profile-container.not-found {
+  display: flex;               /* Center content */
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;      /* Stack content vertically */
+  min-height: 100vh;           /* Full viewport height */
+  width: 100%;                 /* Full width */
+  background-color: #ffffff;
+  border: 1px solid #d9eaf2;
+  color: #2c3e50;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;              /* Center horizontally */
+  animation: slideUp 0.6s ease-out;
+  position: relative;
+}
+
+
+.profile-container.loading {
+  position: relative;
+}
+
+/*  Loading spinner using theme colors */
+.profile-container.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border: 3px solid #d9eaf2;
+  border-top: 3px solid #006bb3;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.profile-container.error {
+  border-left: 5px solid #e74c3c;
+}
+
+.profile-container.error p {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.profile-container.not-found {
+  border-left: 5px solid #f39c12;
+}
+
+.profile-container.not-found p {
+  color: #d68910;
+  font-weight: bold;
+}
+
+/* Responsive design matching home theme breakpoints */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 15px;
+    min-height: 70vh;
   }
   
   .profile-card {
-    background-color: white;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    width: 400px;
-    text-align: center;
-  }
-  
-  .profile-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    justify-content: center; /* Center the content */
-  }
-  
-  .profile-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .profile-card h2 {
-    margin: 0;
-    color: #333;
-    font-size: 2rem;
-    font-weight: 600;
-  }
-  
-  .profile-info {
-    text-align: left;
-    margin-bottom: 30px;
-  }
-  
-  .profile-info p {
-    margin-bottom: 10px;
-    color: #555;
-    font-size: 1.1rem;
-  }
-  
-  .profile-info strong {
-    font-weight: 600;
-    color: #333;
-    margin-right: 5px;
+    width: 95%;
+    max-width: 400px;
+    padding: 1.5rem;
   }
   
   .profile-actions {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+    flex-direction: column;
+    gap: 1rem;
   }
   
   .profile-button {
-    padding: 12px 25px;
-    border: none;
-    border-radius: 8px;
-    background-color: #007bff;
-    color: white;
+    width: 100%;
+    padding: 0.8rem;
+  }
+  
+  .profile-card h2 {
+    font-size: 1.8rem;
+  }
+  
+  .profile-info p {
     font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    padding: 10px 12px;
   }
   
-  .profile-button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
+  .profile-avatar {
+    width: 45px;
+    height: 45px;
   }
-  
-  .profile-button.logout {
-    background-color: #dc3545;
-  }
-  
-  .profile-button.logout:hover {
-    background-color: #c82333;
-  }
-  
-  .profile-container.loading,
-  .profile-container.error,
-  .profile-container.not-found {
-    background: white;
-    color: #333;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
-  .profile-container.error {
-    color: red;
-  }
+}

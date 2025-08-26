@@ -40,7 +40,7 @@ Route::get('/products/search', [ProductController::class, 'search']); // Search 
 Route::middleware(['jwt.auth'])->group(function () {
     // User profile
     Route::get('/profile', [ProfileController::class, 'getUserProfile']);
-
+    Route::post('/profile/update', [ProfileController::class, 'updateProfile']);
     // Cart management
     Route::get('/cart', [CartController::class, 'index']); // View current user's cart
     Route::post('/cart/items', [CartController::class, 'addItem']); // Add item to cart

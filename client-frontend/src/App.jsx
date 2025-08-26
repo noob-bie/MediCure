@@ -6,6 +6,7 @@ import Home from "./pages/home/Home";
 import Shop from "./pages/shop/Shop";
 import Cart from "./pages/cart/Cart";
 import Profile from "./pages/profile/Profile";
+import EditProfile from "./pages/profile/editProfile/EditProfile";
 import AdminPanel from "./pages/adminPanel/AdminPanel";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
@@ -44,11 +45,11 @@ function App() {
       <div>
         {/* Passing state to Navbar */}
         <Navbar
-        isAuthenticated={isAuthenticated}
+          isAuthenticated={isAuthenticated}
           userRole={userRole}
           setIsAuthenticated={setIsAuthenticated}
           setUserRole={setUserRole}
-           />
+        />
         <Outlet />
       </div>
     );
@@ -77,8 +78,17 @@ function App() {
         { path: "/checkout", element: <Checkout /> },
         { path: "/payment", element: <Payment /> },
         { path: "/profile", element: <Profile /> },
+        { path: "/edit-profile", element: <EditProfile /> },
         { path: "/orders", element: <Orders /> },
-        { path: "/login", element: <Login setIsAuthenticated={setIsAuthenticated} setUserRole={setUserRole} /> },
+        {
+          path: "/login",
+          element: (
+            <Login
+              setIsAuthenticated={setIsAuthenticated}
+              setUserRole={setUserRole}
+            />
+          ),
+        },
         { path: "/signup", element: <Signup /> },
         { path: "/product/:id", element: <SingleProduct /> }, // Corrected route
         // { path: "/products/:id", element: <SingleProduct /> },
