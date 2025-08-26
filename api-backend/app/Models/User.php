@@ -16,5 +16,10 @@ class User extends Model
         'address',
         'role',
     ];
-    
+
+    public function assignedOrders()
+   {
+       return $this->hasMany(Order::class, 'deliveryman_id');
+   }
+
 }

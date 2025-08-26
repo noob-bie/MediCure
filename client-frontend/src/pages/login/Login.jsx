@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import "./Login.css";
 import axiosInstance from "../../utils/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,7 +8,7 @@ import Signup from "../signup/Signup";
 import Phone from "../../assets/images/phone.png";
 import Password from "../../assets/images/password.png";
 
-const Login = () => {
+const Login = ({ setIsAuthenticated, setUserRole }) => {
   const [role, setRole] = useState("user");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -40,6 +41,9 @@ const Login = () => {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("isAuthenticated", "true");
       localStorage.setItem("userRole", response.data.user.role);
+
+      setIsAuthenticated(true);
+      setUserRole(response.data.user.role);
 
       alert(response.data.message);
       navigate("/");
@@ -104,6 +108,11 @@ const Login = () => {
       </div>
     </div>
   );
+};
+
+Login.propTypes = {
+  setIsAuthenticated: PropTypes.func.isRequired,
+  setUserRole: PropTypes.func.isRequired,
 };
 
 export default Login;
