@@ -46,6 +46,8 @@
   
   .confirm-order-btn {
     width: 100%;
+    max-width: 220px; /* reduced length */
+    margin: 15px auto 0 auto; /* center horizontally */
     padding: 12px;
     background: #0077b6;
     color: white;
@@ -53,8 +55,8 @@
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    margin-top: 15px;
-  }
+}
+
   
   .confirm-order-btn:hover {
     background: #8fd7f4;

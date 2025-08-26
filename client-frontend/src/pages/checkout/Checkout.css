@@ -92,6 +92,9 @@
   font-size: 18px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  max-width: 250px; /* reduced length */
+  width: 100%; /* allows it to shrink on smaller screens */
+  margin: 0 auto; /* center horizontally */
 }
 
 .checkout-container button[type="submit"]:hover {

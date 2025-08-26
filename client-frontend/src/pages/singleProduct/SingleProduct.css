@@ -70,11 +70,16 @@
   }
 
   /* Desktop layout for buttons (side-by-side) - NEW PART INTEGRATED HERE */
-  .product-actions {
-    justify-content: flex-end;
-    padding-right: 1.5rem;
-    flex-direction: row;
-  }
+  /* Product Actions Container - Ensure buttons are in one line */
+.product-actions {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  flex-direction: row; /* force buttons to stay in one line */
+  justify-content: flex-start; /* align to left, or use center if you want them centered */
+  align-items: center; /* vertically align buttons */
+}
+
 }
 
 /* Mobile Layout - FIXED OVERFLOW ISSUE */
@@ -224,4 +229,81 @@
     width: 90%; /* Ensures equal width */
     max-width: 300px; /* Prevents overly wide buttons */
   }
+}
+
+/* Product Actions Buttons - Equal Height & Width */
+.add-to-cart-button,
+.checkout-button {
+  padding: 0.7rem 1.2rem; /* optional for inner spacing */
+  height: 45px; /* fixed height for both buttons */
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex: 1; /* ensures equal width in flex container */
+  max-width: 180px; /* limits button length */
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center; /* vertically centers text */
+}
+
+/* Popup Overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* Popup Box */
+.popup-box {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 350px;
+  width: 90%;
+}
+
+/* Popup Message Text */
+.popup-box p {
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Popup Buttons */
+.popup-box button {
+  padding: 8px 16px;
+  background-color: #4caf50; /* Green success */
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+/* Button Hover */
+.popup-box button:hover {
+  background-color: #45a049;
+}
+
+/* Error Message */
+.popup-box p.error-message {
+  color: #d9534f; /* Red for errors */
+}
+
+/* Success Message */
+.popup-box p.success-message {
+  color: #5cb85c; /* Green for success */
+  font-weight: bold;
 }

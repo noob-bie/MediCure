@@ -128,7 +128,7 @@ const CartContent = ({ cartItems, setCartItems, fetchCart }) => {
     const isIndeterminate = selectedCount > 0 && selectedCount < cartItems.length;
 
     return (
-        <div>
+        <div className="cart-container">
             <h2>Your Cart</h2>
 
             <div className="cart-select-all">

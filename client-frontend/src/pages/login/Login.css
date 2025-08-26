@@ -146,3 +146,53 @@
         width: 80%;
     }
 }
+
+/* Popup Styles */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.popup-box {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 350px;
+    width: 90%;
+}
+
+.popup-box p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.popup-box button {
+    padding: 8px 16px;
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.popup-box button:hover {
+    background-color: #45a049;
+}
+
+.popup-box p.error-message {
+    color: #d9534f;
+}
+
+.popup-box p.success-message {
+    color: #5cb85c;
+}
