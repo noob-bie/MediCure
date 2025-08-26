@@ -436,4 +436,5 @@ class ProductController extends Controller
             return response()->json(['error' => 'Failed to delete product'], 500);
         }
     }
+
 }

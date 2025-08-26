@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import './Signup.css';
-import axios from 'axios';
 import axiosInstance from '../../utils/axiosInstance';
-
 import person from '../../assets/images/person.png';
 import email from '../../assets/images/email.png';
 import Phone from '../../assets/images/phone.png';
 import Password from '../../assets/images/password.png';
-import {Link, useNavigate} from 'react-router-dom';
-import Login from '../login/Login';
-
+import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [role, setRole] = useState("user");
@@ -17,39 +13,48 @@ const Signup = () => {
   const [emailValue, setEmail] = useState("");
   const [phoneValue, setPhone] = useState("");
   const [passwordValue, setPassword] = useState("");
+  const [popupMessage, setPopupMessage] = useState(null); // popup message state
+  const [isError, setIsError] = useState(false); // to differentiate error/success
   const navigate = useNavigate();
 
-  
-
   const handleSignup = async () => {
-
     // Validation
     if (!emailValue.includes("@")) {
-      alert("Invalid email! Email must contain '@'.");
+      setPopupMessage("Invalid email! Email must contain '@'.");
+      setIsError(true);
       return;
     }
     if (phoneValue.length !== 11 || isNaN(phoneValue)) {
-      alert("Phone number must be exactly 11 digits.");
+      setPopupMessage("Phone number must be exactly 11 digits.");
+      setIsError(true);
       return;
     }
     if (passwordValue.length < 6) {
-      alert("Password must be at least 6 characters.");
+      setPopupMessage("Password must be at least 6 characters.");
+      setIsError(true);
       return;
     }
-
 
     try {
       const response = await axiosInstance.post('/register', {
         name,
-        email: emailValue.toLowerCase(), //Convert to lowercase
+        email: emailValue.toLowerCase(),
         phone: phoneValue,
         password: passwordValue,
-        role: "user", //Default role
+        role: "user",
       });
-      alert(response.data.message);
-      navigate('/login');
+      setPopupMessage(response.data.message);
+      setIsError(false);
     } catch (error) {
-      alert("Signup failed: " + (error.response?.data?.message || "Unknown error"));
+      setPopupMessage("Signup failed: " + (error.response?.data?.message || "Unknown error"));
+      setIsError(true);
+    }
+  };
+
+  const handleClosePopup = () => {
+    setPopupMessage(null);
+    if (!isError) {
+      navigate('/login');
     }
   };
 
@@ -64,37 +69,37 @@ const Signup = () => {
         <div className="input">
           <img src={person} alt="Person" />
           <input 
-          placeholder="Name" 
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)} 
+            placeholder="Name" 
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)} 
           />
         </div>
         <div className="input">
           <img src={email} alt="Email" />
           <input 
-          placeholder="Email Id" 
-          type="email"
-          value={emailValue} 
-          onChange={(e) => setEmail(e.target.value.toLowerCase())} // Convert to lowercase
+            placeholder="Email Id" 
+            type="email"
+            value={emailValue} 
+            onChange={(e) => setEmail(e.target.value.toLowerCase())} 
           />
         </div>
         <div className="input">
           <img src={Phone} alt="Phone" />
           <input 
-          placeholder="Phone Number" 
-          type="text"
-          value={phoneValue} 
-          onChange={(e) => setPhone(e.target.value)} 
+            placeholder="Phone Number" 
+            type="text"
+            value={phoneValue} 
+            onChange={(e) => setPhone(e.target.value)} 
           />
         </div>
         <div className="input">
           <img src={Password} alt="Password" />
           <input 
-          placeholder="Password" 
-          type="password" 
-          value={passwordValue} 
-          onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password" 
+            type="password" 
+            value={passwordValue} 
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
       </div>
@@ -106,6 +111,16 @@ const Signup = () => {
       <div className="submit-container">
         <div className="submit" onClick={handleSignup}>Sign Up</div>
       </div>
+
+      {/* Popup Message */}
+      {popupMessage && (
+        <div className="popup-overlay">
+          <div className="popup-box">
+            <p className={isError ? "error-message" : "success-message"}>{popupMessage}</p>
+            <button onClick={handleClosePopup}>OK</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

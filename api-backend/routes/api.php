@@ -34,6 +34,8 @@ Route::get('/products', [ProductController::class, 'index']); // List all produc
 Route::get('/products/{id}', [ProductController::class, 'show']); // Single product detail
 Route::get('/categories', [ProductController::class, 'getCategories']); // Get available categories
 
+Route::get('/products/search', [ProductController::class, 'search']); // Search products by name
+
 // Protected routes (require authentication)
 Route::middleware(['jwt.auth'])->group(function () {
     // User profile
