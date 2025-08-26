@@ -7,6 +7,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\AdminOrderController;
+use App\Http\Controllers\DeliveryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,11 +48,11 @@ Route::middleware(['jwt.auth'])->group(function () {
     // Order management
     Route::post('/orders', [OrderController::class, 'placeOrder']); // Place an order
     Route::get('/orders', [OrderController::class, 'getOrders']); // Get user orders
-    Route:: get('/orders/pending', [OrderController::class, 'pendingPayments']);
+    Route::get('/orders/pending', [OrderController::class, 'pendingPayments']);
     // Payment processing
     //Route::post('/cart/remove-items', [CartController::class, 'removeItems']);
     Route::post('/cart/remove-selected', [CartController::class, 'removeSelectedItems']);
-    
+
     Route::post('/confirm-order', [PaymentController::class, 'confirmOrder']); // Confirm order payment
 });
 //Route::middleware('auth:sanctum')->get('/orders/pending', [OrderController::class, 'pendingPayments']);
@@ -61,4 +63,15 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::post('/admin/products', [ProductController::class, 'store']); // Admin adds product
     Route::put('/admin/products/{id}', [ProductController::class, 'update']); // Admin updates product
     Route::delete('/admin/products/{id}', [ProductController::class, 'destroy']); // Admin deletes product
+    Route::get('/admin/orders', [AdminOrderController::class, 'index']); // Get all orders
+    Route::get('/admin/deliverymen', [AdminOrderController::class, 'getDeliverymen']); // Get delivery men
+    Route::put('/admin/orders/{orderId}/assign', [AdminOrderController::class, 'assignDeliveryman']); // Assign deliveryman
+    Route::put('/admin/orders/{orderId}/status', [AdminOrderController::class, 'updateStatus']); // Update order status
+
+    // Delivery Management
+    Route::get('/delivery/my-orders', [DeliveryController::class, 'getMyOrders']); // Get assigned orders
+    Route::get('/delivery/history', [DeliveryController::class, 'getDeliveryHistory']); // Get delivery history
+    Route::put('/delivery/orders/{orderId}/status', [DeliveryController::class, 'updateOrderStatus']); // Update order status
+
+
 });

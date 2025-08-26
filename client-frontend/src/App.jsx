@@ -31,16 +31,24 @@ import DeleteProduct from "./pages/adminPanel/productManagement/deleteProduct/De
 import SingleProductUpdate from "./pages/adminPanel/productManagement/updateProduct/singleProductUpdate/SingleProductUpdate";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const isAdmin = localStorage.getItem("userRole") === "admin";
-  const isDeliveryMan = localStorage.getItem("userRole") === "delivery man";
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    localStorage.getItem("isAuthenticated") === "true"
+  );
+  const [userRole, setUserRole] = useState(localStorage.getItem("userRole"));
+  //const isAdmin = localStorage.getItem("userRole") === "admin";
+  //const isDeliveryMan = localStorage.getItem("userRole") === "delivery man";
   const [cartItems, setCartItems] = useState([]);
 
   const Layout = () => {
     return (
       <div>
         {/* Passing state to Navbar */}
-        <Navbar />
+        <Navbar
+        isAuthenticated={isAuthenticated}
+          userRole={userRole}
+          setIsAuthenticated={setIsAuthenticated}
+          setUserRole={setUserRole}
+           />
         <Outlet />
       </div>
     );
@@ -70,7 +78,7 @@ function App() {
         { path: "/payment", element: <Payment /> },
         { path: "/profile", element: <Profile /> },
         { path: "/orders", element: <Orders /> },
-        { path: "/login", element: <Login /> },
+        { path: "/login", element: <Login setIsAuthenticated={setIsAuthenticated} setUserRole={setUserRole} /> },
         { path: "/signup", element: <Signup /> },
         { path: "/product/:id", element: <SingleProduct /> }, // Corrected route
         // { path: "/products/:id", element: <SingleProduct /> },
@@ -79,7 +87,7 @@ function App() {
         // { path: "/products/homecare/:productName", element: <SingleProduct /> },
         // { path: "/products/medicines/:productName", element: <SingleProduct /> },
 
-        ...(isAdmin
+        ...(userRole === "admin"
           ? [
               {
                 path: "/admin",
@@ -111,7 +119,7 @@ function App() {
             ]
           : []),
 
-        ...(isDeliveryMan
+        ...(userRole === "delivery man"
           ? [
               {
                 path: "/delivery",
