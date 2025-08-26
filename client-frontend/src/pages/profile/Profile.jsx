@@ -11,6 +11,7 @@ const Profile = () => {
   const [error, setError] = useState(null);
   const [imageError, setImageError] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState(null);
@@ -66,13 +67,32 @@ const Profile = () => {
     }
   }, [navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("token");
-    localStorage.removeItem("userRole");
-    setIsAuthenticated(false);
-    setUserRole(null);
-    navigate("/");
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    
+    // Add a small delay to show the loading dialog
+    setTimeout(() => {
+      // Clear all authentication data
+      localStorage.removeItem("isAuthenticated");
+      localStorage.removeItem("token");
+      localStorage.removeItem("userRole");
+      
+      // Clear any other user-related data if needed
+      localStorage.removeItem("cartItems"); // if you store cart data
+      localStorage.removeItem("userPreferences"); // if you store preferences
+      
+      // Reset state
+      setIsAuthenticated(false);
+      setUserRole(null);
+      
+      // Navigate to home page and reload the entire website
+      navigate("/");
+      
+      // Force a complete page reload to reset the entire application state
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
+    }, 1500); // Show loading for 1.5 seconds
   };
 
   const handleImageError = () => {
@@ -153,7 +173,7 @@ const Profile = () => {
             <p className="image-status"> </p>
           )}
           {(!profileData.profile_image_url || imageError) && (
-            <p className="image-status">Using default profile image</p>
+            <p className="image-status"></p>
           )}
         </div>
         <div className="profile-info">
