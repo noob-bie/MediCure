@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "./Login.css";
 import axiosInstance from "../../utils/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
+import Signup from "../signup/Signup";
 
 import Phone from "../../assets/images/phone.png";
 import Password from "../../assets/images/password.png";
@@ -11,20 +12,16 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
   const [role, setRole] = useState("user");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [popupMessage, setPopupMessage] = useState(null); // popup state
-  const [isError, setIsError] = useState(false); // error/success flag
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     // Validation checks
     if (phone.length !== 11 || isNaN(phone)) {
-      setPopupMessage("Phone number must be exactly 11 digits.");
-      setIsError(true);
+      alert("Phone number must be exactly 11 digits.");
       return;
     }
     if (password.length < 6) {
-      setPopupMessage("Password must contain 6 Characters");
-      setIsError(true);
+      alert("Password must contain 6 Characters");
       return;
     }
 
@@ -35,9 +32,9 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
         role,
       });
 
+      console.log("Login Response:", response.data); 
       if (!response.data.token) {
-        setPopupMessage("Token not received!");
-        setIsError(true);
+        alert("Token not received!");
         return;
       }
 
@@ -48,21 +45,13 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
       setIsAuthenticated(true);
       setUserRole(response.data.user.role);
 
-      setPopupMessage(response.data.message);
-      setIsError(false);
+      alert(response.data.message);
+      navigate("/");
     } catch (error) {
-      setPopupMessage(
+      alert(
         "Login failed: " +
           (error.response?.data?.message || "Invalid phone number or password.")
       );
-      setIsError(true);
-    }
-  };
-
-  const handleClosePopup = () => {
-    setPopupMessage(null);
-    if (!isError) {
-      navigate("/");
     }
   };
 
@@ -74,6 +63,7 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
       </div>
 
       <div className="inputs">
+        {/* Role Dropdown */}
         <div className="input">
           <select value={role} onChange={(e) => setRole(e.target.value)}>
             <option value="user">User</option>
@@ -116,16 +106,6 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
           Login
         </div>
       </div>
-
-      {/* Popup Message */}
-      {popupMessage && (
-        <div className="popup-overlay">
-          <div className="popup-box">
-            <p className={isError ? "error-message" : "success-message"}>{popupMessage}</p>
-            <button onClick={handleClosePopup}>OK</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
