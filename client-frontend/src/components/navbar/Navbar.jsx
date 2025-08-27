@@ -121,6 +121,7 @@ const Navbar = () => {
           ) : (
             <>
               <Link to="/login">Login</Link>
+              {/* remove logout button */}
               <Link to="/signup">Signup</Link>
             </>
           )}
