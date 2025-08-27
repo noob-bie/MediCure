@@ -9,40 +9,51 @@ class ProductService
 {
 
     // Get all products by category
-    public function getProductsByCategory($category, $sortBy = null, $sortDirection = 'asc')
-    {
-        $query = Product::where('category', $category);
-        if ($sortBy === 'sales_count') {
-            $query->orderBy('sales_count', ($sortDirection === 'desc' ? 'desc' : 'asc'));
-        } elseif ($sortBy === 'price') {
-            $query->orderBy('price', ($sortDirection === 'desc' ? 'desc' : 'asc'));
-        } elseif ($sortBy === 'name') {
-            $query->orderBy('name', ($sortDirection === 'desc' ? 'desc' : 'asc'));
-        } else {
-            // Default sorting by created_at (newest first)
-            $query->orderBy('created_at', 'desc');
-        }
-        return $query->get();
+    public function getProductsByCategory($category, $sortBy = null, $sortDirection = 'asc', $limit = null)
+{
+    $query = Product::where('category', $category);
+
+    // Apply sorting
+    if ($sortBy === 'sales_count') {
+        $query->orderBy('sales_count', $sortDirection === 'desc' ? 'desc' : 'asc');
+    } elseif ($sortBy === 'price') {
+        $query->orderBy('price', $sortDirection === 'desc' ? 'desc' : 'asc');
+    } elseif ($sortBy === 'name') {
+        $query->orderBy('name', $sortDirection === 'desc' ? 'desc' : 'asc');
+    } else {
+        $query->orderBy('created_at', 'desc'); // default newest first
     }
 
-    public function getAllProducts($sortBy = null, $sortDirection = 'asc')
-    {
-        $query = Product::query(); // Start with a query builder
-
-        if ($sortBy === 'sales_count') { // Check if sortBy is 'sales_count'
-            $query->orderBy('sales_count', ($sortDirection === 'desc' ? 'desc' : 'asc')); // Add orderBy clause for sales_count
-        } elseif ($sortBy === 'price') {
-            $query->orderBy('price', ($sortDirection === 'desc' ? 'desc' : 'asc'));
-        } elseif ($sortBy === 'name') {
-            $query->orderBy('name', ($sortDirection === 'desc' ? 'desc' : 'asc'));
-        } else {
-            // Default sorting by created_at (newest first)
-            $query->orderBy('created_at', 'desc');
-        }
-        // You can add more sorting options here in the future (e.g., for price, name, etc.)
-
-        return $query->get();
+    // Apply limit if provided
+    if ($limit) {
+        $query->limit((int)$limit);
     }
+
+    return $query->get();
+}
+
+
+    public function getAllProducts($sortBy = null, $sortDirection = 'asc', $limit = null)
+{
+    $query = Product::query(); // Start with a query builder
+
+    if ($sortBy === 'sales_count') {
+        $query->orderBy('sales_count', $sortDirection === 'desc' ? 'desc' : 'asc');
+    } elseif ($sortBy === 'price') {
+        $query->orderBy('price', $sortDirection === 'desc' ? 'desc' : 'asc');
+    } elseif ($sortBy === 'name') {
+        $query->orderBy('name', $sortDirection === 'desc' ? 'desc' : 'asc');
+    } else {
+        $query->orderBy('created_at', 'desc'); // default: newest first
+    }
+
+    if ($limit) {
+        $query->limit((int)$limit); // apply limit if provided
+    }
+
+    return $query->get();
+}
+
 
     // Get product by ID and remove null attributes
     public function getProductById($id)
