@@ -41,6 +41,7 @@ Route::middleware(['jwt.auth'])->group(function () {
     // User profile
     Route::get('/profile', [ProfileController::class, 'getUserProfile']);
     Route::post('/profile/update', [ProfileController::class, 'updateProfile']);
+
     // Cart management
     Route::get('/cart', [CartController::class, 'index']); // View current user's cart
     Route::post('/cart/items', [CartController::class, 'addItem']); // Add item to cart
@@ -51,6 +52,8 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::post('/orders', [OrderController::class, 'placeOrder']); // Place an order
     Route::get('/orders', [OrderController::class, 'getOrders']); // Get user orders
     Route::get('/orders/pending', [OrderController::class, 'pendingPayments']);
+    Route::put('/orders/{orderId}/cancel', [OrderController::class, 'cancelOrder']); // Cancel order
+
     // Payment processing
     //Route::post('/cart/remove-items', [CartController::class, 'removeItems']);
     Route::post('/cart/remove-selected', [CartController::class, 'removeSelectedItems']);
@@ -74,6 +77,4 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::get('/delivery/my-orders', [DeliveryController::class, 'getMyOrders']); // Get assigned orders
     Route::get('/delivery/history', [DeliveryController::class, 'getDeliveryHistory']); // Get delivery history
     Route::put('/delivery/orders/{orderId}/status', [DeliveryController::class, 'updateOrderStatus']); // Update order status
-
-
 });
