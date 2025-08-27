@@ -11,18 +11,22 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
   const [role, setRole] = useState("user");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [popupMessage, setPopupMessage] = useState(""); // default empty string
+  const [popupMessage, setPopupMessage] = useState("");
   const [isError, setIsError] = useState(false);
-  const [isPopupVisible, setIsPopupVisible] = useState(false); // NEW
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const showPopup = (message, errorFlag) => {
     setPopupMessage(message);
     setIsError(errorFlag);
-    setIsPopupVisible(true); // ensure popup is visible immediately
+    setIsPopupVisible(true);
   };
 
   const handleLogin = async () => {
+    // Prevent multiple submissions
+    if (isLoading) return;
+
     // Validation
     if (phone.length !== 11 || isNaN(phone)) {
       showPopup("Phone number must be exactly 11 digits.", true);
@@ -33,6 +37,8 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
       return;
     }
 
+    setIsLoading(true);
+
     try {
       const response = await axiosInstance.post("/login", {
         phone,
@@ -40,32 +46,52 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
         role,
       });
 
+      console.log("Login Response:", response.data);
+      
       if (!response.data.token) {
         showPopup("Token not received!", true);
+        setIsLoading(false);
         return;
       }
 
+      // Store in localStorage first
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("isAuthenticated", "true");
       localStorage.setItem("userRole", response.data.user.role);
 
+      // Update app state
       setIsAuthenticated(true);
       setUserRole(response.data.user.role);
 
-      showPopup(response.data.message, false);
+      // Show success message
+      showPopup(response.data.message || "Login successful!", false);
+      
+      // Navigate after a delay to allow state to propagate
+      setTimeout(() => {
+        setIsPopupVisible(false);
+        navigate("/");
+      }, 1500);
+
     } catch (error) {
       showPopup(
         "Login failed: " +
           (error.response?.data?.message || "Invalid phone number or password."),
         true
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleClosePopup = () => {
     setIsPopupVisible(false);
-    if (!isError) {
-      navigate("/");
+    // Don't navigate here - let the automatic navigation handle success cases
+    // For error cases, just close the popup
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleLogin();
     }
   };
 
@@ -77,8 +103,13 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
       </div>
 
       <div className="inputs">
+        {/* Role Dropdown */}
         <div className="input">
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <select 
+            value={role} 
+            onChange={(e) => setRole(e.target.value)}
+            disabled={isLoading}
+          >
             <option value="user">User</option>
             <option value="admin">Admin</option>
             <option value="delivery man">Delivery Man</option>
@@ -92,6 +123,8 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
             type="text"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            onKeyPress={handleKeyPress}
+            disabled={isLoading}
           />
         </div>
 
@@ -102,6 +135,8 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={handleKeyPress}
+            disabled={isLoading}
           />
         </div>
       </div>
@@ -115,8 +150,15 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
       </div>
 
       <div className="submit-container">
-        <div className="submit" onClick={handleLogin}>
-          Login
+        <div 
+          className={`submit ${isLoading ? 'loading' : ''}`}
+          onClick={handleLogin}
+          style={{
+            opacity: isLoading ? 0.6 : 1,
+            cursor: isLoading ? 'not-allowed' : 'pointer'
+          }}
+        >
+          {isLoading ? "Logging in..." : "Login"}
         </div>
       </div>
 
@@ -129,7 +171,27 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
           <p className={isError ? "error-message" : "success-message"}>
             {popupMessage}
           </p>
-          <button onClick={handleClosePopup}>OK</button>
+          
+          {isError ? (
+            // Show OK button for errors
+            <button onClick={handleClosePopup}>OK</button>
+          ) : (
+            // Show auto-redirect message for success
+            <div>
+              <p style={{ fontSize: '0.9em', color: '#666', marginTop: '10px' }}>
+                Redirecting to home page...
+              </p>
+              <div className="loading-spinner" style={{ 
+                width: '20px', 
+                height: '20px', 
+                border: '2px solid #f3f3f3',
+                borderTop: '2px solid #3498db',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite',
+                margin: '10px auto'
+              }}></div>
+            </div>
+          )}
         </div>
       </div>
     </div>
