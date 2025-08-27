@@ -77,15 +77,15 @@ const RiderPanel = () => {
             <div className="dashboard-cards">
               <div className="dashboard-card">
                 <h3>Assigned Orders</h3>
-                <p className="number">30</p>
+                <p className="number">3</p>
               </div>
               <div className="dashboard-card">
                 <h3>Pending Orders</h3>
-                <p className="number">25</p>
+                <p className="number">1</p>
               </div>
               <div className="dashboard-card">
                 <h3>Completed Orders</h3>
-                <p className="number">5</p>
+                <p className="number">2</p>
               </div>
             </div>
           </>
