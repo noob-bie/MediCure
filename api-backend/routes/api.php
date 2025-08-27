@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -9,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +67,7 @@ Route::middleware(['jwt.auth'])->group(function () {
 // Admin routes (require admin authentication)
 Route::middleware(['jwt.auth'])->group(function () {
     // Product management (Admin only - validation happens in controller)
+    Route::get('/admin/dashboard-stats', [DashboardController::class, 'getDashboardStats']); // Get dashboard statistics
     Route::post('/admin/products', [ProductController::class, 'store']); // Admin adds product
     Route::put('/admin/products/{id}', [ProductController::class, 'update']); // Admin updates product
     Route::delete('/admin/products/{id}', [ProductController::class, 'destroy']); // Admin deletes product
@@ -77,7 +80,4 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::get('/delivery/my-orders', [DeliveryController::class, 'getMyOrders']); // Get assigned orders
     Route::get('/delivery/history', [DeliveryController::class, 'getDeliveryHistory']); // Get delivery history
     Route::put('/delivery/orders/{orderId}/status', [DeliveryController::class, 'updateOrderStatus']); // Update order status
-    // Add this in your delivery routes section
-    Route::put('/delivery/orders/{orderId}/collect-payment', [DeliveryController::class, 'collectPayment']);
-
 });
