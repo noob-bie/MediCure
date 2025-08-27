@@ -32,7 +32,7 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
         role,
       });
 
-      console.log("Login Response:", response.data); 
+      console.log("Login Response:", response.data);
       if (!response.data.token) {
         alert("Token not received!");
         return;
