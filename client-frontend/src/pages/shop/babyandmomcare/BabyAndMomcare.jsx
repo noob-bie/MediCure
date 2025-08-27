@@ -5,31 +5,38 @@ import "./BabyAndMomcare.css";
 
 const BabyAndMomcare = () => {
   const [babyMomProducts, setBabyMomProducts] = useState([]);
-  const [allBabyMomProducts, setAllBabyMomProducts] = useState([]);
   const [sortOption, setSortOption] = useState("");
   const [orderOption, setOrderOption] = useState("");
   const [loadingProducts, setLoadingProducts] = useState(false);
   const [productsError, setProductsError] = useState(null);
 
-  useEffect(() => {
-    const fetchBabyMomProducts = async () => {
-      setLoadingProducts(true);
-      setProductsError(null);
-      try {
-        // Fix: Properly encode the category parameter with & symbol
-        const categoryParam = encodeURIComponent("Baby & Mom Care");
-        const res = await axiosInstance.get(`/products?category=${categoryParam}`);
-        setBabyMomProducts(res.data);
-        setAllBabyMomProducts(res.data);
-        console.log("Baby & Mom Care products:", res.data);
-      } catch (err) {
-        console.error("Error fetching baby & mom care products:", err);
-        setProductsError("Failed to load baby & mom care products");
-      } finally {
-        setLoadingProducts(false);
+  // Fetch baby & mom care products with sorting
+  const fetchBabyMomProducts = async (sortBy = null, sortDirection = 'asc') => {
+    setLoadingProducts(true);
+    setProductsError(null);
+    try {
+      // Fix: Properly encode the category parameter with & symbol
+      const categoryParam = encodeURIComponent("Baby & Mom Care");
+      let apiUrl = `/products?category=${categoryParam}`;
+      
+      // Add sorting parameters if provided
+      if (sortBy && sortDirection) {
+        apiUrl += `&sortBy=${sortBy}&sortDirection=${sortDirection}`;
       }
-    };
+      
+      console.log("Baby & Mom Care API URL:", apiUrl);
+      const res = await axiosInstance.get(apiUrl);
+      setBabyMomProducts(res.data);
+      console.log("Baby & Mom Care products:", res.data);
+    } catch (err) {
+      console.error("Error fetching baby & mom care products:", err);
+      setProductsError("Failed to load baby & mom care products");
+    } finally {
+      setLoadingProducts(false);
+    }
+  };
 
+  useEffect(() => {
     fetchBabyMomProducts();
   }, []);
 
@@ -38,47 +45,31 @@ const BabyAndMomcare = () => {
     const selectedOption = e.target.value;
     setSortOption(selectedOption);
 
-    // If sorting by price or best sales, wait for order selection
-    if ((selectedOption === "price" || selectedOption === "bestSales") && !orderOption) {
+    // Reset order option when sort changes
+    if (selectedOption === "") {
+      setOrderOption("");
+      fetchBabyMomProducts(); // Fetch without sorting
       return;
     }
 
-    applySortingAndOrdering(selectedOption, orderOption);
+    // If we have an order option, apply sorting immediately
+    if (orderOption) {
+      fetchBabyMomProducts(selectedOption, orderOption);
+    }
   };
 
   const handleOrderChange = (e) => {
     const selectedOption = e.target.value;
     setOrderOption(selectedOption);
 
-    // If no sort option is selected, do nothing
-    if (!sortOption) return;
-
-    applySortingAndOrdering(sortOption, selectedOption);
-  };
-
-  // Function to apply sorting based on current options
-  const applySortingAndOrdering = (sortOption, orderOption) => {
-    let sortedBabyMom = [...allBabyMomProducts];
-
-    if (sortOption === "bestSales") {
-      sortedBabyMom.sort((a, b) =>
-        orderOption === "descending" ? b.sales_count - a.sales_count : a.sales_count - b.sales_count
-      );
-    } else if (sortOption === "price") {
-      sortedBabyMom.sort((a, b) => {
-        let priceA = parseFloat(a.price) || 0;
-        let priceB = parseFloat(b.price) || 0;
-        return orderOption === "descending" ? priceB - priceA : priceA - priceB;
-      });
-    } else {
-      sortedBabyMom.sort((a, b) =>
-        orderOption === "descending"
-          ? a.name < b.name ? 1 : -1
-          : a.name > b.name ? 1 : -1
-      );
+    // If we have a sort option, apply sorting
+    if (sortOption && selectedOption) {
+      fetchBabyMomProducts(sortOption, selectedOption);
+    } else if (selectedOption === "") {
+      // If order is cleared, fetch without sorting
+      setSortOption("");
+      fetchBabyMomProducts();
     }
-
-    setBabyMomProducts(sortedBabyMom);
   };
 
   if (loadingProducts) {
@@ -112,7 +103,7 @@ const BabyAndMomcare = () => {
             onChange={handleSortChange}
           >
             <option value="">Select</option>
-            <option value="bestSales">Best Sales</option>
+            <option value="sales_count">Best Sales</option>
             <option value="price">Price</option>
             <option value="name">Name</option>
           </select>
@@ -129,8 +120,8 @@ const BabyAndMomcare = () => {
             onChange={handleOrderChange}
           >
             <option value="">Select</option>
-            <option value="ascending">Ascending</option>
-            <option value="descending">Descending</option>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
           </select>
         </div>
       </div>
@@ -141,11 +132,6 @@ const BabyAndMomcare = () => {
             <p>No baby & mom care products found.</p>
           ) : (
             babyMomProducts.map((product) => {
-              // Format the name for URL and display
-              const urlName = product.name
-                .toLowerCase()
-                .replace(/\s+/g, "")
-                .replace(/[()]/g, "");
               const displayName = product.name;
 
               return (

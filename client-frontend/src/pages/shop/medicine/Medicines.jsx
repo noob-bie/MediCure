@@ -5,29 +5,36 @@ import "./Medicines.css";
 
 const Medicines = () => {
   const [medicines, setMedicines] = useState([]);
-  const [allMedicines, setAllMedicines] = useState([]);
   const [sortOption, setSortOption] = useState("");
   const [orderOption, setOrderOption] = useState("");
   const [loadingProducts, setLoadingProducts] = useState(false);
   const [productsError, setProductsError] = useState(null);
 
-  useEffect(() => {
-    const fetchMedicines = async () => {
-      setLoadingProducts(true);
-      setProductsError(null);
-      try {
-        const res = await axiosInstance.get("/products?category=medicines");
-        setMedicines(res.data);
-        setAllMedicines(res.data);
-        console.log("Medicines:", res.data);
-      } catch (err) {
-        console.error("Error fetching medicines:", err);
-        setProductsError("Failed to load medicines");
-      } finally {
-        setLoadingProducts(false);
+  // Fetch medicines with sorting
+  const fetchMedicines = async (sortBy = null, sortDirection = 'asc') => {
+    setLoadingProducts(true);
+    setProductsError(null);
+    try {
+      let apiUrl = "/products?category=medicines";
+      
+      // Add sorting parameters if provided
+      if (sortBy && sortDirection) {
+        apiUrl += `&sortBy=${sortBy}&sortDirection=${sortDirection}`;
       }
-    };
+      
+      console.log("Medicines API URL:", apiUrl);
+      const res = await axiosInstance.get(apiUrl);
+      setMedicines(res.data);
+      console.log("Medicines:", res.data);
+    } catch (err) {
+      console.error("Error fetching medicines:", err);
+      setProductsError("Failed to load medicines");
+    } finally {
+      setLoadingProducts(false);
+    }
+  };
 
+  useEffect(() => {
     fetchMedicines();
   }, []);
 
@@ -36,47 +43,31 @@ const Medicines = () => {
     const selectedOption = e.target.value;
     setSortOption(selectedOption);
 
-    // If sorting by price or best sales, wait for order selection
-    if ((selectedOption === "price" || selectedOption === "bestSales") && !orderOption) {
+    // Reset order option when sort changes
+    if (selectedOption === "") {
+      setOrderOption("");
+      fetchMedicines(); // Fetch without sorting
       return;
     }
 
-    applySortingAndOrdering(selectedOption, orderOption);
+    // If we have an order option, apply sorting immediately
+    if (orderOption) {
+      fetchMedicines(selectedOption, orderOption);
+    }
   };
 
   const handleOrderChange = (e) => {
     const selectedOption = e.target.value;
     setOrderOption(selectedOption);
 
-    // If no sort option is selected, do nothing
-    if (!sortOption) return;
-
-    applySortingAndOrdering(sortOption, selectedOption);
-  };
-
-  // Function to apply sorting based on current options
-  const applySortingAndOrdering = (sortOption, orderOption) => {
-    let sortedMeds = [...allMedicines];
-
-    if (sortOption === "bestSales") {
-      sortedMeds.sort((a, b) =>
-        orderOption === "descending" ? b.sales_count - a.sales_count : a.sales_count - b.sales_count
-      );
-    } else if (sortOption === "price") {
-      sortedMeds.sort((a, b) => {
-        let priceA = parseFloat(a.price) || 0;
-        let priceB = parseFloat(b.price) || 0;
-        return orderOption === "descending" ? priceB - priceA : priceA - priceB;
-      });
-    } else {
-      sortedMeds.sort((a, b) =>
-        orderOption === "descending"
-          ? a.name < b.name ? 1 : -1
-          : a.name > b.name ? 1 : -1
-      );
+    // If we have a sort option, apply sorting
+    if (sortOption && selectedOption) {
+      fetchMedicines(sortOption, selectedOption);
+    } else if (selectedOption === "") {
+      // If order is cleared, fetch without sorting
+      setSortOption("");
+      fetchMedicines();
     }
-
-    setMedicines(sortedMeds);
   };
 
   if (loadingProducts) {
@@ -110,7 +101,7 @@ const Medicines = () => {
             onChange={handleSortChange}
           >
             <option value="">Select</option>
-            <option value="bestSales">Best Sales</option>
+            <option value="sales_count">Best Sales</option>
             <option value="price">Price</option>
             <option value="name">Name</option>
           </select>
@@ -127,8 +118,8 @@ const Medicines = () => {
             onChange={handleOrderChange}
           >
             <option value="">Select</option>
-            <option value="ascending">Ascending</option>
-            <option value="descending">Descending</option>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
           </select>
         </div>
       </div>
@@ -139,11 +130,6 @@ const Medicines = () => {
             <p>No medicines found.</p>
           ) : (
             medicines.map((medicine) => {
-              // Format the name for URL and display
-              const urlName = medicine.name
-                .toLowerCase()
-                .replace(/\s+/g, "")
-                .replace(/[()]/g, "");
               const displayName = medicine.name;
 
               return (
