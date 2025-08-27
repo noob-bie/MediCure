@@ -11,20 +11,25 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
   const [role, setRole] = useState("user");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [popupMessage, setPopupMessage] = useState(null); // popup state
-  const [isError, setIsError] = useState(false); // error/success flag
+  const [popupMessage, setPopupMessage] = useState(""); // default empty string
+  const [isError, setIsError] = useState(false);
+  const [isPopupVisible, setIsPopupVisible] = useState(false); // NEW
   const navigate = useNavigate();
 
+  const showPopup = (message, errorFlag) => {
+    setPopupMessage(message);
+    setIsError(errorFlag);
+    setIsPopupVisible(true); // ensure popup is visible immediately
+  };
+
   const handleLogin = async () => {
-    // Validation checks
+    // Validation
     if (phone.length !== 11 || isNaN(phone)) {
-      setPopupMessage("Phone number must be exactly 11 digits.");
-      setIsError(true);
+      showPopup("Phone number must be exactly 11 digits.", true);
       return;
     }
     if (password.length < 6) {
-      setPopupMessage("Password must contain 6 Characters");
-      setIsError(true);
+      showPopup("Password must contain 6 Characters", true);
       return;
     }
 
@@ -36,8 +41,7 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
       });
 
       if (!response.data.token) {
-        setPopupMessage("Token not received!");
-        setIsError(true);
+        showPopup("Token not received!", true);
         return;
       }
 
@@ -48,19 +52,18 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
       setIsAuthenticated(true);
       setUserRole(response.data.user.role);
 
-      setPopupMessage(response.data.message);
-      setIsError(false);
+      showPopup(response.data.message, false);
     } catch (error) {
-      setPopupMessage(
+      showPopup(
         "Login failed: " +
-          (error.response?.data?.message || "Invalid phone number or password.")
+          (error.response?.data?.message || "Invalid phone number or password."),
+        true
       );
-      setIsError(true);
     }
   };
 
   const handleClosePopup = () => {
-    setPopupMessage(null);
+    setIsPopupVisible(false);
     if (!isError) {
       navigate("/");
     }
@@ -118,14 +121,17 @@ const Login = ({ setIsAuthenticated, setUserRole }) => {
       </div>
 
       {/* Popup Message */}
-      {popupMessage && (
-        <div className="popup-overlay">
-          <div className="popup-box">
-            <p className={isError ? "error-message" : "success-message"}>{popupMessage}</p>
-            <button onClick={handleClosePopup}>OK</button>
-          </div>
+      <div
+        className="popup-overlay"
+        style={{ display: isPopupVisible ? "flex" : "none" }}
+      >
+        <div className="popup-box">
+          <p className={isError ? "error-message" : "success-message"}>
+            {popupMessage}
+          </p>
+          <button onClick={handleClosePopup}>OK</button>
         </div>
-      )}
+      </div>
     </div>
   );
 };

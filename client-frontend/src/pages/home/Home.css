@@ -1,114 +1,360 @@
-
+/* Home.css - Updated for new Home.jsx structure */
 
 .home-container {
-    font-family: 'Arial', sans-serif;
-    padding: 0 2rem;
-    background-color: #eaf6fc;
-    color: #2c3e50;
+  font-family: "Arial", sans-serif;
+  padding: 0 2rem;
+  background-color: #eaf6fc;
+  color: #2c3e50;
+}
+
+.home-container h2 {
+  color: #006bb3;
+  font-weight: bold;
+}
+
+.home-container p {
+  color: #4a6c81;
+}
+
+.home-container .content {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 2rem;
+  background-color: #ffffff;
+  border: 1px solid #d9eaf2;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.home-container .content h2 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.home-container .content p {
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+/* Section styling for product sections */
+.home-container section {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.home-container section h2 {
+  color: #006bb3;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Product row container */
+.home-container .product-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+/* Individual product cards - Home specific styling */
+.home-container .goods-card {
+  background-color: #ffffff;
+  border: 1px solid #d9eaf2;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  width: 250px;
+  height: 340px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center; /* <-- already present, good */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin: 0 auto;
+  overflow: hidden;
+  text-align: center; /* <-- add this */
+}
+
+.home-container .goods-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.home-container .goods-card .goods-image {
+  max-width: 100%;
+  height: auto;           /* Let height adjust automatically */
+  object-fit: contain;    /* Show the full image */
+  margin-bottom: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.home-container .goods-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  overflow: hidden;
+}
+
+.home-container .goods-card h3 {
+  color: #006bb3;
+  font-size: 1.1rem; /* Slightly smaller */
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.home-container .goods-card h4 {
+  color: #4a6c81;
+  font-size: 0.9rem; /* Smaller font */
+  margin-bottom: 0.5rem;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
+}
+
+.home-container .goods-card p {
+  color: #007acc;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Utility classes to match your JSX - Home specific */
+.home-container .text-center {
+  text-align: center;
+}
+
+.home-container .text-muted {
+  color: #4a6c81;
+}
+
+.home-container .text-primary {
+  color: #007acc;
+}
+
+.home-container .fw-bold {
+  font-weight: bold;
+}
+
+.home-container .mt-5 {
+  margin-top: 2rem;
+}
+
+/* No products message */
+.home-container .product-row > p {
+  color: #4a6c81;
+  font-size: 1.1rem;
+  text-align: center;
+  width: 100%;
+  padding: 2rem;
+  background-color: #ffffff;
+  border: 1px solid #d9eaf2;
+  border-radius: 8px;
+  margin: 0;
+}
+
+/* Slider container - adjusted for navbar */
+.home-container .slider {
+  margin-top: 80px; /* Adjust based on your navbar height */
+  width: 100%;
+}
+
+/* Legacy medicine container styles (if still needed elsewhere) */
+.home-container #medicines-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.home-container .medicine-card {
+  background-color: #ffffff;
+  border: 1px solid #d9eaf2;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  width: 250px;
+  height: 370px; /* Increased height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin: auto;
+  overflow: hidden; /* Prevent overflow */
+}
+
+.home-container .medicine-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.home-container .medicine-card img {
+  max-width: 100%;
+  border-radius: 8px;
+  height: 150px;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+.home-container .medicine-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  overflow: hidden;
+}
+
+.home-container .medicine-info h3 {
+  color: #006bb3;
+  font-size: 1.1rem; /* Slightly smaller */
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-container .medicine-info p {
+  color: #4a6c81;
+  text-align: center;
+  font-size: 0.9rem; /* Smaller font */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
+}
+
+.home-container .medicine-info .text-primary {
+  color: #007acc;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .home-container .product-row {
+    gap: 1rem;
   }
-  
-  h2 {
-    color: #006bb3;
-    font-weight: bold;
+
+  .home-container .goods-card {
+    width: 220px;
+    height: 320px; /* Adjusted height */
   }
-  
-  p {
-    color: #4a6c81;
+
+  .home-container .goods-card .goods-image {
+    height: 130px;
   }
-  
-  .content {
-    text-align: center;
-    margin: 2rem 0;
-    padding: 2rem;
-    background-color: #ffffff;
-    border: 1px solid #d9eaf2;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    padding: 0 1rem;
   }
-  
-  .content h2 {
-    margin-bottom: 1rem;
-    font-size: 2rem;
+
+  .home-container .content {
+    padding: 1.5rem;
   }
-  
-  .content p {
-    line-height: 1.6;
-    margin-bottom: 0.5rem;
+
+  .home-container .content h2 {
+    font-size: 1.5rem;
   }
-  
-  #medicines-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    justify-content: center;
+
+  .home-container section h2 {
+    font-size: 1.5rem;
   }
-  
-  .medicine-card {
-    background-color: #ffffff;
-    border: 1px solid #d9eaf2;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    width: 250px; 
-    height: 350px; 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
-    align-items: center; 
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    margin: auto; 
+
+  .home-container .product-row {
+    gap: 1rem;
+    padding: 0.5rem 0;
   }
-  
-  .medicine-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  .medicine-card img {
-    max-width: 100%;
-    border-radius: 8px;
-    height: 150px; /* Ensures consistent image size */
-    object-fit: cover;
-    margin-bottom: 1rem;
-  }
-  
-  .medicine-info h3 {
-    color: #006bb3;
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .medicine-info p {
-    color: #4a6c81;
-    text-align: center;
-  }
-  
-  .medicine-info .text-primary {
-    color: #007acc;
-    font-weight: bold;
-    margin-top: 0.5rem;
-  }
-  
-  .home-container .slider {
-    margin-top: 80px; /* Adjust based on your navbar height */
+
+  .home-container .goods-card {
     width: 100%;
+    max-width: 280px;
+    height: 300px; /* Adjusted height */
+    padding: 0.8rem;
   }
-  
-  @media (max-width: 768px) {
-    .content {
-      padding: 1.5rem;
-    }
-  
-    #medicines-container {
-      gap: 1rem;
-    }
-  
-    .medicine-card {
-      padding: 0.8rem;
-    }
-  
-    .medicine-card img {
-      height: 120px;
-    }
+
+  .home-container .goods-card .goods-image {
+    height: 120px;
   }
-  
+
+  .home-container .goods-card h3 {
+    font-size: 1rem; /* Smaller font */
+  }
+
+  .home-container .goods-card h4 {
+    font-size: 0.85rem; /* Smaller font */
+  }
+
+  .home-container .goods-card p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-container {
+    padding: 0 0.5rem;
+  }
+
+  .home-container .content {
+    padding: 1rem;
+  }
+
+  .home-container .content h2 {
+    font-size: 1.3rem;
+  }
+
+  .home-container section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .home-container .goods-card {
+    width: 100%;
+    max-width: 250px;
+    height: 280px; /* Adjusted height */
+  }
+
+  .home-container .goods-card .goods-image {
+    height: 100px;
+  }
+
+  .home-container .goods-card h3 {
+    font-size: 0.95rem; /* Smaller font */
+  }
+
+  .home-container .goods-card h4 {
+    font-size: 0.8rem; /* Smaller font */
+  }
+
+  .home-container .goods-card p {
+    font-size: 0.9rem;
+  }
+}
