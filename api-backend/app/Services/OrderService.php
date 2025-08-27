@@ -6,7 +6,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Cart;
 use App\Models\CartItem;
-use App\Models\Payment; // ✅ Import Payment model
+use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -16,11 +16,11 @@ class OrderService {
 
         return DB::transaction(function () use ($user, $selectedOrderItems, $paymentMethod) {
 
-            // Create new order
+            // ✅ Always create orders as 'pending' initially
             $order = new Order();
             $order->user_id = $user->id;
             $order->total_price = 0;
-            $order->status = 'pending';
+            $order->status = 'pending'; // ✅ Consistent initial status
             $order->save();
 
             $total = 0;
@@ -41,18 +41,8 @@ class OrderService {
             $order->total_price = $total;
             $order->save();
 
-            // ✅ Create payment record if method provided
-            if ($paymentMethod) {
-                Payment::create([
-                    'order_id'       => $order->id,
-                    'payment_method' => $paymentMethod,
-                    'payment_status' => 'paid',
-                ]);
-
-                // ✅ Mark order as Confirmed
-                $order->status = 'confirmed';
-                $order->save();
-            }
+            // ✅ Don't create payment here - let PaymentController handle it
+            // This ensures both single product and cart checkout follow the same flow
 
             return $order;
         });

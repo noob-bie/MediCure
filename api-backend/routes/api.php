@@ -77,4 +77,7 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::get('/delivery/my-orders', [DeliveryController::class, 'getMyOrders']); // Get assigned orders
     Route::get('/delivery/history', [DeliveryController::class, 'getDeliveryHistory']); // Get delivery history
     Route::put('/delivery/orders/{orderId}/status', [DeliveryController::class, 'updateOrderStatus']); // Update order status
+    // Add this in your delivery routes section
+    Route::put('/delivery/orders/{orderId}/collect-payment', [DeliveryController::class, 'collectPayment']);
+
 });
