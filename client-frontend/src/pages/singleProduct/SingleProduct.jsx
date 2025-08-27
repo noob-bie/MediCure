@@ -30,7 +30,8 @@ const SingleProduct = () => {
   }, [id]);
 
   if (loading) return <h2 className="loading">Loading product details...</h2>;
-  if (error || !product) return <h2 className="not-loading">Product Not Found</h2>;
+  if (error || !product)
+    return <h2 className="not-loading">Product Not Found</h2>;
 
   const handleAddToCart = async () => {
     try {
@@ -47,7 +48,21 @@ const SingleProduct = () => {
   };
 
   const handleCheckout = () => {
-    navigate("/checkout");
+    const selectedCartItems = [
+      {
+        id: `temp_${product.id}`,
+        product: {
+          id: product.id,
+          name: product.name,
+          price: product.price,
+        },
+        quantity: 1,
+      },
+    ];
+
+    navigate("/checkout", {
+      state: { selectedCartItems, fromSingleProduct: true },
+    });
   };
 
   const handleClosePopup = () => {
@@ -60,7 +75,11 @@ const SingleProduct = () => {
         <div className="product-info">
           <h1 className="product-name">{product.name}</h1>
           {product.image && (
-            <img src={product.image} alt={product.name} className="product-image" />
+            <img
+              src={product.image}
+              alt={product.name}
+              className="product-image"
+            />
           )}
           <h4 className="product-price">Price: ৳{product.price}</h4>
           <p className="product-category">Category: {product.category}</p>
@@ -68,19 +87,55 @@ const SingleProduct = () => {
         </div>
 
         <div className="product-details">
-          {product.manufacturer && <p className="product-detail-item"><strong>Manufacturer:</strong> {product.manufacturer}</p>}
-          {product.expiration_date && <p className="product-detail-item"><strong>Expiration Date:</strong> {product.expiration_date}</p>}
-          {product.generic_name && <p className="product-detail-item"><strong>Generic Name:</strong> {product.generic_name}</p>}
-          {product.dosage && <p className="product-detail-item"><strong>Dosage:</strong> {product.dosage}</p>}
-          {product.indications && <p className="product-detail-item"><strong>Indications:</strong> {product.indications}</p>}
-          {product.contraindications && <p className="product-detail-item"><strong>Contraindications:</strong> {product.contraindications}</p>}
-          {product.brand && <p className="product-detail-item"><strong>Brand:</strong> {product.brand}</p>}
-          {product.unit && <p className="product-detail-item"><strong>Unit:</strong> {product.unit}</p>}
+          {product.manufacturer && (
+            <p className="product-detail-item">
+              <strong>Manufacturer:</strong> {product.manufacturer}
+            </p>
+          )}
+          {product.expiration_date && (
+            <p className="product-detail-item">
+              <strong>Expiration Date:</strong> {product.expiration_date}
+            </p>
+          )}
+          {product.generic_name && (
+            <p className="product-detail-item">
+              <strong>Generic Name:</strong> {product.generic_name}
+            </p>
+          )}
+          {product.dosage && (
+            <p className="product-detail-item">
+              <strong>Dosage:</strong> {product.dosage}
+            </p>
+          )}
+          {product.indications && (
+            <p className="product-detail-item">
+              <strong>Indications:</strong> {product.indications}
+            </p>
+          )}
+          {product.contraindications && (
+            <p className="product-detail-item">
+              <strong>Contraindications:</strong> {product.contraindications}
+            </p>
+          )}
+          {product.brand && (
+            <p className="product-detail-item">
+              <strong>Brand:</strong> {product.brand}
+            </p>
+          )}
+          {product.unit && (
+            <p className="product-detail-item">
+              <strong>Unit:</strong> {product.unit}
+            </p>
+          )}
         </div>
 
         <div className="product-actions">
-          <button className="add-to-cart-button" onClick={handleAddToCart}>Add to Cart</button>
-          <button className="checkout-button" onClick={handleCheckout}>Checkout</button>
+          <button className="add-to-cart-button" onClick={handleAddToCart}>
+            Add to Cart
+          </button>
+          <button className="checkout-button" onClick={handleCheckout}>
+            Checkout
+          </button>
         </div>
       </div>
 
@@ -88,7 +143,9 @@ const SingleProduct = () => {
       {popupMessage && (
         <div className="popup-overlay">
           <div className="popup-box">
-            <p className={isError ? "error-message" : "success-message"}>{popupMessage}</p>
+            <p className={isError ? "error-message" : "success-message"}>
+              {popupMessage}
+            </p>
             <button onClick={handleClosePopup}>OK</button>
           </div>
         </div>

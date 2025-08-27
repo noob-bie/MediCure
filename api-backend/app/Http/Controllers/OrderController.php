@@ -52,6 +52,7 @@ class OrderController extends Controller
     {
         return response()->json($this->orderService->getUserOrders($request->user()));
     }
+
     public function pendingPayments(Request $request)
     {
         $user = $request->user();
@@ -66,5 +67,28 @@ class OrderController extends Controller
             ->get();
 
         return response()->json($orders);
+    }
+
+    public function cancelOrder(Request $request, $orderId)
+    {
+        $order = Order::where('id', $orderId)
+                      ->where('user_id', $request->user()->id)
+                      ->first();
+
+        if (!$order) {
+            return response()->json(['message' => 'Order not found'], 404);
+        }
+
+        // Only allow cancellation for certain statuses
+        if (in_array($order->status, ['pending', 'confirmed'])) {
+            $order->status = 'cancelled';
+            $order->save();
+
+            Log::info('Order cancelled successfully', ['order_id' => $orderId, 'user_id' => $request->user()->id]);
+
+            return response()->json(['message' => 'Order cancelled successfully']);
+        }
+
+        return response()->json(['message' => 'Cannot cancel order at this stage'], 400);
     }
 }
