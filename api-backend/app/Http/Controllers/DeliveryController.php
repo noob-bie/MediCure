@@ -8,6 +8,42 @@ use Illuminate\Support\Facades\Log;
 
 class DeliveryController extends Controller
 {
+    // Get dashboard counts for the logged-in delivery man
+    public function getDashboardCounts(Request $request)
+    {
+        try {
+            $user = $request->user();
+
+            if ($user->role !== 'delivery man') {
+                return response()->json(['error' => 'Access denied'], 403);
+            }
+
+            // Count assigned orders (assigned and on_the_way status)
+            $assignedCount = Order::where('deliveryman_id', $user->id)
+                ->whereIn('status', ['assigned', 'on_the_way'])
+                ->count();
+
+            // Count pending orders (confirmed status waiting to be assigned)
+            $pendingCount = Order::where('deliveryman_id', $user->id)
+                ->where('status', 'confirmed')
+                ->count();
+
+            // Count completed orders (delivered status)
+            $completedCount = Order::where('deliveryman_id', $user->id)
+                ->where('status', 'delivered')
+                ->count();
+
+            return response()->json([
+                'assigned' => $assignedCount,
+                'pending' => $pendingCount,
+                'completed' => $completedCount
+            ]);
+        } catch (\Exception $e) {
+            Log::error('DeliveryController: getDashboardCounts - Error: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to fetch dashboard counts'], 500);
+        }
+    }
+
     // Get orders assigned to the logged-in delivery man
     public function getMyOrders(Request $request)
     {
@@ -54,12 +90,12 @@ class DeliveryController extends Controller
         }
     }
 
-    // ✅ Updated method to handle payment status
+    // Updated method to handle payment status
     public function updateOrderStatus(Request $request, $orderId)
     {
         $request->validate([
             'status' => 'required|in:on_the_way,delivered',
-            'payment_collected' => 'boolean' // ✅ Optional field for COD payment collection
+            'payment_collected' => 'boolean' // Optional field for COD payment collection
         ]);
 
         try {
@@ -81,7 +117,7 @@ class DeliveryController extends Controller
             // Update order status
             $order->update(['status' => $request->status]);
 
-            // ✅ Handle payment status for COD orders
+            // Handle payment status for COD orders
             if ($order->payment && $order->payment->payment_method === 'cash_on_delivery') {
 
                 // If marking as delivered, automatically mark payment as collected
@@ -109,7 +145,7 @@ class DeliveryController extends Controller
         }
     }
 
-    // ✅ New method specifically for collecting COD payments
+    // New method specifically for collecting COD payments
     public function collectPayment(Request $request, $orderId)
     {
         try {

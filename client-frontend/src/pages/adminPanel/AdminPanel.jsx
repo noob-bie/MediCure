@@ -9,6 +9,10 @@ const AdminPanel = () => {
     pending_orders: 0,
     cancelled_orders: 0,
     confirmed_orders: 0,
+    assigned_orders: 0,
+    on_the_way_orders: 0,
+    delivered_orders: 0,
+    completed_orders: 0,
     total_delivery_men: 0,
     expired_products: 0,
   });
@@ -29,8 +33,6 @@ const AdminPanel = () => {
     }
   }, [isMainAdminPage]);
 
-  // In AdminPanel.jsx, update the fetchDashboardStats function:
-
   const fetchDashboardStats = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -39,7 +41,7 @@ const AdminPanel = () => {
         token ? "Token exists" : "No token"
       );
 
-      // FIXED: Changed from 'dashboard/stats' to 'dashboard-stats'
+      // Fixed URL to match the API route: dashboard-stats instead of dashboard/stats
       const response = await fetch(
         "http://localhost:8000/api/admin/dashboard-stats",
         {
@@ -128,22 +130,12 @@ const AdminPanel = () => {
           <>
             <h2>Dashboard</h2>
             {loading ? (
-              <div>Loading dashboard statistics...</div>
+              <div className="loading-container">
+                <div className="loading-spinner"></div>
+                Loading dashboard statistics...
+              </div>
             ) : (
               <>
-                
-                <div
-                  style={{
-                    marginBottom: "20px",
-                    padding: "10px",
-                    backgroundColor: "#f0f0f0",
-                    borderRadius: "5px",
-                    fontSize: "12px",
-                  }}
-                >
-                  <strong>Debug Info:</strong> {JSON.stringify(dashboardStats)}
-                </div>
-
                 <div className="dashboard-cards">
                   <div className="dashboard-card">
                     <h3>Total Orders</h3>
@@ -162,6 +154,30 @@ const AdminPanel = () => {
                     </p>
                   </div>
                   <div className="dashboard-card">
+                    <h3>Assigned Orders</h3>
+                    <p className="number">
+                      {dashboardStats.assigned_orders || 0}
+                    </p>
+                  </div>
+                  <div className="dashboard-card">
+                    <h3>On The Way Orders</h3>
+                    <p className="number">
+                      {dashboardStats.on_the_way_orders || 0}
+                    </p>
+                  </div>
+                  <div className="dashboard-card">
+                    <h3>Delivered Orders</h3>
+                    <p className="number">
+                      {dashboardStats.delivered_orders || 0}
+                    </p>
+                  </div>
+                  <div className="dashboard-card">
+                    <h3>Completed Orders</h3>
+                    <p className="number">
+                      {dashboardStats.completed_orders || 0}
+                    </p>
+                  </div>
+                  <div className="dashboard-card">
                     <h3>Cancelled Orders</h3>
                     <p className="number">
                       {dashboardStats.cancelled_orders || 0}
@@ -173,7 +189,7 @@ const AdminPanel = () => {
                       {dashboardStats.total_delivery_men || 0}
                     </p>
                   </div>
-                  <div className="dashboard-card">
+                  <div className="dashboard-card expired-card">
                     <h3>Expired Products</h3>
                     <p className="number">
                       {dashboardStats.expired_products || 0}
@@ -184,7 +200,6 @@ const AdminPanel = () => {
             )}
           </>
         ) : (
-          // Show nested route content
           <Outlet />
         )}
       </main>
