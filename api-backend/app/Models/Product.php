@@ -27,10 +27,12 @@ class Product extends Model
         'brand',
         'unit'
     ];
+
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
     }
+
     protected $casts = [
         'price' => 'decimal:2',
         'expiration_date' => 'date',
@@ -63,10 +65,17 @@ class Product extends Model
         return $query->orderBy('price', $order);
     }
 
-    // Accessor for formatted price
+    // FIXED: Accessor for formatted price - handle null values and ensure float conversion
     public function getFormattedPriceAttribute()
     {
-        return '৳' . number_format($this->price, 2);
+        // Handle null price values
+        if ($this->price === null) {
+            return '৳0.00';
+        }
+
+        // Convert to float to ensure number_format works properly
+        $price = (float) $this->price;
+        return '৳' . number_format($price, 2);
     }
 
     // Check if product is medicine
@@ -96,6 +105,7 @@ class Product extends Model
             ->pluck('category')
             ->toArray();
     }
+
      // Validate manufacture and expiration dates
     public function validateDates()
     {
@@ -104,6 +114,7 @@ class Product extends Model
         }
         return true;
     }
+
     public function getImageUrlAttribute()
     {
         if (empty($this->image)) {
