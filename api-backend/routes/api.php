@@ -11,6 +11,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,10 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::post('/cart/remove-selected', [CartController::class, 'removeSelectedItems']);
 
     Route::post('/confirm-order', [PaymentController::class, 'confirmOrder']); // Confirm order payment
+
+    // Reviews
+    Route::get('/reviews', [ReviewController::class, 'index']);
+    Route::post('/reviews', [ReviewController::class, 'store']);
 });
 //Route::middleware('auth:sanctum')->get('/orders/pending', [OrderController::class, 'pendingPayments']);
 

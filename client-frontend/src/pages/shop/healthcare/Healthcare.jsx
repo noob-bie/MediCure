@@ -143,7 +143,6 @@ const Healthcare = () => {
                     <h3>
                       <Link to={`/product/${product.id}`}>{displayName}</Link>
                     </h3>
-                    {product.brand && <p>Brand: {product.brand}</p>}
                     {product.manufacturer && <p>Manufacturer: {product.manufacturer}</p>}
                     <h4>৳{parseFloat(product.price).toFixed(2)}</h4>
                   </div>
