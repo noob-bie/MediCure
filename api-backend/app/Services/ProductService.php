@@ -9,45 +9,58 @@ class ProductService
 {
 
     // Get all products by category
-    public function getProductsByCategory($category, $sortBy = null, $sortDirection = 'asc')
+    public function getProductsByCategory($category, $sortBy = null, $sortDirection = 'asc', $limit = null)
     {
-        $query = Product::where('category', $category);
+        $query = Product::where('category', $category)->where('expiration_date', '>', now());
+
+        // Apply sorting
         if ($sortBy === 'sales_count') {
-            $query->orderBy('sales_count', ($sortDirection === 'desc' ? 'desc' : 'asc'));
+            $query->orderBy('sales_count', $sortDirection === 'desc' ? 'desc' : 'asc');
         } elseif ($sortBy === 'price') {
-            $query->orderBy('price', ($sortDirection === 'desc' ? 'desc' : 'asc'));
+            $query->orderBy('price', $sortDirection === 'desc' ? 'desc' : 'asc');
         } elseif ($sortBy === 'name') {
-            $query->orderBy('name', ($sortDirection === 'desc' ? 'desc' : 'asc'));
+            $query->orderBy('name', $sortDirection === 'desc' ? 'desc' : 'asc');
         } else {
-            // Default sorting by created_at (newest first)
-            $query->orderBy('created_at', 'desc');
+            $query->orderBy('created_at', 'desc'); // default newest first
         }
+
+        // Apply limit if provided
+        if ($limit) {
+            $query->limit((int) $limit);
+        }
+
         return $query->get();
     }
 
-    public function getAllProducts($sortBy = null, $sortDirection = 'asc')
+
+    public function getAllProducts($sortBy = null, $sortDirection = 'asc', $limit = null)
     {
-        $query = Product::query(); // Start with a query builder
+        $query = Product::where('expiration_date', '>', now()); // Start with a query builder
 
-        if ($sortBy === 'sales_count') { // Check if sortBy is 'sales_count'
-            $query->orderBy('sales_count', ($sortDirection === 'desc' ? 'desc' : 'asc')); // Add orderBy clause for sales_count
+        if ($sortBy === 'sales_count') {
+            $query->orderBy('sales_count', $sortDirection === 'desc' ? 'desc' : 'asc');
         } elseif ($sortBy === 'price') {
-            $query->orderBy('price', ($sortDirection === 'desc' ? 'desc' : 'asc'));
+            $query->orderBy('price', $sortDirection === 'desc' ? 'desc' : 'asc');
         } elseif ($sortBy === 'name') {
-            $query->orderBy('name', ($sortDirection === 'desc' ? 'desc' : 'asc'));
+            $query->orderBy('name', $sortDirection === 'desc' ? 'desc' : 'asc');
         } else {
-            // Default sorting by created_at (newest first)
-            $query->orderBy('created_at', 'desc');
+            $query->orderBy('created_at', 'desc'); // default: newest first
         }
-        // You can add more sorting options here in the future (e.g., for price, name, etc.)
+
+        if ($limit) {
+            $query->limit((int) $limit); // apply limit if provided
+        }
 
         return $query->get();
     }
+
 
     // Get product by ID and remove null attributes
     public function getProductById($id)
     {
-        $product = Product::find($id);
+        $product = Product::find($id)
+        ->where('expiration_date', '>', now())
+                      ->first();
 
         if ($product) {
             // Remove null attributes
@@ -82,7 +95,8 @@ class ProductService
     // Get available categories with product counts
     public function getAvailableCategories()
     {
-        return Product::select('category')
+        return Product::where('expiration_date', '>', now()) // exclude expired
+            ->select('category')
             ->selectRaw('count(*) as product_count')
             ->groupBy('category')
             ->get()

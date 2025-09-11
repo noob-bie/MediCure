@@ -94,7 +94,7 @@ const SingleProduct = () => {
           )}
           {product.expiration_date && (
             <p className="product-detail-item">
-              <strong>Expiration Date:</strong> {product.expiration_date}
+              <strong>Expiration Date:</strong> {new Date(product.expiration_date).toLocaleDateString()}
             </p>
           )}
           {product.generic_name && (

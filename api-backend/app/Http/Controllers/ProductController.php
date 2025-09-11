@@ -30,7 +30,7 @@ class ProductController extends Controller
     }
     /**
      * Process image data to ensure proper data URI format
-     * 
+     *
      * @param string|null $imageData
      * @return string|null
      */
@@ -51,28 +51,30 @@ class ProductController extends Controller
     }
     // Fetch all products
     public function index(Request $request)
-    {
-        $category = $request->query('category');
-        $sortBy = $request->query('sortBy');
-        $sortDirection = $request->query('sortDirection', 'asc');
+{
+    $category = $request->query('category');
+    $sortBy = $request->query('sortBy');
+    $sortDirection = $request->query('sortDirection', 'asc');
+    $limit = $request->query('limit', null); // get limit from frontend
 
-        try {
-            if ($category) {
-                $products = $this->productService->getProductsByCategory($category, $sortBy, $sortDirection);
+    try {
+        if ($category) {
+            // Pass limit to the category-based method
+            $products = $this->productService->getProductsByCategory($category, $sortBy, $sortDirection, $limit);
 
-                // Log for debugging
-                Log::info('Fetching products for category: ' . $category);
-                Log::info('Found products count: ' . $products->count());
-            } else {
-                $products = $this->productService->getAllProducts($sortBy, $sortDirection);
-            }
-
-            return response()->json($products);
-        } catch (\Exception $e) {
-            Log::error('Error fetching products: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to fetch products'], 500);
+            Log::info('Fetching products for category: ' . $category);
+            Log::info('Found products count: ' . $products->count());
+        } else {
+            // Pass limit to getAllProducts
+            $products = $this->productService->getAllProducts($sortBy, $sortDirection, $limit);
         }
+
+        return response()->json($products);
+    } catch (\Exception $e) {
+        Log::error('Error fetching products: ' . $e->getMessage());
+        return response()->json(['error' => 'Failed to fetch products'], 500);
     }
+}
 
     // Fetch a single product
     public function show($id)

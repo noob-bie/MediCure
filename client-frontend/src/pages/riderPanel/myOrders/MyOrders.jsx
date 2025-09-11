@@ -36,6 +36,19 @@ const MyOrders = () => {
     }
   };
 
+  // ✅ New function to collect COD payment
+  const handleCollectPayment = async (orderId) => {
+    try {
+      await axiosInstance.put(`/delivery/orders/${orderId}/collect-payment`);
+      
+      fetchMyOrders(); // Refresh orders
+      alert('Payment collected successfully!');
+    } catch (error) {
+      console.error('Error collecting payment:', error);
+      alert('Failed to collect payment');
+    }
+  };
+
   const getStatusBadge = (status) => {
     const statusClasses = {
       'assigned': 'status-assigned',
@@ -122,6 +135,17 @@ const MyOrders = () => {
                     onClick={() => handleStatusUpdate(order.id, 'delivered')}
                   >
                     Mark as Delivered
+                  </button>
+                )}
+
+                {/* ✅ Add collect payment button for COD orders */}
+                {order.payment?.payment_method === 'cash_on_delivery' && 
+                 order.payment?.payment_status === 'yet_to_pay' && (
+                  <button 
+                    className="action-btn collect-payment"
+                    onClick={() => handleCollectPayment(order.id)}
+                  >
+                    Collect Payment
                   </button>
                 )}
               </div>
