@@ -55,12 +55,13 @@ class ProductService
     }
 
 
-    // Get product by ID and remove null attributes
+    // FIXED: Get product by ID and remove null attributes
     public function getProductById($id)
     {
-        $product = Product::find($id)
-        ->where('expiration_date', '>', now())
-                      ->first();
+        // Use where() with find conditions instead of chaining after find()
+        $product = Product::where('id', $id)
+                         ->where('expiration_date', '>', now())
+                         ->first();
 
         if ($product) {
             // Remove null attributes
@@ -80,6 +81,7 @@ class ProductService
     {
         return Product::create($data);
     }
+
     public function getProductsCountByCategory($category = null)
     {
         if ($category) {
