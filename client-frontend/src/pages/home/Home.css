@@ -358,3 +358,151 @@
     font-size: 0.9rem;
   }
 }
+
+/* ================= Reviews Section ================= */
+.home-container .review-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.home-container .review-card {
+  background-color: #ffffff;
+  border: 1px solid #d9eaf2;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  width: 280px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.home-container .review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.home-container .review-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 0.8rem;
+  border: 2px solid #006bb3;
+}
+
+.home-container .review-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #006bb3;
+}
+
+.home-container .review-stars {
+  font-size: 0.9rem;
+  color: #f39c12;
+}
+
+.home-container .review-text {
+  color: #4a6c81;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.home-container .review-form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.home-container .review-input {
+  width: 100%;
+  min-height: 60px; /* reduce from 100px to 80px */
+  border: 1px solid #d9eaf2;
+  border-radius: 6px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  resize: vertical;
+  outline: none; /* remove default blue outline */
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Focus effect for textarea and select */
+.home-container .review-input:focus,
+.home-container .review-select:focus {
+  border-color: #006bb3;
+  box-shadow: 0 0 0 2px rgba(0, 107, 179, 0.2);
+}
+
+.home-container .review-select {
+  width: 200px;
+  padding: 0.6rem;
+  border: 1px solid #d9eaf2;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+  height: 50px;
+}
+
+.home-container .review-submit {
+  background-color: #006bb3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  align-self: flex-start;
+}
+
+.home-container .review-submit:hover {
+  background-color: #004f80;
+}
+
+/* Wrap select + button in one line */
+.home-container .review-form-inline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* Keep dropdown fixed width */
+.home-container .review-form-inline .review-select {
+  width: 200px;
+  flex-shrink: 0;
+}
+
+/* Button stays on right */
+.home-container .review-form-inline .review-submit {
+  flex-shrink: 0;
+}
+
+/* Wrap select + button in one line, below textarea */
+.home-container .review-form-inline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem; /* small gap below textarea */
+}
+
+/* Keep dropdown fixed width */
+.home-container .review-form-inline .review-select {
+  width: 200px;
+  flex-shrink: 0;
+}
+
+/* Button stays on right */
+.home-container .review-form-inline .review-submit {
+  flex-shrink: 0;
+}
