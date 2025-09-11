@@ -30,7 +30,7 @@ class ProductController extends Controller
     }
     /**
      * Process image data to ensure proper data URI format
-     * 
+     *
      * @param string|null $imageData
      * @return string|null
      */
