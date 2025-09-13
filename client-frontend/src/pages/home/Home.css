@@ -359,150 +359,114 @@
   }
 }
 
-/* ================= Reviews Section ================= */
-.home-container .review-row {
+
+/* Action Buttons Section */
+.home-container .action-buttons-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: 2rem;
   justify-content: center;
-  padding: 1rem 0;
-}
-
-.home-container .review-card {
-  background-color: #ffffff;
-  border: 1px solid #d9eaf2;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  width: 280px;
-  min-height: 180px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.home-container .review-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.8rem;
-}
-
-.home-container .review-avatar {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  margin-right: 0.8rem;
-  border: 2px solid #006bb3;
-}
-
-.home-container .review-header h4 {
-  margin: 0;
-  font-size: 1rem;
-  color: #006bb3;
-}
-
-.home-container .review-stars {
-  font-size: 0.9rem;
-  color: #f39c12;
-}
-
-.home-container .review-text {
-  color: #4a6c81;
-  font-size: 0.95rem;
-  line-height: 1.4;
-}
-
-.home-container .review-form {
+  padding: 2rem 0;
   margin-top: 2rem;
+}
+
+.home-container .action-button {
+  background-color: #ffffff;
+  border: 2px solid #006bb3;
+  border-radius: 12px;
+  width: 280px;
+  min-height: 20px;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.home-container .review-input {
-  width: 100%;
-  min-height: 60px; /* reduce from 100px to 80px */
-  border: 1px solid #d9eaf2;
-  border-radius: 6px;
-  padding: 0.8rem;
-  font-size: 1rem;
-  resize: vertical;
-  outline: none; /* remove default blue outline */
-  transition: border 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* Focus effect for textarea and select */
-.home-container .review-input:focus,
-.home-container .review-select:focus {
-  border-color: #006bb3;
-  box-shadow: 0 0 0 2px rgba(0, 107, 179, 0.2);
-}
-
-.home-container .review-select {
-  width: 200px;
-  padding: 0.6rem;
-  border: 1px solid #d9eaf2;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  outline: none;
-  height: 50px;
-}
-
-.home-container .review-submit {
-  background-color: #006bb3;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 0.8rem;
-  font-size: 1rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
   cursor: pointer;
-  transition: background 0.2s ease;
-  align-self: flex-start;
 }
 
-.home-container .review-submit:hover {
-  background-color: #004f80;
+.home-container .action-button:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2);
+  border-color: #004f80;
 }
 
-/* Wrap select + button in one line */
-.home-container .review-form-inline {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 0.5rem;
+.home-container .action-button .button-icon {
+  font-size: 2rem;
+  margin-bottom: .5rem;
+  opacity: 0.8;
 }
 
-/* Keep dropdown fixed width */
-.home-container .review-form-inline .review-select {
-  width: 200px;
-  flex-shrink: 0;
+.home-container .action-button h3 {
+  color: #006bb3;
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  font-weight: bold;
 }
 
-/* Button stays on right */
-.home-container .review-form-inline .review-submit {
-  flex-shrink: 0;
+.home-container .action-button p {
+  color: #4a6c81;
+  font-size: .8rem;
+  line-height: 1;
+  margin: 0;
 }
 
-/* Wrap select + button in one line, below textarea */
-.home-container .review-form-inline {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 0.5rem; /* small gap below textarea */
+/* Specific button variations */
+.home-container .contact-button:hover {
+  background: linear-gradient(135deg, #e8f4f8 0%, #f0f8fc 100%);
 }
 
-/* Keep dropdown fixed width */
-.home-container .review-form-inline .review-select {
-  width: 200px;
-  flex-shrink: 0;
+.home-container .review-button:hover {
+  background: linear-gradient(135deg, #fff7e6 0%, #fffaf0 100%);
 }
 
-/* Button stays on right */
-.home-container .review-form-inline .review-submit {
-  flex-shrink: 0;
+.home-container .about-button:hover {
+  background: linear-gradient(135deg, #f0f8ff 0%, #f8faff 100%);
+}
+
+/* Responsive adjustments for action buttons */
+@media (max-width: 768px) {
+  .home-container .action-buttons-container {
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+  }
+
+  .home-container .action-button {
+    width: 100%;
+    max-width: 300px;
+    min-height: 180px;
+    padding: 1.5rem;
+  }
+
+  .home-container .action-button .button-icon {
+    font-size: 2.5rem;
+  }
+
+  .home-container .action-button h3 {
+    font-size: 1.2rem;
+  }
+
+  .home-container .action-button p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-container .action-buttons-container {
+    gap: 1rem;
+  }
+
+  .home-container .action-button {
+    min-height: 160px;
+    padding: 1rem;
+  }
+
+  .home-container .action-button .button-icon {
+    font-size: 2rem;
+  }
+
+  .home-container .action-button h3 {
+    font-size: 1.1rem;
+  }
 }

@@ -145,64 +145,27 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ✅ Reviews Section */}
-      <section className="mt-5">
-        <h2 className="text-center">User Reviews</h2>
-
-        <div className="review-row">
-          {reviews.length > 0 ? (
-            reviews.map((review) => (
-              <div key={review.id} className="review-card">
-                <div className="review-header">
-                  <img
-                    src={review.user?.profile_image_url || download}
-                    alt={review.user?.name || "User"}
-                    className="review-avatar"
-                  />
-                  <div>
-                    <h4>{review.user?.name || "Anonymous"}</h4>
-                    <div className="review-stars">
-                      {"⭐".repeat(review.rating)}
-                      {"☆".repeat(5 - review.rating)}
-                    </div>
-                  </div>
-                </div>
-                <p className="review-text">{review.message}</p>
-              </div>
-            ))
-          ) : (
-            <p>No reviews yet.</p>
-          )}
+     {/* Action Buttons Section */}
+      <section className="mt-5 mb-5">
+        <div className="action-buttons-container">
+          <Link to="/contact" className="action-button contact-button">
+            <div className="button-icon">📞</div>
+            <h3>Contact Us</h3>
+            <p>Get in touch with our support team</p>
+          </Link>
+          
+          <Link to="/reviews" className="action-button review-button">
+            <div className="button-icon">⭐</div>
+            <h3>Rate Us</h3>
+            <p>Share your experience with us</p>
+          </Link>
+          
+          <Link to="/about" className="action-button about-button">
+            <div className="button-icon">ℹ️</div>
+            <h3>About Us</h3>
+            <p>Learn more about Medicure</p>
+          </Link>
         </div>
-
-        {/* Review Writing Form */}
-   <div className="review-form">
-  <textarea
-    placeholder="Write your review..."
-    className="review-input"
-    value={newReview}
-    onChange={(e) => setNewReview(e.target.value)}
-  />
-
-  <div className="review-form-inline">
-    <select
-      className="review-select"
-      value={newRating}
-      onChange={(e) => setNewRating(e.target.value)}
-    >
-      <option value="">Select Rating</option>
-      <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
-      <option value="4">⭐⭐⭐⭐ - Good</option>
-      <option value="3">⭐⭐⭐ - Average</option>
-      <option value="2">⭐⭐ - Poor</option>
-      <option value="1">⭐ - Terrible</option>
-    </select>
-
-    <button className="review-submit" onClick={handleReviewSubmit}>
-      Submit Review
-    </button>
-  </div>
-</div>
       </section>
     </div>
   );
