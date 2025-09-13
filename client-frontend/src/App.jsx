@@ -30,6 +30,9 @@ import AddProduct from "./pages/adminPanel/productManagement/addProduct/AddProdu
 import UpdateProduct from "./pages/adminPanel/productManagement/updateProduct/UpdateProduct";
 import DeleteProduct from "./pages/adminPanel/productManagement/deleteProduct/DeleteProduct";
 import SingleProductUpdate from "./pages/adminPanel/productManagement/updateProduct/singleProductUpdate/SingleProductUpdate";
+import About from "./pages/about/About";
+import Contact from "./pages/contact/Contact";
+import Review from "./pages/review/Review"; 
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -80,6 +83,9 @@ function App() {
         { path: "/profile", element: <Profile /> },
         { path: "/edit-profile", element: <EditProfile /> },
         { path: "/orders", element: <Orders /> },
+        { path: "/reviews", element: <Review /> },
+        { path: "/contact", element: <Contact /> },
+        { path: "/about", element: <About /> },
         {
           path: "/login",
           element: (

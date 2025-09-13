@@ -16,12 +16,19 @@ class ReviewController extends Controller
 
     /**
      * GET /reviews
-     * Fetch top reviews (default 3)
+     * Fetch reviews with optional sorting and limit parameters
      */
     public function index(Request $request)
     {
         $limit = $request->query('limit', 3);
-        $reviews = $this->reviewService->getLatestReviews($limit);
+        $sortBy = $request->query('sortBy', 'rating');
+        $sortDirection = $request->query('sortDirection', 'desc');
+        $all = $request->query('all', false);
+
+        // Convert string 'true'/'false' to boolean
+        $all = filter_var($all, FILTER_VALIDATE_BOOLEAN);
+
+        $reviews = $this->reviewService->getLatestReviews($limit, $sortBy, $sortDirection, $all);
 
         return response()->json($reviews);
     }
